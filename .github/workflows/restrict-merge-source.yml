@@ -1,4 +1,4 @@
-name: Restrict merge source
+name: Restriction merge de branche
 
 on:
   pull_request:
