@@ -18,7 +18,7 @@
 1. (WINDOWS) Téléchargez et installez le logiciel depuis le site officiel [Docker website](https://www.docker.com/) ou utilisez winget (Windows Package Manager) avec PowerShell `winget install Docker.DockerDesktop`.
 1. (AUTRE) Téléchargez et installez le logiciel depuis le site officiel [Docker website](https://www.docker.com/) ou utilisez votre gestionnaire de packet.
 
-2. Sur l'écran d'acceuil dans les paramètres, assurez vous de selectionner `WSL 2` plutot que `Hyper-V`
+2. (WINDOWS) Sur l'écran d'acceuil dans les paramètres, assurez vous de selectionner `WSL 2` plutot que `Hyper-V`
 3. quand vous démarrez Docker pour la première fois, acceptez les conditions d'utilisation. Vous n'avez pas besoin d'utiliser un compte (appuyez sur skip), travailler en local est suffisant.
 4. Docker s'initialisera. Cela peut prendre un moment lors du premier lancement.
 
