@@ -38,7 +38,7 @@ et ouvrez le dans votre éditeur préféré
 3. Démarrez les conteneurs en exécutant la commande suivante depuis le dossier du projet
 `docker compose up --build -d`. Cela peut prendre un certain temps la première fois.
 > [!TIP]
-> pour les prochaines fois `--build` ne sera pas necessaire, il sert à utiliser le fichier Dockefile pour installer les dépendances php. Pour les prochains lancement préférez `docker compose up -d` et `docker compose down` pour eteindre vos conteneurs
+> pour les prochaines fois `--build` ne sera pas necessaire, il sert à utiliser le fichier Dockefile pour installer les dépendances php. Pour les prochains lancement préférez `docker compose up -d`
 > [!TIP]
 > Une fois la première commande lancée, vos conteneurs serons démarables depuis votre application Docker Desktop. Vous n'êtes donc pas obligé d'utiliser les commandes docker
 4. Une fois fini ouvrez http://localhost:8080 pour voir le site
