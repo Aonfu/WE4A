@@ -30,7 +30,7 @@
 Trivial
 
 ### Configuration du projet
-1. Clonez le repo: `git clone https://github.com/TheRefraction/WE4_Project.git` 
+1. Clonez le repo: `git clone https://github.com/Aonfu/WE4A.git` 
 et ouvrez le dans votre éditeur préféré
 2. Copié le fichier de variable d'environnement `.env.example` sur un `.env` que vous créez et remplissez le avec vos propres valeurs
 > [!CAUTION]
@@ -41,7 +41,7 @@ et ouvrez le dans votre éditeur préféré
 > pour les prochaines fois `--build` ne sera pas necessaire, il sert à utiliser le fichier Dockefile pour installer les dépendances php. Pour les prochains lancement préférez `docker compose up -d`
 > [!TIP]
 > Une fois la première commande lancée, vos conteneurs serons démarables depuis votre application Docker Desktop. Vous n'êtes donc pas obligé d'utiliser les commandes docker
-4. Une fois fini ouvrez http://localhost:8080 pour voir le site
+4. Une fois fini ouvrez http://localhost:8000 pour voir le site
 > [!TIP]
 > le lien pour phpmyadmin et votre site web est aussi accessible et cliquable depuis votre application Docker
 
