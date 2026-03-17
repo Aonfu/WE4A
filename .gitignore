@@ -1,0 +1,7 @@
+# PhpStorm
+.idea/
+!.idea/codeStyles/
+!.idea/inspectionProfiles/
+
+# Docker
+.env
