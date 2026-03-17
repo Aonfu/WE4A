@@ -1,0 +1,27 @@
+name: Restriction merge de branche
+
+on:
+  pull_request:
+    branches:
+      - master
+      - development
+
+jobs:
+  check-source-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check that PR source is 'dev'
+        run: |
+          if [ "${{ github.base_ref }}" == "master" ]; then
+            if [ "${{ github.head_ref }}" != "development" ]; then
+              echo "PRs vers master sont seulement autorisées depuis la branche 'development'"
+              echo "La branche source était: ${{ github.head_ref }}"
+              exit 1
+            fi
+          fi
+          if [ "${{ github.base_ref }}" == "development" ] && [ "${{ github.head_ref }}" == "master" ]; then
+            echo "Merges depuis 'master' vers 'dev' ne sont pas authorisées."
+            exit 1
+          fi
+          
+          echo "la branche source est autorisée. traitement en cours ..."

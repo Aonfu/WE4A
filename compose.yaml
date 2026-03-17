@@ -1,0 +1,39 @@
+services:
+  php:
+    image: php:8.2-apache
+    restart: always
+    container_name: php_82
+    env_file:
+      - .env
+    ports:
+      - 8000:80
+    volumes:
+      - ./src:/var/www/html
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  db:
+    image: mysql:8.0
+    restart: always
+    container_name: mysql_8
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "8080:80"
+
+volumes:
+  mysql_data:
