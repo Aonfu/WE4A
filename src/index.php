@@ -12,3 +12,4 @@ if ($conn->connect_error) {
 }
 echo " Connecté à mysql avec succès !";
 ?>
+
