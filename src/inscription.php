@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bind_param("ssss", $nom, $prenom, $email, $mdp);
     $stmt->execute();
 
+    #il faudra aussi changer le header, il est temporaire
     header("Location: hub.php");
     exit();
 }
@@ -45,6 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <label for="mdp">Mot de Passe</label>
         <input type="password" id="mdp" name="mdp" placeholder="Mot de Passe" required>
+
+        <!-- Il faudra faire la verification du mdp avec javascript (voir sujet) -->
 
         <button type="submit">S'inscrire</button>
 
