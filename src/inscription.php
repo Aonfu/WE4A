@@ -35,17 +35,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <h1>Inscription</h1>
     <form action="inscription.php" method="post">
 
-        <label for="nom">Nom</label>
+        <label for="nom">Nom:</label>
         <input type="text" id="nom" name="nom" placeholder="Nom" required>
 
-        <label for="prenom">Prénom</label>
+        <br>
+
+        <label for="prenom">Prénom:</label>
         <input type="text" id="prenom" name="prenom" placeholder="Prénom" required>
 
-        <label for="email">Email</label>
+        <br>
+
+        <label for="email">Email:</label>
         <input type="email" id="email" name="email" placeholder="mail.exemple@ex.com" required>
 
-        <label for="mdp">Mot de Passe</label>
+        <br>
+
+        <label for="mdp">Mot de Passe:</label>
         <input type="password" id="mdp" name="mdp" placeholder="Mot de Passe" required>
+
+        <br>
 
         <!-- Il faudra faire la verification du mdp avec javascript (voir sujet) -->
 

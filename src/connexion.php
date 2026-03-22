@@ -39,8 +39,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <label for="email">Email</label>
     <input type="email" id="email" name="email" placeholder="mail.exemple@ex.com" required>
 
+    <br>
+
     <label for="mdp">Mot de Passe</label>
     <input type="password" id="mdp" name="mdp" placeholder="Mot de Passe" required>
+
+    <br>
 
     <button type="submit">Se connecter</button>
 
