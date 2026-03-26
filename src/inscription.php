@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
 
     #il faudra aussi changer le header, il est temporaire
-    header("Location: hub.php");
+    header("Location: index.php");
     exit();
 }
 ?>
