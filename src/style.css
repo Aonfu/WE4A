@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    font-family: system-ui, sans-serif; /* Une police moderne */
+    background-color: #f9fafb; /* Un gris très clair */
+    color: #111827; /* Un texte presque noir */
+}
+
+a {
+    text-decoration: none; /* Enlève les lignes sous les liens */
+}
+
+/* Notre boîte pour centrer le contenu */
+.container {
+    max-width: 1000px;
+    margin: 0 auto; /* Centre la boîte au milieu de l'écran */
+    padding: 0 20px;
+}
+/* La barre de navigation */
+.navbar {
+    background-color: white;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.navbar-content {
+    display: flex; /* La magie qui met les éléments côte à côte */
+    justify-content: space-between; /* Écarte le logo et les boutons au maximum */
+    align-items: center; /* Centre verticalement */
+    height: 70px;
+}
+.nav-actions {
+    display: flex;
+    gap: 15px; /* Espace entre les boutons */
+}
+
+/* Les boutons */
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary { background-color: #16a34a; color: white; } /* Bouton vert */
+.btn-secondary { background-color: #f3f4f6; color: black; } /* Bouton gris */
+.btn-text { background-color: transparent; color: black; } /* Bouton transparent */
+
+
+/* Le Menu Déroulant */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none; /* On cache le menu par défaut */
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 10px;
+    width: 200px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block; /* On affiche le menu au survol de la souris ! */
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 8px;
+    color: black;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f3f4f6; /* Grise le lien au survol */
+}
+
+/* La zone principale de la page */
+.page-content {
+    padding: 40px 20px;
+}
+
+/* L'état vide (Aucune enchère) */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: white;
+    border: 2px dashed #cbd5e1; /* Bordure en pointillés */
+    border-radius: 8px;
+    margin-top: 30px;
+}
