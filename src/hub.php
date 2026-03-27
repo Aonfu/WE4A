@@ -10,22 +10,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="navbar"
-            <div class="contrainer navbar-content"
-                 <div class="nav-action"
-                    <a href="#" class="btn btn-primary">+ Ajouter un objet</a>
-                    <a href="connexion.php" class="btn btn-text">Connexion</a>
-                    <a href="inscription.php" class="btn btn-text">Inscription</a>
-                    <div class="dropdown"
-                        <button class="btn btn-secondary dropdown-toggle">Mon Espace ▼</button>
-                        <div class="dropdown-menu">
-                            <a href="#">Mon Porte-monnaie (16 €) pour kenneth</a>
-                            <a href="#">Déconnexion</a>
-                        </div>
-                    </div>
+<header class="navbar">
+    <div class="container navbar-content">
+
+        <div class="nav-actions" style="margin-left: auto;">
+
+            <a href="#" class="btn btn-primary">+ Ajouter un objet</a>
+            <a href="connexion.php" class="btn btn-text">Connexion</a>
+            <a href="inscription.php" class="btn btn-secondary">Inscription</a>
+
+            <div class="dropdown" style="position: relative;">
+                <button class="btn btn-secondary dropdown-toggle">Mon Espace ▼</button>
+
+                <div class="dropdown-menu">
+                    <a href="#">Mon Porte-monnaie (16€)</a>
+                    <a href="#">Déconnexion</a>
                 </div>
             </div>
-        </header>
+
+        </div>
+    </div>
+</header>
     <main class="container page-content">
         <h1>Enchères à la une</h1>
         <p>Découvrez les objets les plus populaires.</p>
