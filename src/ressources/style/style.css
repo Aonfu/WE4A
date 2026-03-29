@@ -32,3 +32,27 @@ button:hover{
     background-color: #f8d434;
     transform: scale(1.05);
 }
+
+body {
+    margin: 0;
+}
+
+.bandeau {
+    background-color: #ffc001;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+    padding: 0.7%;
+}
+
+.bandeau a {
+    text-decoration: none;
+    background-color: #A37800;
+    padding: 0.7%;
+    color: antiquewhite;
+    margin: 0;
+}
+
+.bandeau a:hover {
+    background-color: #473400;
+}

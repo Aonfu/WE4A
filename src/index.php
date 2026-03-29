@@ -22,7 +22,7 @@ if ($conn->connect_error) {
     <link rel="stylesheet" href="/ressources/style/style.css">
 </head>
 <body>
-<div class="Bandeau">
+<div class="bandeau">
     <a href="connexion.php">Connexion</a>
     <a href="connexion.php">Inscription</a>
 </div>
