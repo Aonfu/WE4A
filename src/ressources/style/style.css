@@ -4,10 +4,16 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    font-family: Georgia, serif;
+    color: #c82a3c;
+    text-align: left;
+}
+
 form {
     width: 400px;
     margin: 80px auto;
-    border: 5px solid #888;
+    border: 5px solid #bc4c58;
     border-radius: 12px;
     padding: 40px;
 }
@@ -40,7 +46,7 @@ body {
 .bandeau {
     background-color: #ffc001;
     font-weight: bold;
-    text-align: left;
+    text-align: right;
     width: 100%;
     padding: 0.7%;
 }
@@ -55,4 +61,22 @@ body {
 
 .bandeau a:hover {
     background-color: #473400;
+}
+
+.redirection-vente a {
+    display: block;
+    text-decoration: none;
+    background-color: #bc4c58;
+    font-weight: bold;
+    color: antiquewhite;
+    padding: 0.7%;
+    width: 21%;
+    border-radius: 8px;
+    margin-left: 75%;
+    transition: transform 0.2s;
+}
+
+.redirection-vente a:hover {
+    background-color: #d16672;
+    transform: scale(1.05);
 }

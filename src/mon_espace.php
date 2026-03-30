@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hub</title>
+    <title>Mon Espace</title>
     <link rel="stylesheet" href="/ressources/style/style.css">
 </head>
 <body>
@@ -26,9 +26,10 @@ if ($conn->connect_error) {
     <a href="mon_espace.php">Mon Espace</a>
     <a href="index.php">Hub</a>
 </div>
-<h1>Catalogue</h1>
+<h1>Mon Espace</h1>
+<h2>Statistiques:</h2>
+<div class="redirection-vente">
+    <a href="vente.php">Mettre au enchères un nouveau produits</a>
+</div>
 </body>
 </html>
-
-
-
