@@ -22,7 +22,7 @@ if ($conn->connect_error) {
 <body>
 <div class="navbar">
     <a href="connexion.php">Connexion</a>
-    <a href="connexion.php">Inscription</a>
+    <a href="inscription.php">Inscription</a>
     <a href="mon_espace.php">Mon Espace</a>
     <a href="index.php">Hub</a>
 </div>
