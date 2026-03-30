@@ -20,7 +20,7 @@ if ($conn->connect_error) {
     <link rel="stylesheet" href="/ressources/style/style.css">
 </head>
 <body>
-<div class="bandeau">
+<div class="navbar">
     <a href="connexion.php">Connexion</a>
     <a href="connexion.php">Inscription</a>
     <a href="mon_espace.php">Mon Espace</a>

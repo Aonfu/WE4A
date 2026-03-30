@@ -43,7 +43,7 @@ body {
     margin: 0;
 }
 
-.bandeau {
+.navbar {
     background-color: #ffc001;
     font-weight: bold;
     text-align: right;
@@ -51,7 +51,7 @@ body {
     padding: 0.7%;
 }
 
-.bandeau a {
+.navbar a {
     text-decoration: none;
     background-color: #A37800;
     padding: 0.7%;
@@ -59,7 +59,7 @@ body {
     margin: 0;
 }
 
-.bandeau a:hover {
+.navbar a:hover {
     background-color: #473400;
 }
 

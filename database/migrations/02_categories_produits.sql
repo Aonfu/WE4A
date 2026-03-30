@@ -51,20 +51,6 @@ CREATE TABLE `produit` (
 -- --------------------------------------------------------
 
 --
--- Déchargement des données de la table `utilisateur`
---
-
-INSERT INTO `utilisateur` (`utilisateur_id`, `email`, `nom`, `prenom`, `mdp`, `role`) VALUES
-    (2, 'moussa.djouder@gmail.com', 'Moussa', 'Djouder', 'Moussalegoat', 'utilisateur');
-
---
--- Déchargement des données de la table `categorie`
---
-
-INSERT INTO `categorie` (`id_categorie`, `nom`) VALUES
-                                                    (1, 'vélo'),
-                                                    (2, 'jeux vidéos');
---
 -- Index pour les tables déchargées
 --
 
