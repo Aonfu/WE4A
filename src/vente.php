@@ -9,6 +9,10 @@ $conn = new mysqli(
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+$stmt = $conn->prepare("SELECT * FROM categorie");
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 
 
@@ -35,7 +39,11 @@ if ($conn->connect_error) {
     <br>
 
     <label for="categorie">Catégorie:</label>
-    <input type="" id="categorie" name="categorie" required>
+    <select name="categorie" id="categorie">
+        <?php while ($row=$result->fetch_assoc()) {
+            echo('<option value="'.$row['nom'].'">'.$row['nom'].'</option>');
+        } ?>
+    </select>
 
     <br>
 
