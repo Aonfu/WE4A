@@ -14,8 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();
     if ($result){
-        #il faudra changer le header car il est temporaire
-        header("Location: hub.php");
+        header("Location: index.php");
         exit();
     }
     else{
