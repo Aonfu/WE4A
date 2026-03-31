@@ -13,6 +13,14 @@ if ($conn->connect_error) {
 $stmt = $conn->prepare("SELECT * FROM categorie");
 $stmt->execute();
 $result = $stmt->get_result();
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $nom = $_POST["nom"];
+    $categorie = $_POST["categorie"];
+    $description = $_POST["description"];
+    $photo = $_FILES["photo"];
+    $prix = $_POST["prix"];
+}
 ?>
 
 
@@ -31,7 +39,7 @@ $result = $stmt->get_result();
     <a href="index.php">Hub</a>
 </div>
 <h1>Mise aux enchères</h1>
-<form action="inscription.php" method="post">
+<form action="vente.php" method="post">
 
     <label for="nom">Nom:</label>
     <input type="text" id="nom" name="nom" placeholder="Nom" required>
@@ -48,7 +56,7 @@ $result = $stmt->get_result();
     <br>
 
     <label for="decription">Décription:</label>
-    <textarea id="decription" placeholder="décription"></textarea>
+    <textarea id="decription" name="description" placeholder="décription"></textarea>
 
     <br>
 
