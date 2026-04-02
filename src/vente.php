@@ -1,4 +1,5 @@
 <?php
+session_start();
 $conn = new mysqli(
     $_ENV['MYSQL_HOST'],
     $_ENV['MYSQL_USER'],
@@ -19,8 +20,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $categorie = $_POST["categorie"];
     $description = $_POST["description"];
     $photo = $_FILES["photo"];
+    $db_photo = __DIR__."/src/ressources/images/" . $photo["name"];
+    move_uploaded_file($photo["tmp_name"],$db_photo);
     $prix = $_POST["prix"];
+    $stmt = $conn->prepare("INSERT INTO produit (id_utilisateur, nom, id_categorie, description, photo, prix_depart) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isissi", $_SESSION["id"],$nom, $categorie, $description, $db_photo, $prix);
+    $stmt->execute();
+    header("Location: mon_espace.php");
+    exit();
 }
+
 ?>
 
 
@@ -34,12 +43,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
 <div class="navbar">
     <a href="connexion.php">Connexion</a>
-    <a href="connexion.php">Inscription</a>
+    <a href="inscription.php">Inscription</a>
     <a href="mon_espace.php">Mon Espace</a>
     <a href="index.php">Hub</a>
 </div>
 <h1>Mise aux enchères</h1>
-<form action="vente.php" method="post">
+<form action="vente.php" method="post" enctype="multipart/form-data">
 
     <label for="nom">Nom:</label>
     <input type="text" id="nom" name="nom" placeholder="Nom" required>
@@ -49,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <label for="categorie">Catégorie:</label>
     <select name="categorie" id="categorie">
         <?php while ($row=$result->fetch_assoc()) {
-            echo('<option value="'.$row['nom'].'">'.$row['nom'].'</option>');
+            echo('<option value="'.$row['id_categorie'].'">'.$row['nom'].'</option>');
         } ?>
     </select>
 
@@ -66,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <br>
 
     <label for="prix">Prix de départ:</label>
-    <input type="number" id="prix" name="prix" required min="1" step="10">
+    <input type="number" id="prix" name="prix" required min="1" step="1">
 
     <br>
 

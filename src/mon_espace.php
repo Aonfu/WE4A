@@ -1,4 +1,5 @@
 <?php
+session_start(); // j'ai mis un session start car il sera utile plus tard pour reucpérer les infors de l'user
 $conn = new mysqli(
     $_ENV['MYSQL_HOST'],
     $_ENV['MYSQL_USER'],
@@ -22,7 +23,7 @@ if ($conn->connect_error) {
 <body>
 <div class="navbar">
     <a href="connexion.php">Connexion</a>
-    <a href="connexion.php">Inscription</a>
+    <a href="inscription.php">Inscription</a>
     <a href="mon_espace.php">Mon Espace</a>
     <a href="index.php">Hub</a>
 </div>

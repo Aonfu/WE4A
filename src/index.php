@@ -1,4 +1,5 @@
 <?php
+session_start(); // j'ai mis un session start car je pense qu'il sera utile pour empecher un utilisateur non connecté de participer a une enchère
 $conn = new mysqli(
     $_ENV['MYSQL_HOST'],
     $_ENV['MYSQL_USER'],

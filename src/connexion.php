@@ -1,4 +1,5 @@
 <?php
+session_start();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST["email"];
     $mdp = $_POST["mdp"];
@@ -14,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();
     if ($result){
+        $_SESSION["id"] = $result["utilisateur_id"];
         header("Location: index.php");
         exit();
     }
