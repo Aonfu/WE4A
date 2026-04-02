@@ -5,3 +5,7 @@
 
 # Docker
 .env
+
+# (Commentaire a changer/suppr) Je me suis permis de mettre les images des produits en ignore vu que c'est propre a la bdd je sais pas si c une bonne initiative ou non
+.jpg
+.png
