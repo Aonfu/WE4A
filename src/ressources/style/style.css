@@ -80,3 +80,36 @@ body {
     background-color: #d16672;
     transform: scale(1.05);
 }
+
+.catalog {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    border: 5px solid #1b1213;
+    border-radius: 12px;
+}
+
+.catalog-element {
+    border: 3px solid #605c5d;
+    margin: 1%;
+    padding: 20%;
+    position: relative;
+}
+
+.catalog-element a {
+    text-decoration: none;
+    background-color: #980919;
+    font-weight: bold;
+    color: antiquewhite;
+    padding: 0.7%;
+    border-radius: 4px;
+    transition: transform 0.2s;
+    position: absolute;
+    width: 37%;
+    bottom: 2%;
+    right: 1%;
+}
+
+.catalog-element a:hover {
+    background-color: #6e050a;
+    transform: scale(1.05);
+}
