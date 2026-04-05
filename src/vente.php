@@ -20,10 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $categorie = $_POST["categorie"];
     $description = $_POST["description"];
     $photo = $_FILES["photo"];
-    //l'ia ma suggerer de faire ca pour enregister les photos je pense avoir compris a 67% ce que j'ai fait et ca a pris du temps a debug (com a suppr)
-    $db_photo = __DIR__."/ressources/images/" . $photo["name"];
-    move_uploaded_file($photo["tmp_name"],$db_photo);
-    //
+    $db_photo = __DIR__."/temporary/path/" . $photo["name"];
     $prix = $_POST["prix"];
     $stmt = $conn->prepare("INSERT INTO produit (id_utilisateur, nom, id_categorie, description, photo, prix_depart) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("isissi", $_SESSION["id"],$nom, $categorie, $description, $db_photo, $prix);
