@@ -23,4 +23,4 @@ SET time_zone = "+01:00";
 
 -- --------------------------------------------------------
 
-ALTER TABLE `produit` CHANGE `prix_départ` `prix_depart` INT NOT NULL;
+ALTER TABLE `produit` CHANGE `prix départ` `prix_depart` INT NOT NULL;

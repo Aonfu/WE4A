@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $error = "mdp ou email invalide";
     }
 }
-session_start();
 ?>
 
 <!DOCTYPE html>

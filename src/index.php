@@ -25,12 +25,6 @@ $result = $stmt->get_result();
     <link rel="stylesheet" type="text/css" href="ressources/style/style.css">
 </head>
 <body>
-<h1>Catalogue</h1>
-<div class="catalog">
-    <?php while ($row=$result->fetch_assoc()) {
-        echo '<div class="catalog-element">'.$row['nom'].'<a href="enchere.php?id='.$row['id_produit'].'">Participer à l\'enchère</a></div>'; // faudra aussi echo l'image quand on aura gérer ça
-    } ?>
-</div>
 <nav class="navbar navbar-expand-md navbar-light bg-warning-subtle flex-nowrap">
     <div class="container-fluid d-flex align-items-center">
         <a class="navbar-brand me-3 pawnstar-font" href="index.php">PawnStar?</a>
@@ -68,6 +62,12 @@ $result = $stmt->get_result();
         </button>
     </div>
 </nav>
+<h1>Catalogue</h1>
+<div class="catalog">
+    <?php while ($row=$result->fetch_assoc()) {
+        echo '<div class="catalog-element">'.$row['nom'].'<a href="enchere.php?id='.$row['id_produit'].'">Participer à l\'enchère</a></div>'; // faudra aussi echo l'image quand on aura gérer ça
+    } ?>
+</div>
 </body>
 </html>
 

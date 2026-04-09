@@ -93,8 +93,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <br>
 
-    <label for="decription">Décription:</label>
-    <textarea id="decription" name="description" placeholder="décription"></textarea>
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" placeholder="description"></textarea>
 
     <br>
 
