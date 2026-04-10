@@ -1,5 +1,6 @@
 <?php
 include "header.php";
+include "footer.php";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST["email"];
     $mdp = $_POST["mdp"];

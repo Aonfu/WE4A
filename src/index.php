@@ -1,5 +1,6 @@
 <?php
 include "header.php";
+include "footer.php";
 $conn = new mysqli(
     $_ENV['MYSQL_HOST'],
     $_ENV['MYSQL_USER'],
