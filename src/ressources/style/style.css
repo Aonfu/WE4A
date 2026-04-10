@@ -10,10 +10,9 @@
     background-image: url("../img/old_paper.jpg");
     background-repeat: repeat;
     opacity: 0.2;
-    pointer-events: none;
 }
 
-.navbar > .container-fluid {
+.navbar > * {
     position: relative;
 }
 
@@ -26,6 +25,8 @@
         background-color: #fff3cd;
         padding-left: 1rem;
         border-top: 1px solid #000000;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
     }
 
     .navbar-collapse::before {
@@ -35,12 +36,15 @@
         background-image: url("../img/old_paper.jpg");
         background-repeat: repeat;
         opacity: 0.2;
-        pointer-events: none;
     }
 
     .navbar-collapse > * {
         position: relative;
     }
+}
+
+.nav-item {
+    padding: 0.2rem 0 0 0;
 }
 
 .pawnstar-font {
@@ -54,7 +58,7 @@
     transform-origin: center;
 }
 
-.pawnstar-font:hover {
+.navbar .pawnstar-font:hover {
     color: #741d18!important;
     transform: scale(1.05);
 }
@@ -70,7 +74,7 @@
 
 .search-button:hover {
     transform: scale(1.05);
-    background-image: url("../img/search_button4.png");
+    background-image: url("../img/search_button2.png");
 }
 
 .search-bar {
@@ -104,4 +108,127 @@
 
 .navbar-toggler-icon {
     background-image: url("../img/navbar-burger-icon.svg");
+}
+
+.background {
+    background-color: #fff9e6;
+}
+
+.centrer {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0 2rem 0;
+}
+
+.card-grid {
+    column-gap: 10px;
+}
+
+@media (min-width: 1070px) {
+    .card-grid {
+        column-count: 4;
+        width: 1030px
+    }
+}
+
+@media (min-width: 810px) and (max-width: 1070px){
+    .card-grid {
+        column-count: 3;
+        width: 770px
+    }
+}
+
+@media (min-width: 550px) and (max-width: 810px) {
+    .card-grid {
+        column-count: 2;
+        width: 510px;
+    }
+}
+
+@media (max-width: 550px){
+    .card-grid {
+        column-count: 1;
+        width: 250px
+    }
+}
+
+.card {
+    position: relative;
+    padding: 15px 15px 0 15px;
+    margin-bottom: 10px;
+    border-radius: 40px;
+    border: 3px solid #F7E5B9;
+    background-color: #fff3cd;
+    break-inside: avoid;
+    vertical-align: top;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.card-grid .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("../img/old_paper.jpg");
+    background-repeat: repeat;
+    opacity: 0.2;
+}
+
+.card-grid .card > * {
+    position: relative;
+}
+
+.card-grid .card a.stretched-link {
+    position: static;
+}
+
+.card-grid .card:hover {
+    transition: all 0.1s ease-in-out;
+    border: 3px solid #a62a22;
+    box-shadow: 0 0 0 0.15rem #D1A62E;
+    transform: scale(1.02);
+}
+
+.card-images {
+}
+
+.card-images .card-img-top {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.card-images .scotch-1 {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: -20px;
+    left: -20px;
+    opacity: 0.8;
+}
+
+.card-images .scotch-2 {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    bottom: -20px;
+    right: -20px;
+    opacity: 0.8;
+}
+
+.card-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    overflow: hidden;
+}
+
+.card-title {
+    font-size: 25px!important;
+}
+
+.card-body .pawnstar-font {
+    font-size: 40px!important;
+    padding: 0 0.15rem 0 0.15rem;
 }
