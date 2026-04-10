@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();
     if ($result){
+        $_SESSION["id"] = $result["utilisateur_id"];
         header("Location: index.php");
         exit();
     }

@@ -15,8 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $conn->prepare("INSERT INTO utilisateur (nom, prenom, email, mdp) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $nom, $prenom, $email, $mdp);
     $stmt->execute();
-
-    #il faudra aussi changer le header, il est temporaire
     header("Location: index.php");
     exit();
 }

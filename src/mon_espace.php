@@ -21,7 +21,7 @@ if ($conn->connect_error) {
 <h1>Mon Espace</h1>
 <h2>Statistiques:</h2>
 <div class="redirection-vente">
-    <a href="vente.php">Mettre au enchères un nouveau produits</a>
+    <a href="vente.php">Mettre aux enchères un nouveau produit</a>
 </div>
 </body>
 </html>
