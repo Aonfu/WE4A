@@ -1,4 +1,5 @@
 <?php
+session_start(); // j'ai mis un session start car je pense qu'il sera utile pour empecher un utilisateur non connecté de participer a une enchère
 $conn = new mysqli(
     $_ENV['MYSQL_HOST'],
     $_ENV['MYSQL_USER'],
@@ -9,7 +10,10 @@ $conn = new mysqli(
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-session_start();
+
+$stmt = $conn->prepare("SELECT * FROM produit");
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +62,12 @@ session_start();
         </button>
     </div>
 </nav>
+<h1>Catalogue</h1>
+<div class="catalog">
+    <?php while ($row=$result->fetch_assoc()) {
+        echo '<div class="catalog-element">'.$row['nom'].'<a href="enchere.php?id='.$row['id_produit'].'">Participer à l\'enchère</a></div>'; // faudra aussi echo l'image quand on aura gérer ça
+    } ?>
+</div>
 </body>
 </html>
 
