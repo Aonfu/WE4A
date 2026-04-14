@@ -31,7 +31,7 @@ CREATE TABLE `enchere_participants` (
   `id_user` int NOT NULL,
   `id_enchere` int NOT NULL,
   `montant` int NOT NULL,
-  `date` date NOT NULL
+  `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
