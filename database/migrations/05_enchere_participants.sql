@@ -3,13 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : lun. 06 avr. 2026 à 11:33
+-- Généré le : mar. 14 avr. 2026 à 17:19
 -- Version du serveur : 8.0.45
 -- Version de PHP : 8.3.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+01:00";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -28,10 +28,10 @@ SET time_zone = "+01:00";
 --
 
 CREATE TABLE `enchere_participants` (
-  `id_user` int NOT NULL,
-  `id_enchere` int NOT NULL,
-  `montant` int NOT NULL,
-  `date` datetime NOT NULL
+                                        `id_user` int NOT NULL,
+                                        `id_produit` int NOT NULL,
+                                        `montant` int NOT NULL,
+                                        `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -42,8 +42,8 @@ CREATE TABLE `enchere_participants` (
 -- Index pour la table `enchere_participants`
 --
 ALTER TABLE `enchere_participants`
-  ADD KEY `id_user` (`id_user`),
-  ADD KEY `id_enchere` (`id_enchere`);
+    ADD KEY `id_user` (`id_user`),
+    ADD KEY `id_enchere` (`id_produit`);
 
 --
 -- Contraintes pour les tables déchargées
@@ -53,8 +53,8 @@ ALTER TABLE `enchere_participants`
 -- Contraintes pour la table `enchere_participants`
 --
 ALTER TABLE `enchere_participants`
-  ADD CONSTRAINT `enchere_participants_ibfk_1` FOREIGN KEY (`id_enchere`) REFERENCES `enchere` (`id_enchere`),
-  ADD CONSTRAINT `enchere_participants_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `utilisateur` (`utilisateur_id`);
+    ADD CONSTRAINT `enchere_participants_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `utilisateur` (`utilisateur_id`),
+    ADD CONSTRAINT `enchere_participants_ibfk_3` FOREIGN KEY (`id_produit`) REFERENCES `produit` (`id_produit`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
