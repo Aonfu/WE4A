@@ -31,7 +31,7 @@ CREATE TABLE `enchere` (
                            `id_enchere` int NOT NULL,
                            `id_produit` int NOT NULL,
                            `prix` int NOT NULL,
-                           `date_fin` date NOT NULL
+                           `date_fin` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
