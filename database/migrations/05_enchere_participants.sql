@@ -9,7 +9,7 @@
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET time_zone = "+01:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -24,11 +24,11 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `enchere_participants`
+-- Structure de la table `enchere`
 --
 
-CREATE TABLE `enchere_participants` (
-                                        `id_user` int NOT NULL,
+CREATE TABLE `enchere` (
+                                        `id_utilisateur` int NOT NULL,
                                         `id_produit` int NOT NULL,
                                         `montant` int NOT NULL,
                                         `date` datetime NOT NULL
@@ -39,22 +39,22 @@ CREATE TABLE `enchere_participants` (
 --
 
 --
--- Index pour la table `enchere_participants`
+-- Index pour la table `enchere`
 --
-ALTER TABLE `enchere_participants`
-    ADD KEY `id_user` (`id_user`),
-    ADD KEY `id_enchere` (`id_produit`);
+ALTER TABLE `enchere`
+    ADD KEY `id_utilisateur` (`id_utilisateur`),
+    ADD KEY `id_produit` (`id_produit`);
 
 --
 -- Contraintes pour les tables déchargées
 --
 
 --
--- Contraintes pour la table `enchere_participants`
+-- Contraintes pour la table `enchere`
 --
-ALTER TABLE `enchere_participants`
-    ADD CONSTRAINT `enchere_participants_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `utilisateur` (`utilisateur_id`),
-    ADD CONSTRAINT `enchere_participants_ibfk_3` FOREIGN KEY (`id_produit`) REFERENCES `produit` (`id_produit`);
+ALTER TABLE `enchere`
+    ADD CONSTRAINT `enchere_ibfk_2` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`utilisateur_id`),
+    ADD CONSTRAINT `enchere_ibfk_3` FOREIGN KEY (`id_produit`) REFERENCES `produit` (`id_produit`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
