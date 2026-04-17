@@ -1,4 +1,7 @@
 <?php
+
+date_default_timezone_set('Europe/Paris'); //ligne assez importante pour régler un bug
+
 session_start();
 $conn = new mysqli(
     $_ENV['MYSQL_HOST'],
@@ -15,6 +18,8 @@ $stmt = $conn->prepare("SELECT * FROM categorie");
 $stmt->execute();
 $result = $stmt->get_result();
 
+$min_date = date('Y-m-d\TH:i');
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nom = $_POST["nom"];
     $categorie = $_POST["categorie"];
@@ -22,8 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $photo = $_FILES["photo"];
     $db_photo = __DIR__."/temporary/path/" . $photo["name"];
     $prix = $_POST["prix"];
-    $stmt = $conn->prepare("INSERT INTO produit (id_utilisateur, nom, id_categorie, description, photo, prix_depart) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("isissi", $_SESSION["id"],$nom, $categorie, $description, $db_photo, $prix);
+    $date_fin= $_POST["date_fin"];
+    $stmt = $conn->prepare("INSERT INTO produit (id_utilisateur, nom, id_categorie, description, photo, prix_depart, date_fin) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isissis", $_SESSION["id"],$nom, $categorie, $description, $db_photo, $prix, $date_fin);
     $stmt->execute();
     header("Location: mon_espace.php");
     exit();
@@ -107,6 +113,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <input type="number" id="prix" name="prix" required min="1" step="1">
 
     <br>
+
+    <label for="date_fin">Date de fin:</label>
+    <input type="datetime-local" id="date_fin" name="date_fin" min = <?php echo $min_date; ?> required >
 
     <button type="submit">Mettre aux enchères</button>
 
