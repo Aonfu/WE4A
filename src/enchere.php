@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } ?>
 </div>
 
-<?php if ($date_fin > $now){ ?>
+<?php if ($date_fin > $now && $_SESSION["id"] != $row_produit["id_utilisateur"]) { ?>
 <div class="enchere-form">
     <form action="enchere.php?id=<?php echo $id; ?>" method="post" >
 
