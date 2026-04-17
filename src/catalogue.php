@@ -10,10 +10,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 session_start();
-$requete = "SELECT produit.nom, produit.description, produit.photo, enchere.prix FROM produit JOIN enchere ON produit.id_produit = enchere.id_produit;";
-$resultat = $conn->prepare($requete);
-$resultat->execute();
-$data = $resultat->fetchAll(); /* Je crois que ça fonctionne pas pour Docker */
+$stmt = $conn->prepare("SELECT produit.nom, produit.description, produit.photo, MAX(enchere.montant) FROM produit JOIN enchere ON produit.id_produit = enchere.id_produit;");
+$stmt->execute();
+$data = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -66,22 +65,22 @@ $data = $resultat->fetchAll(); /* Je crois que ça fonctionne pas pour Docker */
 <div class="centrer">
 <div class="card-grid">
     <?php
-    foreach ($data as $enchere) {
+    while ($row = $data->fetch_assoc()) {
         echo
                 '<div class="card">
             <div class="card-images">
-                <img src="ressources/img/' . $enchere["photo"] . '" class="card-img-top" alt="...">
+                <img src="ressources/img/' . $row["photo"] . '" class="card-img-top" alt="...">
                 <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
                 <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
             </div>
             <div class="card-body">
-                <h3 class="card-text card-title">' . $enchere["nom"] . '</h3>
-                <p class="card-text">' . $enchere["description"] . '</p>
-                <h1 class="card-text pawnstar-font">' . $enchere["prix"] . '$</h1>
+                <h3 class="card-text card-title">' . $row["nom"] . '</h3>
+                <p class="card-text">' . $row["description"] . '</p>
+                <h1 class="card-text pawnstar-font">' . $row["montant"] . '$</h1>
             </div>
             <a href="index.php" class="stretched-link text-decoration-none"></a>
         </div>';
-    } /* Je ne sais pas comment sont gérées les photos et leur extensions. De plus il faudrait quelque chose pour que chaque enchère ait sa page web */
+    }
     ?>
 </div>
 </div>
