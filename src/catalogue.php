@@ -81,7 +81,7 @@ $data = $stmt->get_result();
                 <p class="card-text">' . $row["description"] . '</p>
                 <h1 class="card-text pawnstar-font">' . $row["montant"] . '$</h1>
             </div>
-            <a href="enchere.php" class="stretched-link text-decoration-none" id="' . $row["id_produit"] . '"></a>
+            <a href="enchere.php?id='.$row['id_produit'].'" class="stretched-link text-decoration-none"></a>
         </div>';
     }
     ?>
