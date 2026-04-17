@@ -46,7 +46,13 @@ if ($date_fin < $now) {
     echo '<div class="enchere_over">L\'enchère a été gagnée par ' . $row_gagnant['nom'] . ' pour un montant de ' . $row_gagnant['montant'] . '€</div>';
 }
 
-// Gère le formulaire, s'il reste moins de 1h a l'enchère, la date de fin est modifié et est arrondie à l'heure suppérieure
+//recupère l'historique des enchères pour l'afficher
+$stmt = $conn->prepare("SELECT *, utilisateur.nom FROM enchere JOIN utilisateur ON enchere.id_user = utilisateur.utilisateur_id  WHERE id_produit = ? ORDER BY montant DESC");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result_historique = $stmt->get_result();
+
+// Gère le formulaire, s'il reste moins de 1h à l'enchère, la date de fin est modifié et est arrondie à l'heure suppérieure
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $montant=$_POST["montant"];
     $id_user=$_SESSION["id"];
@@ -112,9 +118,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 </nav>
 <h1>Enchère</h1>
+
 <div class="product">
     <?php echo '<div class="product-element">'.$row_produit['nom'].$row_produit['description'].$row_produit['date_fin'].'</div>'; // faudra aussi echo l'image quand on aura gérer ça?>
 </div>
+
+<div class="historique">
+    <?php while ($row_historique = $result_historique->fetch_assoc()) {
+        $datetime = explode(' ', $row_historique['date']); //sépare la date en deux a l'espace
+        echo '<p>' . $row_historique['nom'] . ' a placé une enchère de ' . $row_historique['montant'] . '€ le ' . $datetime[0] . ' à ' . $datetime[1] . '</p>';
+    } ?>
+</div>
+
 <?php if ($date_fin > $now){ ?>
 <div class="enchere-form">
     <form action="enchere.php?id=<?php echo $id; ?>" method="post" >
@@ -129,5 +144,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </form>
 </div>
 <?php } ?>
+
 </body>
 </html>
