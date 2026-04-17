@@ -1,4 +1,5 @@
 <?php
+session_start();
 $conn = new mysqli(
     $_ENV['MYSQL_HOST'],
     $_ENV['MYSQL_USER'],
@@ -9,8 +10,10 @@ $conn = new mysqli(
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-session_start();
-$stmt = $conn->prepare("SELECT produit.nom, produit.description, produit.photo, MAX(enchere.montant) FROM produit JOIN enchere ON produit.id_produit = enchere.id_produit;");
+$stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, MAX(enchere.montant) AS montant
+FROM produit
+JOIN enchere ON produit.id_produit = enchere.id_produit
+GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo;");
 $stmt->execute();
 $data = $stmt->get_result();
 ?>
@@ -78,7 +81,7 @@ $data = $stmt->get_result();
                 <p class="card-text">' . $row["description"] . '</p>
                 <h1 class="card-text pawnstar-font">' . $row["montant"] . '$</h1>
             </div>
-            <a href="index.php" class="stretched-link text-decoration-none"></a>
+            <a href="enchere.php" class="stretched-link text-decoration-none" id="' . $row["id_produit"] . '"></a>
         </div>';
     }
     ?>
