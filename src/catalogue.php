@@ -10,12 +10,33 @@ $conn = new mysqli(
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, MAX(enchere.montant) AS montant
-FROM produit
-JOIN enchere ON produit.id_produit = enchere.id_produit
-GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo;");
-$stmt->execute();
-$data = $stmt->get_result();
+
+if( isset($_GET['tri']) && $_GET['tri'] == 'prix_desc') {
+    $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
+    FROM produit
+    LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
+    GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo ORDER BY montant DESC;");
+    $stmt->execute();
+    $data = $stmt->get_result();
+}
+
+if( isset($_GET['tri']) && $_GET['tri'] == 'prix_asc') {
+    $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
+    FROM produit
+    LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
+    GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo ORDER BY montant ASC;");
+    $stmt->execute();
+    $data = $stmt->get_result();
+}
+
+else {
+    $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
+    FROM produit
+    LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
+    GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo;");
+    $stmt->execute();
+    $data = $stmt->get_result();
+}
 ?>
 
 <!DOCTYPE html>
@@ -65,6 +86,14 @@ $data = $stmt->get_result();
         </button>
     </div>
 </nav>
+<div class="tri">
+    <!-- Si le details c de la merde pour le css hésite pas a changer Loic -->
+    <details>
+        <summary>Trier par :</summary>
+        <a href="catalogue.php?tri=prix_desc">Prix décroissant</a>
+        <a href="catalogue.php?tri=prix_asc">Prix croissant</a>
+    </details>
+</div>
 <div class="centrer">
 <div class="card-grid">
     <?php
