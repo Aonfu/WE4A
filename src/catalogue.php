@@ -10,9 +10,9 @@ $conn = new mysqli(
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, MAX(enchere.montant) AS montant
+$stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
 FROM produit
-JOIN enchere ON produit.id_produit = enchere.id_produit
+LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
 GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo;");
 $stmt->execute();
 $data = $stmt->get_result();
