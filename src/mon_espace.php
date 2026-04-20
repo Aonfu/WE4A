@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 // Calcul du nombre d'enchères gagné et du montant dépensé
 $now = new DateTime();
 $now_str = $now->format('Y-m-d H:i:s');
-$stmt = $conn->prepare("SELECT MAX(enchere.montant) as montant FROM enchere JOIN produit ON enchere.id_produit = produit.id_produit WHERE produit.date_fin < ? AND enchere.id_user = ? GROUP BY produit.id_produit");
+$stmt = $conn->prepare("SELECT MAX(enchere.montant) as montant FROM enchere JOIN produit ON enchere.id_produit = produit.id_produit WHERE enchere.montant = (SELECT MAX(montant) FROM enchere WHERE id_produit = produit.id_produit) AND produit.date_fin < ? AND enchere.id_user = ? GROUP BY produit.id_produit");
 $stmt->bind_param("si", $now_str, $_SESSION['id']);
 $stmt->execute();
 $result_gangnant = $stmt->get_result();
@@ -31,7 +31,12 @@ $stmt->bind_param("si", $now_str, $_SESSION['id']);
 $stmt->execute();
 $result_participe = $stmt->get_result();
 $enchere_participe = $result_participe->num_rows;
-$winrate = ($enchere_gagne/$enchere_participe) * 100;
+if ($enchere_participe > 0) {
+    $winrate = ($enchere_gagne/$enchere_participe) * 100;
+}
+else {
+    $winrate = 0;
+}
 
 //Calcul du nombre d'enchères en cours
 $stmt = $conn->prepare("SELECT enchere.id_produit FROM enchere JOIN produit ON enchere.id_produit = produit.id_produit WHERE produit.date_fin > ? AND enchere.id_user = ? GROUP BY produit.id_produit");
@@ -121,12 +126,12 @@ $row_plus_grosse_vente = $result_plus_grosse_vente->fetch_assoc();
     <?php echo'<p>Enchères participées : '. $enchere_participe .'</p>'; ?>
     <?php echo'<p>Winrate : '. $winrate .' % </p>'; ?>
     <?php echo'<p>Enchere en cours : '. $enchere_en_cours .' </p>'; ?>
-    <?php echo'<p>Catégorie Favorite : '. $row_categorie['nom'] .' avec '. $row_categorie['nb']. ' enchères placées</p>'; ?>
+    <?php echo'<p>Catégorie Favorite : '. ($row_categorie['nom'] ?? 'aucune') .' avec '. ($row_categorie['nb'] ?? 0). ' enchères placées</p>'; ?>
     <br>
     <!-- Stats pour les users vendeur !-->
     <?php echo'<p>Nombre de ventes effectuées : '. $nb_vente .'</p>'; ?>
     <?php echo'<p>Revenu total : '. $revenu_total .'</p>'; ?>
-    <?php echo'<p>Plus grosse vente : '. $row_plus_grosse_vente['montant'] .'</p>'; ?>
+    <?php echo'<p>Plus grosse vente : '. ($row_plus_grosse_vente['montant'] ?? 0) .'</p>'; ?>
 
 </div>
 
