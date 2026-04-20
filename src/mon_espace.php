@@ -115,7 +115,7 @@ $row_plus_grosse_vente = $result_plus_grosse_vente->fetch_assoc();
 <h1>Mon Espace</h1>
 <h2>Statistiques:</h2>
 <div class="stats">
-    <!-- Stats pour les users normeaux !-->
+    <!-- Stats pour les users normaux !-->
     <?php echo'<p>Enchères gagnées : '. $enchere_gagne .'</p>'; ?>
     <?php echo'<p>Montant Dépensé : '. $montant_depense .'</p>'; ?>
     <?php echo'<p>Enchères participées : '. $enchere_participe .'</p>'; ?>
