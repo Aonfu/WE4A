@@ -1,0 +1,1 @@
+ALTER TABLE `produit` ADD `date_fin` DATETIME NOT NULL AFTER `prix_depart`;
