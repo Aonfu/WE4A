@@ -1,6 +1,8 @@
 <?php
+
 include "header.php";
 include "footer.php";
+
 date_default_timezone_set('Europe/Paris'); //ligne assez importante pour régler un bug
 session_start();
 $conn = new mysqli(

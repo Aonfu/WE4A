@@ -13,20 +13,17 @@ session_start();
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-warning-subtle flex-nowrap">
     <div class="container-fluid d-flex align-items-center">
-        <a class="navbar-brand me-3 pawnstar-font" href="index.php">PawnStar?</a>
+        <a class="navbar-brand me-3 pawnstar-font" href="catalogue.php">PawnStar?</a>
         <div class="collapse navbar-collapse order-2 order-md-1" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-0 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active pawnstar-font" aria-current="page" href="index.php">Hub</a>
+                    <a class="nav-link active pawnstar-font" aria-current="page" href="index.php">Catalogue</a>
                 </li>
                 <?php
                 if (isset($_SESSION["id"])) {
                     echo
                     '<li class="nav-item">
                             <a class="nav-link pawnstar-font" href="mon_espace.php">Mon Espace</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link pawnstar-font" href="vente.php">Vente</a>
                         </li>';
                 } else {
                     echo
