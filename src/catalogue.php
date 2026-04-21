@@ -1,5 +1,4 @@
 <?php
-session_start();
 $conn = new mysqli(
     $_ENV['MYSQL_HOST'],
     $_ENV['MYSQL_USER'],
