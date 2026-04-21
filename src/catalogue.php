@@ -15,40 +15,53 @@ $stmt = $conn->prepare("SELECT * FROM categorie");
 $stmt->execute();
 $result_categorie = $stmt->get_result();
 
+$now = new DateTime();
+$now_str = $now->format('Y-m-d H:i:s');
+
+//tri par prix décroissant
 if( isset($_GET['tri']) && $_GET['tri'] == 'prix_desc') {
     $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
     FROM produit
     LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
+    WHERE produit.date_fin > ?
     GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo ORDER BY montant DESC;");
+    $stmt->bind_param("s", $now_str);
     $stmt->execute();
     $data = $stmt->get_result();
 }
 
+//tri par prix croissant
 elseif ( isset($_GET['tri']) && $_GET['tri'] == 'prix_asc') {
     $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
     FROM produit
     LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
+    WHERE produit.date_fin > ?
     GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo ORDER BY montant ASC;");
+    $stmt->bind_param("s", $now_str);
     $stmt->execute();
     $data = $stmt->get_result();
 }
 
+//tri par catégorie
 elseif ( isset($_GET['categorie'])) {
     $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
     FROM produit
     LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
-    WHERE produit.id_categorie = ?
+    WHERE produit.id_categorie = ? AND produit.date_fin > ?
     GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo;");
-    $stmt->bind_param("i",$_GET['categorie']);
+    $stmt->bind_param("is",$_GET['categorie'], $now_str);
     $stmt->execute();
     $data = $stmt->get_result();
 }
 
+//tri par défaut
 else {
     $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
     FROM produit
     LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
+    WHERE produit.date_fin > ?
     GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo;");
+    $stmt->bind_param("s", $now_str);
     $stmt->execute();
     $data = $stmt->get_result();
 }
