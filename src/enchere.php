@@ -1,5 +1,8 @@
 <?php
+session_start();
+/*
 date_default_timezone_set('Europe/Paris'); //ligne assez importante pour régler un bug
+
 $conn = new mysqli(
         $_ENV['MYSQL_HOST'],
         $_ENV['MYSQL_USER'],
@@ -70,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $conn->prepare("INSERT INTO enchere(id_user,id_produit,montant,date) VALUES(?,?,?,?)");
     $stmt->bind_param("iiis", $id_user,$id,$montant,$date);
     $stmt->execute();
-}
+} */
 ?>
 
 <!DOCTYPE html>
