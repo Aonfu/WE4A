@@ -54,6 +54,19 @@ elseif ( isset($_GET['categorie'])) {
     $data = $stmt->get_result();
 }
 
+//recherche
+elseif ( isset($_GET['search'])) {
+    $search = '%'.$_GET['search'].'%';
+    $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
+    FROM produit
+    LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
+    WHERE produit.date_fin > ? AND produit.nom LIKE ?
+    GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo;");
+    $stmt->bind_param("ss", $now_str, $search);
+    $stmt->execute();
+    $data = $stmt->get_result();
+}
+
 //tri par défaut
 else {
     $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
@@ -105,8 +118,8 @@ else {
                 }?>
             </ul>
         </div>
-        <form class="d-flex order-1 order-md-2" role="search">
-            <input class="form-control me-2 search-bar" type="search" placeholder="Search" aria-label="Search"/>
+        <form class="d-flex order-1 order-md-2" role="search" name="search" action="catalogue.php" method="get">
+            <input class="form-control me-2 search-bar" type="search" placeholder="Search" aria-label="Search" name="search"/>
             <button class="btn search-button" type="submit"></button>
         </form>
         <button class="navbar-toggler order-3 ms-auto navbar-burger" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
