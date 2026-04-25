@@ -103,7 +103,7 @@ else {
     </details>
 </div>
 <div class="centrer">
-<div class="card-grid">
+<div class="catalogue-grid">
     <?php
     while ($row = $data->fetch_assoc()) {
         echo
@@ -116,7 +116,7 @@ else {
             <div class="card-body">
                 <h3 class="card-text card-title">' . $row["nom"] . '</h3>
                 <p class="card-text">' . $row["description"] . '</p>
-                <h1 class="card-text pawnstar-font">' . $row["montant"] . '$</h1>
+                <h1 class="card-text pawnstar-font">$' . $row["montant"] . '</h1>
             </div>
             <a href="enchere.php?id='.$row['id_produit'].'" class="stretched-link text-decoration-none"></a>
         </div>';
