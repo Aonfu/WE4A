@@ -72,6 +72,17 @@ $stmt->bind_param("si", $now_str, $_SESSION['id']);
 $stmt->execute();
 $result_plus_grosse_vente = $stmt->get_result();
 $row_plus_grosse_vente = $result_plus_grosse_vente->fetch_assoc();
+
+// Selectionne les produits en vente de l'utilisateur
+$stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
+FROM produit
+LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
+WHERE produit.date_fin > ? AND id_utilisateur = ?
+GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo;");
+$stmt->bind_param("si", $now_str,$_SESSION['id']);
+$stmt->execute();
+$data = $stmt->get_result();
+
 ?>
 
 <!DOCTYPE html>
@@ -81,7 +92,7 @@ $row_plus_grosse_vente = $result_plus_grosse_vente->fetch_assoc();
 </head>
 <body>
 <h1>Mon Espace</h1>
-<h2>Statistiques:</h2>
+<h2>Statistiques :</h2>
 <div class="stats">
     <!-- Stats pour les users normaux !-->
     <?php echo'<p>Enchères gagnées : '. $enchere_gagne .'</p>'; ?>
@@ -99,7 +110,29 @@ $row_plus_grosse_vente = $result_plus_grosse_vente->fetch_assoc();
 </div>
 
 <br>
-
+<hr>
+<h2>Éditer ou supprimer un produit :</h2>
+<div class="card-grid">
+    <?php
+    while ($row = $data->fetch_assoc()) {
+        echo
+                '<div class="card">
+            <div class="card-images">
+                <img src="ressources/img/' . $row["photo"] . '" class="card-img-top" alt="...">
+                <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
+                <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
+            </div>
+            <div class="card-body">
+                <h3 class="card-text card-title">' . $row["nom"] . '</h3>
+                <p class="card-text">' . $row["description"] . '</p>
+                <h1 class="card-text pawnstar-font">' . $row["montant"] . '$</h1>
+            </div>
+            <a href="editer_produit.php?id='.$row['id_produit'].'" class="stretched-link text-decoration-none"></a>
+        </div>';
+    }
+    ?>
+</div>
+<br>
 <hr>  <!-- j'utilise juste ca pour séparer la partie stat de la redirection, à suprimer si besoin -->
 
 <div class="redirection-vente">
