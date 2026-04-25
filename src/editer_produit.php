@@ -48,6 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     echo "<script>window.location.href='mon_espace.php';</script>"; // redirection en Javascript pour éviter un bug causé par le header
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -98,8 +100,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <label for="date_fin">Date de fin:</label>
     <input type="datetime-local" id="date_fin" name="date_fin" min = "<?php echo $min_date; ?>" value="<?php echo date('Y-m-d\TH:i', strtotime($row_produit['date_fin'])); ?>" required >
 
-    <button type="submit">Mettre aux enchères</button>
+    <button type="submit">Modifier l'enchères</button>
 
+</form>
+
+<hr>
+
+<br>
+
+<h2>Supprimer</h2>
+
+<form action="supprimer_produit.php?id=<?php echo $id; ?>" method="post" enctype="multipart/form-data">
+    <button onclick="return confirm('Voulez vous vraiment supprimer ce produit ?')">Supprimer ce produit</button>
 </form>
 </body>
 </html>
