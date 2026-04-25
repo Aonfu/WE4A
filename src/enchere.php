@@ -80,12 +80,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <body>
 <h1>Enchère</h1>
-
-<div class="product">
-    <?php echo '<div class="product-element">'.$row_produit['nom'].$row_produit['description'].$row_produit['date_fin'].'</div>'; // faudra aussi echo l'image quand on aura gérer ça?>
+<div class="product-element">
+    <h2><?php echo $row_produit['nom']; ?></h2>
+    <p><?php echo $row_produit['description']; ?></p>
+    <p id="date_fin"><?php echo 'L\'Enchère finit le: '.$row_produit['date_fin']; ?></p>
 </div>
 
-<div class="historique">
+<div id="historique" class="historique">
     <?php while ($row_historique = $result_historique->fetch_assoc()) {
         $datetime = explode(' ', $row_historique['date']); //sépare la date en deux a l'espace
         echo '<p>' . $row_historique['nom'] . ' a placé une enchère de ' . $row_historique['montant'] . '€ le ' . $datetime[0] . ' à ' . $datetime[1] . '</p>';
@@ -107,5 +108,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </div>
 <?php } ?>
 
+<script>
+    // Requette AJAX pour garder les information a jours
+    setInterval(function () {
+        fetch('get_data_enchere.php?id=<?php echo $id; ?>')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('date_fin').innerHTML = data.date_fin;
+                document.getElementById('montant').min = data.enchere_min;
+                let html = '';
+                data.historique.forEach(function(row){
+                    let datetime = row.date.split(' ');
+                    html += '<p>'  + row.nom + ' a placé une enchère de ' + row.montant + '€ le ' + datetime[0] + 'à' + datetime[1] + '</p>'
+                })
+                document.getElementById('historique').innerHTML = html
+            });
+    },5000);
+</script>
 </body>
 </html>
