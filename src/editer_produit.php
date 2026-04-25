@@ -21,16 +21,33 @@ $result = $stmt->get_result();
 
 $min_date = date('Y-m-d\TH:i');
 
+$id=$_GET['id'];
 
+//requete pour remplir le formulaire
 $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom AS nom, produit.description, produit.photo, produit.date_fin, produit.id_categorie ,GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
 FROM produit
 LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
 WHERE  produit.id_produit = ?
-GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo;");
-$stmt->bind_param("i", $_GET['id']);
+GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo, produit.id_categorie;");
+$stmt->bind_param("i", $id);
 $stmt->execute();
 $result_produit = $stmt->get_result();
 $row_produit = $result_produit->fetch_assoc();
+
+// requete pour update le produit dans la bdd
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $nom = $_POST["nom"];
+    $categorie = $_POST["categorie"];
+    $description = $_POST["description"];
+    $photo = $_FILES["photo"];
+    $db_photo = __DIR__."/temporary/path/" . $photo["name"];
+    $prix = $_POST["prix"];
+    $date_fin= $_POST["date_fin"];
+    $stmt = $conn->prepare("UPDATE produit SET nom = ?,id_categorie = ?, description = ?, photo = ?, date_fin = ? WHERE id_produit = ?");
+    $stmt->bind_param("sisssi", $nom, $categorie, $description, $db_photo, $date_fin,$id);
+    $stmt->execute();
+    echo "<script>window.location.href='mon_espace.php';</script>"; // redirection en Javascript pour éviter un bug causé par le header
+}
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +62,7 @@ $row_produit = $result_produit->fetch_assoc();
 
 <h2>Éditer</h2>
 
-<form action="editer_produit.php" method="post" enctype="multipart/form-data">
+<form action="editer_produit.php?id=<?php echo $id; ?>" method="post" enctype="multipart/form-data">
 
     <label for="nom">Nom:</label>
     <input type="text" id="nom" name="nom" placeholder="Nom" value="<?php echo $row_produit['nom']; ?>" required>
