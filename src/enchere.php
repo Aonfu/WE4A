@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="card">
                 <div class="card-body">
                     <form class="form" action="enchere.php?id=<?php echo $id; ?>" method="post" id="form">
-                        <?php if ( $_SESSION['id'] != $row_produit['id_utilisateur']) {?>
+                        <?php if ( $date_fin > $now && $_SESSION['id'] != $row_produit['id_utilisateur']) {?>
                         <h1 class="pawnstar-font">Placer Enchère</h1>
                         <?php echo '<p class="card-text">L\'Enchère finit le :</p>
                                     <h1 id="date_fin">' . $row_produit['date_fin'] . '</h1>'; ?>
