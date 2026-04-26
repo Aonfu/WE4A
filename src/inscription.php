@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $conn->prepare("INSERT INTO utilisateur (nom, prenom, email, mdp) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $nom, $prenom, $email, $mdp);
     $stmt->execute();
-    header("Location: index.php");
+    echo "<script>window.location.href='index.php';</script>";
     exit();
 }
 ?>
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <body>
     <h1>Inscription</h1>
-    <form action="inscription.php" method="post">
+    <form action="inscription.php" method="post" id="form_inscription">
 
         <label for="nom">Nom:</label>
         <input type="text" id="nom" name="nom" placeholder="Nom" required>
@@ -56,13 +56,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <br>
 
-        <!-- Il faudra faire la verification du mdp avec javascript (voir sujet) -->
 
         <button type="submit">S'inscrire</button>
 
     </form>
     <script>
-        const form = document.querySelector('form');
+        const form = document.getElementById('form_inscription');
         const mdp = document.getElementById('mdp');
         const confirmMdp = document.getElementById('confirm_mdp');
         const erreurMsg = document.getElementById('erreur');
