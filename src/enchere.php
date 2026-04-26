@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 
 date_default_timezone_set('Europe/Paris'); //ligne assez importante pour régler un bug
 
@@ -35,7 +34,7 @@ $result_enchere = $stmt->get_result();
 $row_produit = $result_produit->fetch_assoc();
 $row_enchere = $result_enchere->fetch_assoc();
 $enchere_max = max($row_produit['prix_depart'], $row_enchere['MAX(montant)']);
-$enchere_min = $enchere_max * 1.05;
+$enchere_min = ceil($enchere_max * 1.05); //ici on arrondit pour eviter un problème dans le form
 
 // Recupère le nom du gagnant de l'enchère et le montant de son enchère
 $stmt = $conn->prepare("SELECT utilisateur.nom, enchere.montant FROM utilisateur JOIN enchere ON utilisateur.utilisateur_id = enchere.id_user WHERE id_produit = ? ORDER BY montant DESC LIMIT 1 ");
@@ -95,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="card-body">
                     <h1 class="card-title"><?php echo $row_produit['nom']; ?></h1>
                     <p><?php echo $row_produit['description']; ?></p>
-                    <h1 class="card-title pawnstar-font">$<?php echo $enchere_max; ?></h1>
+                    <h1 class="card-title pawnstar-font" id="prix">$<?php echo $enchere_max; ?></h1>
                 </div>
             </div>
         </div>
@@ -103,12 +102,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <?php if ($date_fin > $now && $_SESSION["id"] != $row_produit["id_utilisateur"]) { ?>
                 <div class="card">
                     <div class="card-body">
-                        <form class="form" action="enchere.php?id=<?php echo $id; ?>" method="post">
+                        <form class="form" action="enchere.php?id=<?php echo $id; ?>" method="post" id="form">
                             <h1 class="pawnstar-font">Placer Enchère</h1>
                             <?php echo '<p class="card-text">L\'Enchère finit le :</p>
                                         <h1 id="date_fin">' . $row_produit['date_fin'] . '</h1>'; ?>
                             <label class="card-text" for="montant">Montant de l'enchère :</label>
-                            <input class="form-input" type="number" id="montant" name="montant" required min="<?php echo $enchere_min; ?>" step="1" placeholder="Min : $<?php echo $enchere_min; ?>">
+                            <input class="form-input" type="number" id="montant" name="montant" required min="<?php echo $enchere_min; ?>" placeholder="Min : $<?php echo $enchere_min; ?>">
                             <button class="button" type="submit">Placer l'enchère</button>
                         </form>
                     </div>
@@ -180,12 +179,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             .then(data => {
                 document.getElementById('date_fin').innerHTML = data.date_fin;
                 document.getElementById('montant').min = data.enchere_min;
+                document.getElementById('montant').placeholder = data.enchere_min;
+                document.getElementById('prix').innerHTML = '$'+data.prix_actuel;
                 let html = '';
                 data.historique.forEach(function(row){
-                    let datetime = row.date.split(' ');
-                    html += '<p>'  + row.nom + ' a placé une enchère de ' + row.montant + '€ le ' + datetime[0] + 'à' + datetime[1] + '</p>'
+                    html += '<tr> <td>'  + row.nom + ' </td> <td>' + row.montant + ' </td> </tr>'
                 })
                 document.getElementById('historique').innerHTML = html
+                if (data.termine) {
+                    document.getElementById('form').style.display = 'none';
+                }
             });
     },5000);
 </script>
