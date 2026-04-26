@@ -82,7 +82,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>Enchère</title>
 </head>
 <body>
-<div id="enchere_over" class="enchere_over"></div> <!-- tu peux deplacer ce dv ou tu veux -->
 <div class="centrer">
     <div class="enchere-grid">
         <div class="main-column">
@@ -100,20 +99,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </div>
         <div class="side-column">
-            <?php if ($date_fin > $now && $_SESSION["id"] != $row_produit["id_utilisateur"]) { ?>
-                <div class="card">
-                    <div class="card-body">
-                        <form class="form" action="enchere.php?id=<?php echo $id; ?>" method="post" id="form">
-                            <h1 class="pawnstar-font">Placer Enchère</h1>
-                            <?php echo '<p class="card-text">L\'Enchère finit le :</p>
-                                        <h1 id="date_fin">' . $row_produit['date_fin'] . '</h1>'; ?>
-                            <label class="card-text" for="montant">Montant de l'enchère :</label>
-                            <input class="form-input" type="number" id="montant" name="montant" required min="<?php echo $enchere_min; ?>" placeholder="Min : $<?php echo $enchere_min; ?>">
-                            <button class="button" type="submit">Placer l'enchère</button>
-                        </form>
-                    </div>
+            <div class="card">
+                <div class="card-body">
+                    <form class="form" action="enchere.php?id=<?php echo $id; ?>" method="post" id="form">
+                        <h1 class="pawnstar-font">Placer Enchère</h1>
+                        <?php echo '<p class="card-text">L\'Enchère finit le :</p>
+                                    <h1 id="date_fin">' . $row_produit['date_fin'] . '</h1>'; ?>
+                        <label class="card-text" for="montant">Montant de l'enchère :</label>
+                        <input class="form-input" type="number" id="montant" name="montant" required min="<?php echo $enchere_min; ?>" placeholder="Min : $<?php echo $enchere_min; ?>">
+                        <button class="button" type="submit">Placer l'enchère</button>
+                    </form>
+                    <div id="enchere_over" class="form"></div>
                 </div>
-            <?php } ?>
+            </div>
             <div class="card">
                 <h1 class="pawnstar-font text-center">Historique</h1>
                 <?php if ($result_historique->num_rows > 0) { ?>
@@ -141,37 +139,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 </div>
 
-
-<?php /*
-<h1>Enchère</h1>
-<div class="product-element">
-    <h2><?php echo $row_produit['nom']; ?></h2>
-    <p><?php echo $row_produit['description']; ?></p>
-    <p id="date_fin"><?php echo 'L\'Enchère finit le: '.$row_produit['date_fin']; ?></p>
-</div>
-
-<div id="historique" class="historique">
-    <?php while ($row_historique = $result_historique->fetch_assoc()) {
-        $datetime = explode(' ', $row_historique['date']); //sépare la date en deux a l'espace
-        echo '<p>' . $row_historique['nom'] . ' a placé une enchère de ' . $row_historique['montant'] . '€ le ' . $datetime[0] . ' à ' . $datetime[1] . '</p>';
-    } ?>
-</div>
-
-<?php if ($date_fin > $now && $_SESSION["id"] != $row_produit["id_utilisateur"]) { ?>
-<div class="enchere-form">
-    <form action="enchere.php?id=<?php echo $id; ?>" method="post" >
-
-        <label for="montant">Montant de l'enchère:</label>
-        <input type="number" id="montant" name="montant" required min="<?php echo $enchere_min; ?>" step="1">
-
-        <br>
-
-        <button type="submit">Placer l'enchère</button>
-
-    </form>
-</div>
-<?php } */ ?>
-
 <script>
     // Requette AJAX pour garder les information a jours
     setInterval(function () {
@@ -189,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 document.getElementById('historique').innerHTML = html
                 if (data.termine) {
                     document.getElementById('form').style.display = 'none';
-                    document.getElementById('enchere_over').innerHTML = 'L\'enchère a été gagnée par ' + data.gagnant.nom + ' pour un montant de ' + data.gagnant.montant + '$';
+                    document.getElementById('enchere_over').innerHTML = '<p class="card-text">L\'enchère a été gagnée par ' + data.gagnant.nom + ' pour un montant de </p><h1 class="pawnstar-font">$' + data.gagnant.montant + '</h1>';
                 }
             });
     },5000);
