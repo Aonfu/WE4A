@@ -48,7 +48,7 @@ $now = new DateTime();
 $date_fin = new DateTime($row_produit['date_fin']);
 $diff = $now->diff($date_fin);
 if ($date_fin < $now) {
-    echo '<div class="enchere_over">L\'enchère a été gagnée par ' . $row_gagnant['nom'] . ' pour un montant de ' . $row_gagnant['montant'] . '€</div>';
+    echo '<div class="enchere_over">L\'enchère a été gagnée par ' . $row_gagnant['nom'] . ' pour un montant de ' . $row_gagnant['montant'] . '$</div>';
 }
 
 //recupère l'historique des enchères pour l'afficher
@@ -82,6 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>Enchère</title>
 </head>
 <body>
+<div id="enchere_over" class="enchere_over"></div> <!-- tu peux deplacer ce dv ou tu veux -->
 <div class="centrer">
     <div class="enchere-grid">
         <div class="main-column">
@@ -188,6 +189,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 document.getElementById('historique').innerHTML = html
                 if (data.termine) {
                     document.getElementById('form').style.display = 'none';
+                    document.getElementById('enchere_over').innerHTML = 'L\'enchère a été gagnée par ' + data.gagnant.nom + ' pour un montant de ' + data.gagnant.montant + '$';
                 }
             });
     },5000);
