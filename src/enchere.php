@@ -47,9 +47,6 @@ $row_gagnant = $result_gagnant->fetch_assoc();
 $now = new DateTime();
 $date_fin = new DateTime($row_produit['date_fin']);
 $diff = $now->diff($date_fin);
-if ($date_fin < $now) {
-    echo '<div class="enchere_over">L\'enchère a été gagnée par ' . $row_gagnant['nom'] . ' pour un montant de ' . $row_gagnant['montant'] . '$</div>';
-}
 
 //recupère l'historique des enchères pour l'afficher
 $stmt = $conn->prepare("SELECT *, utilisateur.nom FROM enchere JOIN utilisateur ON enchere.id_user = utilisateur.utilisateur_id  WHERE id_produit = ? ORDER BY montant DESC");
@@ -102,12 +99,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="card">
                 <div class="card-body">
                     <form class="form" action="enchere.php?id=<?php echo $id; ?>" method="post" id="form">
+                        <?php if ( $_SESSION['id'] != $row_produit['id_utilisateur']) {?>
                         <h1 class="pawnstar-font">Placer Enchère</h1>
                         <?php echo '<p class="card-text">L\'Enchère finit le :</p>
                                     <h1 id="date_fin">' . $row_produit['date_fin'] . '</h1>'; ?>
                         <label class="card-text" for="montant">Montant de l'enchère :</label>
                         <input class="form-input" type="number" id="montant" name="montant" required min="<?php echo $enchere_min; ?>" placeholder="Min : $<?php echo $enchere_min; ?>">
                         <button class="button" type="submit">Placer l'enchère</button>
+                        <?php } ?>
                     </form>
                     <div id="enchere_over" class="form"></div>
                 </div>
