@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $conn->prepare("INSERT INTO utilisateur (nom, prenom, email, mdp) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $nom, $prenom, $email, $mdp);
     $stmt->execute();
-    header("Location: index.php");
+    echo "<script>window.location.href='index.php';</script>";
     exit();
 }
 ?>
