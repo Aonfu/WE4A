@@ -36,51 +36,54 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     header("Location: mon_espace.php");
     exit();
 }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <title>Vente</title>
-<body>
-<h1>Mise aux enchères</h1>
-<form action="vente.php" method="post" enctype="multipart/form-data">
-
-    <label for="nom">Nom:</label>
-    <input type="text" id="nom" name="nom" placeholder="Nom" required>
-
-    <br>
-
-    <label for="categorie">Catégorie:</label>
-    <select name="categorie" id="categorie">
-        <?php while ($row=$result->fetch_assoc()) {
-            echo('<option value="'.$row['id_categorie'].'">'.$row['nom'].'</option>');
-        } ?>
-    </select>
-
-    <br>
-
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" placeholder="description"></textarea>
-
-    <br>
-
-    <label for="photo">Photo:</label>
-    <input type="file" id="photo" name="photo" accept="image/*" required>
-
-    <br>
-
-    <label for="prix">Prix de départ:</label>
-    <input type="number" id="prix" name="prix" required min="1" step="1">
-
-    <br>
-
-    <label for="date_fin">Date de fin:</label>
-    <input type="datetime-local" id="date_fin" name="date_fin" min = <?php echo $min_date; ?> required >
-
-    <button type="submit">Mettre aux enchères</button>
-
-</form>
+<body class="background ">
+    <div class="form-grid">
+        <div class="card">
+            <div class="card-body">
+                <form class="form" action="vente.php" method="post" enctype="multipart/form-data">
+                    <h1 class="pawnstar-font">Mise aux enchères</h1>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label class="card-text" for="nom">Nom :</label>
+                            <input class="form-control form-input" type="text" id="nom" name="nom" placeholder="Nom" required>
+                        </div>
+                        <div class="form-field">
+                            <label class="card-text" for="prix">Prix de départ :</label>
+                            <input class="form-control form-input" type="number" id="prix" name="prix" placeholder="Prix" required min="1" step="1">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label class="card-text" for="categorie">Catégorie :</label>
+                            <select class="form-select form-input" name="categorie" id="categorie">
+                                <?php while ($row=$result->fetch_assoc()) {
+                                echo('<option value="'.$row['id_categorie'].'">'.$row['nom'].'</option>');
+                            } ?>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label class="card-text" for="date_fin">Date de fin :</label>
+                            <input class="form-control form-input" type="datetime-local" id="date_fin" name="date_fin" min="<?php echo $min_date; ?>" required>
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label class="card-text" for="description">Description :</label>
+                        <textarea class="form-control form-input" id="description" name="description" placeholder="Description" required></textarea>
+                    </div>
+                    <div class="form-field">
+                        <label class="card-text" for="photo">Photo :</label>
+                        <input class="form-control form-input" type="file" id="photo" name="photo" accept="image/*" required>
+                    </div>
+                    <button class="button" type="submit">Mettre aux enchères</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
