@@ -1,3 +1,8 @@
+.redirection-vente a:hover {
+    background-color: #d16672;
+    transform: scale(1.05);
+}
+
 .navbar {
     position: relative;
     padding-bottom: 0.5rem;
@@ -96,11 +101,6 @@
     border-radius: 50px;
 }
 
-.redirection-vente a:hover {
-    background-color: #d16672;
-    transform: scale(1.05);
-}
-
 .catalog {
     display: grid;
     grid-template-columns: repeat(3,1fr);
@@ -133,6 +133,7 @@
     background-color: #6e050a;
     transform: scale(1.05);
 }
+
 .navbar-burger:focus {
     box-shadow: none;
 }
@@ -157,35 +158,65 @@
     padding: 2rem 0 2rem 0;
 }
 
-.card-grid {
+.catalogue-grid {
     column-gap: 10px;
 }
 
+.enchere-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 253px;
+    gap: 10px;
+    width: min(100%, 1030px);
+}
+
+.main-column {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.side-column {
+    display: flex;
+    flex-direction: column;
+    padding-right: 20px;
+}
+
 @media (min-width: 1070px) {
-    .card-grid {
+    .catalogue-grid {
         column-count: 4;
         width: 1030px
     }
 }
 
 @media (min-width: 810px) and (max-width: 1070px){
-    .card-grid {
+    .catalogue-grid {
         column-count: 3;
         width: 770px
     }
 }
 
 @media (min-width: 550px) and (max-width: 810px) {
-    .card-grid {
+    .catalogue-grid {
         column-count: 2;
         width: 510px;
     }
 }
 
 @media (max-width: 550px){
-    .card-grid {
+    .catalogue-grid {
         column-count: 1;
         width: 250px
+    }
+
+    .enchere-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .side-column, .main-column {
+        width: 250px;
+        justify-self: center;
+        padding: 0;
     }
 }
 
@@ -202,7 +233,7 @@
     overflow: hidden;
 }
 
-.card-grid .card::before {
+.card::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -211,27 +242,22 @@
     opacity: 0.2;
 }
 
-.card-grid .card > * {
+.card > * {
     position: relative;
 }
 
-.card-grid .card a.stretched-link {
+.catalogue-grid .card a.stretched-link {
     position: static;
 }
 
-.card-grid .card:hover {
+.catalogue-grid .card:hover {
     transition: all 0.1s ease-in-out;
     border: 3px solid #a62a22;
     box-shadow: 0 0 0 0.15rem #D1A62E;
     transform: scale(1.02);
 }
 
-.card-images {
-}
-
 .card-images .card-img-top {
-    width: 100%;
-    height: auto;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
@@ -254,18 +280,103 @@
     opacity: 0.8;
 }
 
+.card .pawnstar-font {
+    display: block;
+    font-size: 40px!important;
+    padding: 0 0.15rem 0 0.15rem;
+}
+
 .card-text {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 10;
     overflow: hidden;
+    margin: 0;
 }
 
 .card-title {
     font-size: 25px!important;
 }
 
-.card-body .pawnstar-font {
-    font-size: 40px!important;
-    padding: 0 0.15rem 0 0.15rem;
+.card .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: -1rem;
+}
+
+.form-input {
+    background-color: #fff9e6;
+    border-radius: 50px;
+    border: 3px solid #D1A62E;
+    padding-left: 0.5rem;
+}
+
+.form-input:focus {
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    background-color: #fff9e6;
+    border-radius: 50px;
+    border: 3px solid #a62a22;
+    box-shadow: 0 0 0 0.15rem #D1A62E;
+}
+
+input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+.button {
+    background-color: #a62a22;
+    border-radius: 50px;
+    border: 3px solid #D1A62E;
+    color: #D1A62E;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.button:hover {
+    background-color: #741d18;
+    border: 3px solid #D1A62E;
+    transform: scale(1.05);
+}
+
+.table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    border: 3px solid #D1A62E;
+    overflow: hidden;
+}
+
+.table th,
+.table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: #fff9e6;
+    border-right: 1px solid #D1A62E;
+    border-bottom: 1px solid #D1A62E;
+    padding: 0.5rem;
+}
+
+.table thead th {
+    border-bottom: 2px solid #D1A62E;
+}
+
+.table th:last-child,
+.table td:last-child {
+    border-right: none;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.enchere-over {
+    text-align: center;
+    font-weight: bold;
 }

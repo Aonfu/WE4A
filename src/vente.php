@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $conn->prepare("INSERT INTO produit (id_utilisateur, nom, id_categorie, description, photo, prix_depart, date_fin) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("isissis", $_SESSION["id"],$nom, $categorie, $description, $db_photo, $prix, $date_fin);
     $stmt->execute();
-    echo "<script>window.location.href='mon_espace.php';</script>";
+    echo "<script>window.location.href='mon_espace.php';</script>"; // redirection en Javascript pour éviter un bug causé par le header
     exit();
 }
 
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <br>
 
     <label for="date_fin">Date de fin:</label>
-    <input type="datetime-local" id="date_fin" name="date_fin" min = <?php echo $min_date; ?> required >
+    <input type="datetime-local" id="date_fin" name="date_fin" min = "<?php echo $min_date; ?>" required >
 
     <button type="submit">Mettre aux enchères</button>
 
