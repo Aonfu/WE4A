@@ -47,7 +47,7 @@ $date_fin = new DateTime($row_produit['date_fin']);
 $diff = $now->diff($date_fin);
 
 //recupère l'historique des enchères pour l'afficher
-$stmt = $conn->prepare("SELECT *, utilisateur.nom FROM enchere JOIN utilisateur ON enchere.id_user = utilisateur.utilisateur_id  WHERE id_produit = ? ORDER BY montant DESC");
+$stmt = $conn->prepare("SELECT enchere.montant, utilisateur.nom FROM enchere JOIN utilisateur ON enchere.id_user = utilisateur.utilisateur_id  WHERE id_produit = ? ORDER BY montant DESC");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result_historique = $stmt->get_result();
@@ -58,10 +58,12 @@ while($row_historique = $result_historique->fetch_assoc()){
     $historique[] = $row_historique;
 }
 
+//on envoi le JSON
 echo json_encode([
     'enchere_min' => $enchere_min,
     'date_fin' => $row_produit['date_fin'],
     'gagnant' => $row_gagnant,
     'historique' => $historique,
-    'termine'=> $date_fin<$now]);
+    'termine'=> $date_fin<$now,
+    'prix_actuel' => max($row_produit['prix_depart'], $row_enchere['MAX(montant)'])]);
 ?>
