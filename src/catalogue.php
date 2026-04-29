@@ -69,6 +69,49 @@ elseif ( isset($_GET['search'])) {
     $data = $stmt->get_result();
 }
 
+//filtre si prix max et prix min sont tous les deux rentrés par l'user
+elseif (isset($_GET['prix_min']) && isset($_GET['prix_max'])) {
+    $prix_max = $_GET['prix_max'];
+    $prix_min = $_GET['prix_min'];
+    $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
+    FROM produit
+    LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
+    WHERE produit.date_fin > ?
+    GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo
+    HAVING montant <= ? AND montant >= ? ;");
+    $stmt->bind_param("sii", $now_str,$prix_max, $prix_min);
+    $stmt->execute();
+    $data = $stmt->get_result();
+}
+
+//filtre Plus de :
+elseif ( isset($_GET['prix_min'])) {
+    $prix_min = $_GET['prix_min'];
+    $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
+    FROM produit
+    LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
+    WHERE produit.date_fin > ?
+    GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo
+    HAVING montant >= ?;");
+    $stmt->bind_param("si", $now_str,$prix_min);
+    $stmt->execute();
+    $data = $stmt->get_result();
+}
+
+//filtre Moins de :
+elseif ( isset($_GET['prix_max'])) {
+    $prix_max = $_GET['prix_max'];
+    $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
+    FROM produit
+    LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
+    WHERE produit.date_fin > ?
+    GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo
+    HAVING montant <= ?;");
+    $stmt->bind_param("si", $now_str,$prix_max);
+    $stmt->execute();
+    $data = $stmt->get_result();
+}
+
 //tri par défaut
 else {
     $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
@@ -91,7 +134,7 @@ else {
 <div class="tri">
     <!-- Si le details c de la merde pour le css hésite pas a changer Loic -->
     <details>
-        <summary>Trier par :</summary>
+        <summary>Trier :</summary>
         <a href="catalogue.php?tri=prix_desc">Prix décroissant</a>
         <a href="catalogue.php?tri=prix_asc">Prix croissant</a>
         <details>
@@ -100,6 +143,21 @@ else {
                 echo('<a href="catalogue.php?categorie='.$row_categorie['id_categorie'].'">'.$row_categorie['nom'].'</a>');
             } ?>
         </details>
+    </details>
+</div>
+<div class="filtre">
+    <details>
+        <summary>Filtrer par prix :</summary>
+        <form action="catalogue.php" method="get">
+
+            <label>Plus de :</label>
+            <input type="number" name="prix_min">
+
+            <label>Moins de :</label>
+            <input type="number" name="prix_max">
+
+            <button type="submit">Filtrer</button>
+        </form>
     </details>
 </div>
 <div class="centrer">

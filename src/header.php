@@ -39,8 +39,8 @@ session_start();
                 }?>
             </ul>
         </div>
-        <form class="d-flex order-1 order-md-2" role="search">
-            <input class="form-control me-2 search-bar" type="search" placeholder="Search" aria-label="Search"/>
+        <form  action = "catalogue.php?search=" class="d-flex order-1 order-md-2" role="search" method="get">
+            <input class="form-control me-2 search-bar" type="search" placeholder="Search" aria-label="Search" name="search"/>
             <button class="btn search-button" type="submit"></button>
         </form>
         <button class="navbar-toggler order-3 ms-auto navbar-burger" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
