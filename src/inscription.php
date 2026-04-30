@@ -28,38 +28,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <title>Inscription</title>
 </head>
-<body>
-    <h1>Inscription</h1>
-    <form action="inscription.php" method="post" id="form_inscription">
-
-        <label for="nom">Nom:</label>
-        <input type="text" id="nom" name="nom" placeholder="Nom" required>
-
-        <br>
-
-        <label for="prenom">Prénom:</label>
-        <input type="text" id="prenom" name="prenom" placeholder="Prénom" required>
-
-        <br>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="mail.exemple@ex.com" required>
-
-        <br>
-
-        <label for="mdp">Mot de Passe:</label>
-        <input type="password" id="mdp" name="mdp" placeholder="Mot de Passe" required>
-
-        <label for="confirm_mdp">Confirmer le Mot de Passe:</label>
-        <input type="password" id="confirm_mdp" name="confirm_mdp" placeholder="Confirmer" required>
-        <p id="erreur" style="color: red;"></p>
-
-        <br>
-
-
-        <button type="submit">S'inscrire</button>
-
-    </form>
+<body class="background">
+    <div class="form-grid">
+        <div class="card">
+            <div class="card-body">
+                <form class="form" action="inscription.php" method="post" id="form_inscription">
+                    <h1 class="pawnstar-font">Inscription</h1>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label class="card-text" for="nom">Nom:</label>
+                            <input class="form-control form-input" type="text" id="nom" name="nom" placeholder="Nom" required>
+                        </div>
+                        <div class="form-field">
+                            <label class="card-text" for="prenom">Prénom:</label>
+                            <input class="form-control form-input" type="text" id="prenom" name="prenom" placeholder="Prénom" required>
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label class="card-text" for="email">Email:</label>
+                        <input class="form-control form-input" type="email" id="email" name="email" placeholder="mail.exemple@ex.com" required>
+                    </div>
+                    <div class="form-field">
+                        <label class="card-text" for="mdp">Mot de Passe:</label>
+                        <input class="form-control form-input" type="password" id="mdp" name="mdp" placeholder="Mot de Passe" required>
+                    </div>
+                    <div class="form-field">
+                         <label class="card-text" for="confirm_mdp">Confirmer le Mot de Passe:</label>
+                         <input class="form-control form-input" type="password" id="confirm_mdp" name="confirm_mdp" placeholder="Confirmer" required>
+                         <p id="erreur" style="color: red; margin-bottom: 0;"></p>
+                    </div>
+                    <button class="button" type="submit">S'inscrire</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <script>
         const form = document.getElementById('form_inscription');
         const mdp = document.getElementById('mdp');

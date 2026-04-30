@@ -33,23 +33,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <title>Connexion</title>
 </head>
-<body>
-<h1>Connexion</h1>
-<?php if(isset($error)){echo $error;} ?>
-<form action="connexion.php" method="post">
-
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" placeholder="mail.exemple@ex.com" required>
-
-    <br>
-
-    <label for="mdp">Mot de Passe</label>
-    <input type="password" id="mdp" name="mdp" placeholder="Mot de Passe" required>
-
-    <br>
-
-    <button type="submit">Se connecter</button>
-
-</form>
+<body class="background">
+    <?php if(isset($error)){echo $error;} ?>
+    <div class="form-grid">
+        <div class="card">
+            <div class="card-body">
+                <form class="form" action="connexion.php" method="post">
+                    <h1 class="pawnstar-font">Connexion</h1>
+                    <div class="form-field">
+                        <label class="card-text left" for="email">Email:</label>
+                        <input class="form-control form-input" type="email" id="email" name="email" placeholder="mail.exemple@ex.com" required>
+                    </div>
+                    <div class="form-field">
+                        <label class="card-text left" for="mdp">Mot de Passe:</label>
+                        <input class="form-control form-input" type="password" id="mdp" name="mdp" placeholder="Mot de Passe" required>
+                    </div>
+                    <button class="button" type="submit">Se Connecter</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

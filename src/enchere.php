@@ -1,6 +1,5 @@
 <?php
 
-
 date_default_timezone_set('Europe/Paris'); //ligne assez importante pour régler un bug
 
 $conn = new mysqli(
@@ -78,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <title>Enchère</title>
 </head>
-<body>
+<body class="background">
 <div class="centrer">
     <div class="enchere-grid">
         <div class="main-column">
@@ -105,8 +104,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 <?php echo '<p class="card-text">L\'Enchère finit le :</p>
                                             <h1 id="date_fin">' . $row_produit['date_fin'] . '</h1>'; ?>
                                 <label class="card-text" for="montant">Montant de l'enchère :</label>
-                                <input class="form-input" type="number" id="montant" name="montant" required min="<?php echo $enchere_min; ?>" placeholder="Min : $<?php echo $enchere_min; ?>">
-                                <button class="button" type="submit">Placer l'enchère</button>
+                                <input class="form-control form-input" type="number" id="montant" name="montant" required min="<?php echo $enchere_min; ?>" placeholder="Min : $<?php echo $enchere_min; ?>">
+                                <button class="button" type="submit" id="placer">Placer l'enchère</button>
                             <?php } else {
                                 echo '<p class="card-text">L\'Enchère finit le :</p>
                                       <h1 id="date_fin">' . $row_produit['date_fin'] . '</h1>';

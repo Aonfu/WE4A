@@ -24,7 +24,10 @@ session_start();
                     echo
                     '<li class="nav-item">
                             <a class="nav-link pawnstar-font" href="mon_espace.php">Mon Espace</a>
-                        </li>';
+                        </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link pawnstar-font" href="vente.php">Vente</a>
+                    </li>';
                 } else {
                     echo
                     '<li class="nav-item">

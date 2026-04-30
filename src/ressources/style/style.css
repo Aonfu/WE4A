@@ -158,6 +158,13 @@
     padding: 2rem 0 2rem 0;
 }
 
+.form-grid {
+    display: grid;
+    width: 450px;
+    justify-self: center;
+    padding: 2rem 0 2rem 0;
+}
+
 .catalogue-grid {
     column-gap: 10px;
 }
@@ -167,6 +174,78 @@
     grid-template-columns: minmax(0, 1fr) 253px;
     gap: 10px;
     width: min(100%, 1030px);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: -1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-input {
+    background-color: #fff9e6;
+    border-radius: 25px;
+    border: 3px solid #D1A62E;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.form-input:focus {
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    background-color: #fff9e6;
+    border-radius: 25px;
+    border: 3px solid #a62a22;
+    box-shadow: 0 0 0 0.15rem #D1A62E;
+}
+
+input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type="file"]::file-selector-button {
+    border-radius: 25px;
+    border: 3px solid #D1A62E;
+    font-weight: bold;
+    margin: -1rem 0.2rem -1rem -1rem;
+}
+
+.button {
+    background-color: #a62a22;
+    border-radius: 25px;
+    border: 3px solid #D1A62E;
+    color: #D1A62E;
+    margin-top: 1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.button:hover {
+    background-color: #741d18;
+    border: 3px solid #D1A62E;
+    transform: scale(1.05);
+}
+
+#placer {
+    margin-bottom: 1rem;
 }
 
 .main-column {
@@ -298,50 +377,6 @@
     font-size: 25px!important;
 }
 
-.card .form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-top: -1rem;
-}
-
-.form-input {
-    background-color: #fff9e6;
-    border-radius: 50px;
-    border: 3px solid #D1A62E;
-    padding-left: 0.5rem;
-}
-
-.form-input:focus {
-    outline: none;
-    transition: all 0.3s ease-in-out;
-    background-color: #fff9e6;
-    border-radius: 50px;
-    border: 3px solid #a62a22;
-    box-shadow: 0 0 0 0.15rem #D1A62E;
-}
-
-input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-}
-
-.button {
-    background-color: #a62a22;
-    border-radius: 50px;
-    border: 3px solid #D1A62E;
-    color: #D1A62E;
-    margin-top: 0.5rem;
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-.button:hover {
-    background-color: #741d18;
-    border: 3px solid #D1A62E;
-    transform: scale(1.05);
-}
-
 .table {
     table-layout: fixed;
     width: 100%;
@@ -379,4 +414,9 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 .enchere-over {
     text-align: center;
     font-weight: bold;
+}
+
+.left {
+    text-align: left;
+    padding-left: 0.5rem;
 }
