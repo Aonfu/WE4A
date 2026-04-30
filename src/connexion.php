@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $result = $stmt->get_result()->fetch_assoc();
     if ($result){
         $_SESSION["id"] = $result["utilisateur_id"];
-        header("Location: index.php");
+        echo "<script>window.location.href='index.php';</script>";
         exit();
     }
     else{
