@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <body>
     <h1>Inscription</h1>
-    <form action="inscription.php" method="post">
+    <form action="inscription.php" method="post" id="form_inscription">
 
         <label for="nom">Nom:</label>
         <input type="text" id="nom" name="nom" placeholder="Nom" required>
@@ -50,12 +50,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <label for="mdp">Mot de Passe:</label>
         <input type="password" id="mdp" name="mdp" placeholder="Mot de Passe" required>
 
+        <label for="confirm_mdp">Confirmer le Mot de Passe:</label>
+        <input type="password" id="confirm_mdp" name="confirm_mdp" placeholder="Confirmer" required>
+        <p id="erreur" style="color: red;"></p>
+
         <br>
 
-        <!-- Il faudra faire la verification du mdp avec javascript (voir sujet) -->
 
         <button type="submit">S'inscrire</button>
 
     </form>
+    <script>
+        const form = document.getElementById('form_inscription');
+        const mdp = document.getElementById('mdp');
+        const confirmMdp = document.getElementById('confirm_mdp');
+        const erreurMsg = document.getElementById('erreur');
+
+        form.addEventListener('submit', function(event) {
+            if (mdp.value !== confirmMdp.value) {
+                event.preventDefault();
+                erreurMsg.textContent = "Les mots de passe ne sont pas identiques !";
+            } else {
+                erreurMsg.textContent = "";
+            }
+        });
+
+    </script>
 </body>
 </html>
