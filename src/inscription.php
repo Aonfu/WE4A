@@ -1,7 +1,8 @@
 <?php
 
-include "header.php";
-include "footer.php";
+session_start();
+
+$page_title = "Inscription";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nom = $_POST["nom"];
@@ -21,14 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     echo "<script>window.location.href='index.php';</script>";
     exit();
 }
-?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <title>Inscription</title>
-</head>
-<body class="background">
+include "header.php";
+
+?>
     <div class="form-grid">
         <div class="card">
             <div class="card-body">
@@ -62,12 +59,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </div>
     </div>
+    <?php include "footer.php"; ?>
     <script>
         const form = document.getElementById('form_inscription');
         const mdp = document.getElementById('mdp');
         const confirmMdp = document.getElementById('confirm_mdp');
         const erreurMsg = document.getElementById('erreur');
-
         form.addEventListener('submit', function(event) {
             if (mdp.value !== confirmMdp.value) {
                 event.preventDefault();
@@ -76,7 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 erreurMsg.textContent = "";
             }
         });
-
     </script>
 </body>
 </html>

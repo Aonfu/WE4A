@@ -1,7 +1,8 @@
 <?php
 
-include "header.php";
-include "footer.php";
+session_start();
+
+$page_title = "Mon Espace";
 
 date_default_timezone_set('Europe/Paris'); //ligne assez importante pour régler un bug
 $conn = new mysqli(
@@ -83,14 +84,9 @@ $stmt->bind_param("si", $now_str,$_SESSION['id']);
 $stmt->execute();
 $data = $stmt->get_result();
 
-?>
+include "header.php";
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <title>Mon Espace</title>
-</head>
-<body>
+?>
 <h1>Mon Espace</h1>
 <h2>Statistiques :</h2>
 <div class="stats">
@@ -138,5 +134,6 @@ $data = $stmt->get_result();
 <div class="redirection-vente">
     <a href="vente.php">Mettre aux enchères un nouveau produit</a>
 </div>
+<?php include "footer.php"; ?>
 </body>
 </html>

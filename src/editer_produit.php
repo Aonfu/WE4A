@@ -1,7 +1,8 @@
 <?php
 
-include "header.php";
-include "footer.php";
+session_start();
+
+$page_title = "Editer un produit";
 
 date_default_timezone_set('Europe/Paris'); //ligne assez importante pour régler un bug
 $conn = new mysqli(
@@ -49,15 +50,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     echo "<script>window.location.href='mon_espace.php';</script>"; // redirection en Javascript pour éviter un bug causé par le header
 }
 
+include "header.php";
 
 ?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <title>Editer un produit</title>
-</head>
-<body>
 <h1>Édition et Suppression</h1>
 
 <br>
@@ -113,5 +108,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <form action="supprimer_produit.php?id=<?php echo $id; ?>" method="post" enctype="multipart/form-data">
     <button onclick="return confirm('Voulez vous vraiment supprimer ce produit ?')">Supprimer ce produit</button>
 </form>
+<?php include "footer.php"; ?>
 </body>
 </html>

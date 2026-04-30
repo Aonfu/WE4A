@@ -1,7 +1,8 @@
 <?php
 
-include "header.php";
-include "footer.php";
+session_start();
+
+$page_title = "Connexion";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST["email"];
@@ -26,14 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $error = "mdp ou email invalide";
     }
 }
-?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <title>Connexion</title>
-</head>
-<body class="background">
+include "header.php";
+
+?>
     <?php if(isset($error)){echo $error;} ?>
     <div class="form-grid">
         <div class="card">
@@ -53,5 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </div>
     </div>
+    <?php include "footer.php"; ?>
 </body>
 </html>
