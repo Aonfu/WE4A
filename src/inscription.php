@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $conn->prepare("INSERT INTO utilisateur (nom, prenom, email, mdp) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $nom, $prenom, $email, $mdp);
     $stmt->execute();
-    header("Location: index.php");
+    echo "<script>window.location.href='index.php';</script>";
     exit();
 }
 ?>
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="form-grid">
         <div class="card">
             <div class="card-body">
-                <form class="form" action="inscription.php" method="post">
+                <form class="form" action="inscription.php" method="post" id="form_inscription">
                     <h1 class="pawnstar-font">Inscription</h1>
                     <div class="form-row">
                         <div class="form-field">
@@ -52,10 +52,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <label class="card-text" for="mdp">Mot de Passe:</label>
                         <input class="form-control form-input" type="password" id="mdp" name="mdp" placeholder="Mot de Passe" required>
                     </div>
+                    <div class="form-field">
+                         <label for="confirm_mdp">Confirmer le Mot de Passe:</label>
+                         <input type="password" id="confirm_mdp" name="confirm_mdp" placeholder="Confirmer" required>
+                         <p id="erreur" style="color: red;"></p>
+                    </div>
                     <button class="button" type="submit">S'inscrire</button>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        const form = document.getElementById('form_inscription');
+        const mdp = document.getElementById('mdp');
+        const confirmMdp = document.getElementById('confirm_mdp');
+        const erreurMsg = document.getElementById('erreur');
+
+        form.addEventListener('submit', function(event) {
+            if (mdp.value !== confirmMdp.value) {
+                event.preventDefault();
+                erreurMsg.textContent = "Les mots de passe ne sont pas identiques !";
+            } else {
+                erreurMsg.textContent = "";
+            }
+        });
+
+    </script>
 </body>
 </html>

@@ -127,7 +127,7 @@ $data = $stmt->get_result();
                 <p class="card-text">' . $row["description"] . '</p>
                 <h1 class="card-text pawnstar-font">' . $row["montant"] . '$</h1>
             </div>
-            <a href="editer_produit.php?id='.$row['id_produit'].'" class="stretched-link text-decoration-none"></a>
+            <a href="editer_produit.php?id='.$row['id_produit'].'" class="stretched-link text-decoration-none">Editer</a>
         </div>';
     }
     ?>
