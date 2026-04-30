@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <label class="card-text left" for="mdp">Mot de Passe:</label>
                         <input class="form-control form-input" type="password" id="mdp" name="mdp" placeholder="Mot de Passe" required>
                     </div>
-                    <button class="button" type="submit">S'inscrire</button>
+                    <button class="button" type="submit">Se Connecter</button>
                 </form>
             </div>
         </div>
