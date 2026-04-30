@@ -53,9 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <input class="form-control form-input" type="password" id="mdp" name="mdp" placeholder="Mot de Passe" required>
                     </div>
                     <div class="form-field">
-                         <label for="confirm_mdp">Confirmer le Mot de Passe:</label>
-                         <input type="password" id="confirm_mdp" name="confirm_mdp" placeholder="Confirmer" required>
-                         <p id="erreur" style="color: red;"></p>
+                         <label class="card-text" for="confirm_mdp">Confirmer le Mot de Passe:</label>
+                         <input class="form-control form-input" type="password" id="confirm_mdp" name="confirm_mdp" placeholder="Confirmer" required>
+                         <p id="erreur" style="color: red; margin-bottom: 0;"></p>
                     </div>
                     <button class="button" type="submit">S'inscrire</button>
                 </form>
