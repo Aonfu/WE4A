@@ -1,7 +1,8 @@
 <?php
 
-include "header.php";
-include "footer.php";
+session_start();
+
+$page_title = "Mon Espace";
 
 date_default_timezone_set('Europe/Paris'); //ligne assez importante pour régler un bug
 $conn = new mysqli(
@@ -83,60 +84,69 @@ $stmt->bind_param("si", $now_str,$_SESSION['id']);
 $stmt->execute();
 $data = $stmt->get_result();
 
+include "header.php";
+
 ?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <title>Mon Espace</title>
-</head>
-<body>
-<h1>Mon Espace</h1>
-<h2>Statistiques :</h2>
-<div class="stats">
-    <!-- Stats pour les users normaux !-->
-    <?php echo'<p>Enchères gagnées : '. $enchere_gagne .'</p>'; ?>
-    <?php echo'<p>Montant Dépensé : '. $montant_depense .'</p>'; ?>
-    <?php echo'<p>Enchères participées : '. $enchere_participe .'</p>'; ?>
-    <?php echo'<p>Winrate : '. $winrate .' % </p>'; ?>
-    <?php echo'<p>Enchere en cours : '. $enchere_en_cours .' </p>'; ?>
-    <?php echo'<p>Catégorie Favorite : '. ($row_categorie['nom'] ?? 'aucune') .' avec '. ($row_categorie['nb'] ?? 0). ' enchères placées</p>'; ?>
-    <br>
-    <!-- Stats pour les users vendeur !-->
-    <?php echo'<p>Nombre de ventes effectuées : '. $nb_vente .'</p>'; ?>
-    <?php echo'<p>Revenu total : '. $revenu_total .'</p>'; ?>
-    <?php echo'<p>Plus grosse vente : '. ($row_plus_grosse_vente['montant'] ?? 0) .'</p>'; ?>
-
-</div>
-
-<br>
-<hr>
-<h2>Éditer ou supprimer un produit :</h2>
-<div class="card-grid">
-    <?php
-    while ($row = $data->fetch_assoc()) {
-        echo
-                '<div class="card">
-            <div class="card-images">
-                <img src="ressources/img/' . $row["photo"] . '" class="card-img-top" alt="...">
-                <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
-                <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
-            </div>
+    <div class="stat-grid">
+        <div class="card">
+            <h1 class="pawnstar-font text-center">Statistiques</h1>
             <div class="card-body">
-                <h3 class="card-text card-title">' . $row["nom"] . '</h3>
-                <p class="card-text">' . $row["description"] . '</p>
-                <h1 class="card-text pawnstar-font">' . $row["montant"] . '$</h1>
+                <div class="stats">
+                    <div class="stat">
+                        <p class="card-text">Enchères Gagnées</p>
+                        <?php echo'<h1 class="pawnstar-font">'. $enchere_gagne .'</h1>'; ?>
+                    </div>
+                    <div class="stat">
+                        <p class="card-text">Montant Dépensé</p>
+                        <?php echo'<h1 class="pawnstar-font">$'. $montant_depense .'</h1>'; ?>
+                    </div>
+                    <div class="stat">
+                        <p class="card-text">Winrate</p>
+                        <?php echo'<h1 class="pawnstar-font">'. $winrate .' %</h1>'; ?>
+                    </div>
+                    <div class="stat">
+                        <p class="card-text">Enchères en Cours</p>
+                        <?php echo'<h1 class="pawnstar-font">'. $enchere_en_cours .'</h1>'; ?>
+                    </div>
+                    <div class="stat">
+                        <p class="card-text">Catégorie Favorite</p>
+                        <?php echo'<h1 class="pawnstar-font">'. ($row_categorie['nom'] ?? 'aucune') .'</h1>'; ?>
+                    </div>
+                    <div class="stat">
+                        <p class="card-text">Nombre de Ventes Effectuées</p>
+                        <?php echo'<h1 class="pawnstar-font">'. $nb_vente .'</h1>'; ?>
+                    </div>
+                    <div class="stat">
+                        <p class="card-text">Revenu Total</p>
+                        <?php echo'<h1 class="pawnstar-font">'. $revenu_total .'$</h1>'; ?>
+                    </div>
+                    <div class="stat">
+                        <p class="card-text">Plus Grosse Vente</p>
+                        <?php echo'<h1 class="pawnstar-font">$'. ($row_plus_grosse_vente['montant'] ?? 0) .'</h1>'; ?>
+                    </div>
+                </div>
             </div>
-            <a href="editer_produit.php?id='.$row['id_produit'].'" class="stretched-link text-decoration-none">Editer</a>
-        </div>';
-    }
-    ?>
-</div>
-<br>
-<hr>  <!-- j'utilise juste ca pour séparer la partie stat de la redirection, à suprimer si besoin -->
-
-<div class="redirection-vente">
-    <a href="vente.php">Mettre aux enchères un nouveau produit</a>
-</div>
+        </div>
+    </div>
+    <div class="centrer">
+        <div class="catalogue-grid">
+            <?php while ($row = $data->fetch_assoc()) { ?>
+                <div class="card">
+                    <div class="card-images">
+                        <img src="ressources/img/<?php echo $row["photo"]; ?>" class="card-img-top" alt="...">
+                        <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
+                        <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-text card-title"><?php echo $row["nom"]; ?></h3>
+                        <p class="card-text"><?php echo $row["description"]; ?></p>
+                        <h1 class="card-text pawnstar-font">$<?php echo $row["montant"]; ?></h1>
+                    </div>
+                    <a href="enchere.php?id=<?php echo $row["id_produit"]; ?>" class="stretched-link text-decoration-none"></a>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+    <?php include "footer.php"; ?>
 </body>
 </html>

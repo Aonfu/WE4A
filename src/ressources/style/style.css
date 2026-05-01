@@ -176,6 +176,21 @@
     width: min(100%, 1030px);
 }
 
+.stat-grid {
+    display: grid;
+    justify-self: center;
+    padding: 2rem 1.25rem 2rem 1.25rem;
+}
+
+.stats {
+    column-gap: 10px;
+}
+
+.stat{
+    break-inside: avoid;
+    text-align: center;
+}
+
 .form {
     display: flex;
     flex-direction: column;
@@ -265,6 +280,14 @@ input[type="file"]::file-selector-button {
         column-count: 4;
         width: 1030px
     }
+
+    .stat-grid {
+        width: 1070px;
+    }
+
+    .stats {
+        column-count: 4;
+    }
 }
 
 @media (min-width: 810px) and (max-width: 1070px){
@@ -272,12 +295,28 @@ input[type="file"]::file-selector-button {
         column-count: 3;
         width: 770px
     }
+
+    .stat-grid {
+        width: 810px;
+    }
+
+    .stats {
+        column-count: 3;
+    }
 }
 
 @media (min-width: 550px) and (max-width: 810px) {
     .catalogue-grid {
         column-count: 2;
         width: 510px;
+    }
+
+    .stat-grid {
+        width: 550px;
+    }
+
+    .stats {
+        column-count: 2;
     }
 }
 
@@ -296,6 +335,14 @@ input[type="file"]::file-selector-button {
         width: 250px;
         justify-self: center;
         padding: 0;
+    }
+
+    .stat-grid {
+        width: 350px;
+    }
+
+    .stats {
+        column-count: 1;
     }
 }
 
