@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $conn->prepare("INSERT INTO utilisateur (nom, prenom, email, mdp) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $nom, $prenom, $email, $mdp);
     $stmt->execute();
-    echo "<script>window.location.href='index.php';</script>";
+    echo "<script>window.location.href='catalogue.php';</script>";
     exit();
 }
 
