@@ -98,15 +98,16 @@ include "header.php";
                             <?php if ( $date_fin > $now ) {
                                 if ( $_SESSION['id'] != $row_produit['id_utilisateur'] ) { ?>
                                     <h1 class="pawnstar-font">Placer Enchère</h1>
-                                    <?php echo '<p class="card-text">L\'Enchère finit le :</p>
-                                                <h1 id="date_fin">' . $row_produit['date_fin'] . '</h1>'; ?>
+                                    <p class="card-text">L\'Enchère finit le :</p>
+                                    <h1 id="date_fin"><?php echo $row_produit['date_fin']; ?></h1>
                                     <label class="card-text" for="montant">Montant de l'enchère :</label>
                                     <input class="form-control form-input" type="number" id="montant" name="montant" required min="<?php echo $enchere_min; ?>" placeholder="Min : $<?php echo $enchere_min; ?>">
                                     <button class="button" type="submit" id="placer">Placer l'enchère</button>
-                                <?php } else {
-                                    echo '<p class="card-text">L\'Enchère finit le :</p>
-                                          <h1 id="date_fin">' . $row_produit['date_fin'] . '</h1>';
-                                }
+                                <?php } else { ?>
+                                    <p class="card-text">L'Enchère finit le :</p>
+                                    <h1 id="date_fin"><?php echo $row_produit['date_fin']; ?></h1>
+                                    <a class="button text-decoration-none" href="editer_produit.php?id=<?php echo $id; ?>" id="placer">Editer ou Supprimer l'Enchère</a>
+                                <?php }
                             } ?>
                         </form>
                         <div id="enchere_over" class="form"></div>

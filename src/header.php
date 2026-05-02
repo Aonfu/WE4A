@@ -16,7 +16,7 @@
             <div class="collapse navbar-collapse order-2 order-md-1" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-0 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active pawnstar-font" aria-current="page" href="index.php">Catalogue</a>
+                        <a class="nav-link active pawnstar-font" aria-current="page" href="catalogue.php">Catalogue</a>
                     </li>
                     <?php
                     if (isset($_SESSION["id"])) {
