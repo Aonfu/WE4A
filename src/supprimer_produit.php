@@ -1,7 +1,8 @@
 <?php
 
-include "header.php";
-include "footer.php";
+session_start();
+
+$page_title = "Supprimer un produit";
 
 date_default_timezone_set('Europe/Paris'); //ligne assez importante pour régler un bug
 $conn = new mysqli(
@@ -26,4 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
     echo "<script>window.location.href='mon_espace.php';</script>"; // redirection en Javascript pour éviter un bug causé par le header
 }
+
+include "header.php";
+include "footer.php";
 ?>

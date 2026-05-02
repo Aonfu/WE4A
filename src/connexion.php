@@ -1,7 +1,8 @@
 <?php
 
-include "header.php";
-include "footer.php";
+session_start();
+
+$page_title = "Connexion";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST["email"];
@@ -19,21 +20,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $result = $stmt->get_result()->fetch_assoc();
     if ($result){
         $_SESSION["id"] = $result["utilisateur_id"];
-        echo "<script>window.location.href='index.php';</script>";
+        echo "<script>window.location.href='catalogue.php';</script>";
         exit();
     }
     else{
         $error = "mdp ou email invalide";
     }
 }
-?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <title>Connexion</title>
-</head>
-<body class="background">
+include "header.php";
+
+?>
     <?php if(isset($error)){echo $error;} ?>
     <div class="form-grid">
         <div class="card">
@@ -53,5 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </div>
     </div>
+    <?php include "footer.php"; ?>
 </body>
 </html>

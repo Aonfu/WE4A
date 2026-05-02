@@ -1,7 +1,8 @@
 <?php
 
-include "header.php";
-include "footer.php";
+session_start();
+
+$page_title = "Vente";
 
 date_default_timezone_set('Europe/Paris'); //ligne assez importante pour régler un bug
 
@@ -36,13 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     echo "<script>window.location.href='mon_espace.php';</script>"; // redirection en Javascript pour éviter un bug causé par le header
     exit();
 }
-?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <title>Vente</title>
-<body class="background ">
+include "header.php";
+
+?>
     <div class="form-grid">
         <div class="card">
             <div class="card-body">
@@ -85,5 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </div>
     </div>
+    <?php include "footer.php"; ?>
 </body>
 </html>

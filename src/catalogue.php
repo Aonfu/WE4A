@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+$page_title = "Catalogue";
+
 $conn = new mysqli(
     $_ENV['MYSQL_HOST'],
     $_ENV['MYSQL_USER'],
@@ -9,9 +14,6 @@ $conn = new mysqli(
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
-include "header.php";
-include "footer.php";
 
 $stmt = $conn->prepare("SELECT * FROM categorie");
 $stmt->execute();
@@ -123,14 +125,10 @@ else {
     $stmt->execute();
     $data = $stmt->get_result();
 }
-?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <title>Catalogue</title>
-</head>
-<body class="background">
+include "header.php";
+
+?>
 <div class="tri">
     <!-- Si le details c de la merde pour le css hésite pas a changer Loic -->
     <details>
@@ -182,6 +180,7 @@ else {
     ?>
 </div>
 </div>
+<?php include "footer.php"; ?>
 </body>
 </html>
 
