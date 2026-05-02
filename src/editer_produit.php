@@ -53,61 +53,46 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 include "header.php";
 
 ?>
-<h1>Édition et Suppression</h1>
-
-<br>
-
-<h2>Éditer</h2>
-
-<form action="editer_produit.php?id=<?php echo $id; ?>" method="post" enctype="multipart/form-data">
-
-    <label for="nom">Nom:</label>
-    <input type="text" id="nom" name="nom" placeholder="Nom" value="<?php echo $row_produit['nom']; ?>" required>
-
-    <br>
-
-    <label for="categorie">Catégorie:</label>
-    <select name="categorie" id="categorie">
-        <?php while ($row=$result->fetch_assoc()) {
-            $selected = ($row['id_categorie'] == $row_produit['id_categorie'] ) ? 'selected' : '';
-            echo '<option value="'.$row['id_categorie'].'" '.$selected.'>'.$row['nom'].'</option>';
-        } ?>
-    </select>
-
-    <br>
-
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" placeholder="description"> <?php echo $row_produit['description']; ?></textarea>
-
-    <br>
-
-    <label for="photo">Photo:</label>
-    <input type="file" id="photo" name="photo" accept="image/*" >
-    <img src="<?php echo $row_produit['photo']; ?>" alt="<?php echo $row_produit['description']; ?>">
-
-    <br>
-
-    <label for="prix">Prix de départ:</label>
-    <input type="number" id="prix" name="prix" required min="1" step="1" value="<?php echo $row_produit['montant']; ?>" readonly>
-
-    <br>
-
-    <label for="date_fin">Date de fin:</label>
-    <input type="datetime-local" id="date_fin" name="date_fin" min = "<?php echo $min_date; ?>" value="<?php echo date('Y-m-d\TH:i', strtotime($row_produit['date_fin'])); ?>" required >
-
-    <button type="submit">Modifier l'enchères</button>
-
-</form>
-
-<hr>
-
-<br>
-
-<h2>Supprimer</h2>
-
-<form action="supprimer_produit.php?id=<?php echo $id; ?>" method="post" enctype="multipart/form-data">
-    <button onclick="return confirm('Voulez vous vraiment supprimer ce produit ?')">Supprimer ce produit</button>
-</form>
-<?php include "footer.php"; ?>
+    <div class="form-grid">
+        <div class="card">
+            <div class="card-body">
+                <form class="form" action="editer_produit.php?id=<?php echo $id; ?>" method="post" enctype="multipart/form-data">
+                    <h1 class="pawnstar-font">Édition ou Suppression</h1>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label class="card-text" for="nom">Nom :</label>
+                            <input class="form-control form-input" type="text" id="nom" name="nom" placeholder="Nom" value="<?php echo $row_produit['nom']; ?>" required>
+                        </div>
+                        <div class="form-field">
+                            <label class="card-text" for="categorie">Catégorie :</label>
+                            <select class="form-select form-input" name="categorie" id="categorie">
+                                <?php while ($row=$result->fetch_assoc()) {
+                                    $selected = ($row['id_categorie'] == $row_produit['id_categorie'] ) ? 'selected' : '';
+                                    echo '<option value="'.$row['id_categorie'].'" '.$selected.'>'.$row['nom'].'</option>';
+                                } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label class="card-text" for="description">Description :</label>
+                        <textarea class="form-control form-input" id="description" name="description" placeholder="Description" required><?php echo $row_produit['description']; ?></textarea>
+                    </div>
+                    <div class="form-field">
+                        <label class="card-text" for="photo">Photo :</label>
+                        <input class="form-control form-input" type="file" id="photo" name="photo" accept="image/*">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-field">
+                            <button class="button" type="submit">Modifier</button>
+                        </div>
+                        <div class="form-field">
+                            <button class="button" type="submit" formaction="supprimer_produit.php?id=<?php echo $id; ?>" onclick="return confirm('Voulez vous vraiment supprimer ce produit ?')">Supprimer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <?php include "footer.php"; ?>
 </body>
 </html>
