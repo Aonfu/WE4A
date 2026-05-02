@@ -42,10 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $description = $_POST["description"];
     $photo = $_FILES["photo"];
     $db_photo = __DIR__."/temporary/path/" . $photo["name"];
-    $prix = $_POST["prix"];
-    $date_fin= $_POST["date_fin"];
-    $stmt = $conn->prepare("UPDATE produit SET nom = ?,id_categorie = ?, description = ?, photo = ?, date_fin = ? WHERE id_produit = ?");
-    $stmt->bind_param("sisssi", $nom, $categorie, $description, $db_photo, $date_fin,$id);
+    $stmt = $conn->prepare("UPDATE produit SET nom = ?,id_categorie = ?, description = ?, photo = ? WHERE id_produit = ?");
+    $stmt->bind_param("sissi", $nom, $categorie, $description, $db_photo,$id);
     $stmt->execute();
     echo "<script>window.location.href='mon_espace.php';</script>"; // redirection en Javascript pour éviter un bug causé par le header
 }
