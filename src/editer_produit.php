@@ -40,8 +40,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nom = $_POST["nom"];
     $categorie = $_POST["categorie"];
     $description = $_POST["description"];
-    $photo = $_FILES["photo"];
-    $db_photo = __DIR__."/temporary/path/" . $photo["name"];
+    if ($_FILES["photo"]["name"] == '') {
+        $db_photo = $row_produit["photo"];
+    } else {
+        $db_photo = __DIR__ . "/chemin/" . $_FILES["photo"]["name"];
+    }
     $stmt = $conn->prepare("UPDATE produit SET nom = ?,id_categorie = ?, description = ?, photo = ? WHERE id_produit = ?");
     $stmt->bind_param("sissi", $nom, $categorie, $description, $db_photo,$id);
     $stmt->execute();
