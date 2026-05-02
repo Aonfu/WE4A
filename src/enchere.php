@@ -104,11 +104,9 @@ include "header.php";
                                     <input class="form-control form-input" type="number" id="montant" name="montant" required min="<?php echo $enchere_min; ?>" placeholder="Min : $<?php echo $enchere_min; ?>">
                                     <button class="button" type="submit" id="placer">Placer l'enchère</button>
                                 <?php } else { ?>
-                                    <form action="editer_produit.php?id=<?php echo $id; ?>" method="post">
-                                        <p class="card-text">L\'Enchère finit le :</p>
-                                        <h1 id="date_fin"><?php echo $row_produit['date_fin']; ?></h1>
-                                        <button class="button" type="submit" id="placer">Editer ou Supprimer l'Enchère</button>
-                                    </form>
+                                    <p class="card-text">L'Enchère finit le :</p>
+                                    <h1 id="date_fin"><?php echo $row_produit['date_fin']; ?></h1>
+                                    <a class="button text-decoration-none" href="editer_produit.php?id=<?php echo $id; ?>" id="placer">Editer ou Supprimer l'Enchère</a>
                                 <?php }
                             } ?>
                         </form>
@@ -141,6 +139,7 @@ include "header.php";
             </div>
         </div>
     </div>
+    <?php include "footer.php"; ?>
     <script>
         // Requette AJAX pour garder les information a jours
         setInterval(function () {
