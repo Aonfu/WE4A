@@ -9,6 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $prenom = $_POST["prenom"];
     $email = $_POST["email"];
     $mdp = $_POST["mdp"];
+    $mdp_hash = password_hash($mdp, PASSWORD_DEFAULT);
 
     $conn = new mysqli(
         $_ENV['MYSQL_HOST'],
@@ -17,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_ENV['MYSQL_DATABASE']
     );
     $stmt = $conn->prepare("INSERT INTO utilisateur (nom, prenom, email, mdp) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $nom, $prenom, $email, $mdp);
+    $stmt->bind_param("ssss", $nom, $prenom, $email, $mdp_hash);
     $stmt->execute();
     echo "<script>window.location.href='catalogue.php';</script>";
     exit();
