@@ -137,7 +137,7 @@ include "header.php";
         <details>
             <summary>Catégories :</summary>
             <?php while ($row_categorie=$result_categorie->fetch_assoc()) {
-                echo('<a href="catalogue.php?categorie='.$row_categorie['id_categorie'].'">'.$row_categorie['nom'].'</a>');
+                echo('<a href="catalogue.php?categorie='.$row_categorie['id_categorie'].'">'.$row_categorie['nom'].'</a>'); // le bouton est ici loic
             } ?>
         </details>
     </details>
@@ -173,9 +173,9 @@ include "header.php";
                 <p class="card-text">' . $row["description"] . '</p>
                 <h1 class="card-text pawnstar-font">$' . $row["montant"] . '</h1>';
 
-            if ($_SESSION["role"] == "admin") {
+            if (isset($_SESSION["role"]) && $_SESSION["role"] == "admin") {
                 echo '
-                <form method="post" action="supprimer_produit.php?id=' . $row['id_produit'] . '" style="position: relative; z-index: 10;">
+                <form method="post" action="supprimer_produit.php?id=' . $row['id_produit'] . '" style="position: relative; z-index: 10;"> // LOIC
                     <button class="button" type="submit" onclick="return confirm(\'Voulez-vous vraiment supprimer ce produit ?\')">Supprimer</button>
             </form>';
         }
