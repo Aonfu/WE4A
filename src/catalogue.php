@@ -173,7 +173,7 @@ include "header.php";
                 <p class="card-text">' . $row["description"] . '</p>
                 <h1 class="card-text pawnstar-font">$' . $row["montant"] . '</h1>';
 
-            if ($_SESSION["role"] == "admin") {
+            if (isset($_SESSION["role"]) && $_SESSION["role"] == "admin") {
                 echo '
                 <form method="post" action="supprimer_produit.php?id=' . $row['id_produit'] . '" style="position: relative; z-index: 10;">
                     <button class="button" type="submit" onclick="return confirm(\'Voulez-vous vraiment supprimer ce produit ?\')">Supprimer</button>
