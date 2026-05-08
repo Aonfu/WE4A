@@ -158,7 +158,7 @@ include "header.php";
                     <details class="form">
                         <summary class="pawnstar-font">Catégories</summary>
                         <?php while ($row_categorie=$result_categorie->fetch_assoc()) {
-                            echo('<a href="catalogue.php?categorie='.$row_categorie['id_categorie'].'">'.$row_categorie['nom'].'</a>');
+                            echo('<a class="button text-decoration-none"  href="catalogue.php?categorie='.$row_categorie['id_categorie'].'">'.$row_categorie['nom'].'</a>');
                         } ?>
                     </details>
                 </div>
@@ -166,7 +166,7 @@ include "header.php";
             <?php while ($row = $data->fetch_assoc()) { ?>
                 <div class="card">
                     <div class="card-images">
-                        <img src="ressources/img/<?php echo $row["photo"]; ?>" class="card-img-top" alt="...">
+                        <img src="<?php echo $row["photo"]; ?>" class="card-img-top" alt="...">
                         <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
                         <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
                     </div>
