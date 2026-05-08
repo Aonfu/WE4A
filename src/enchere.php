@@ -88,6 +88,11 @@ include "header.php";
     <div class="centrer">
         <div class="enchere-grid">
             <div class="main-column">
+                <?php if (isset($_SESSION["role]"]) && $_SESSION["role"] == "admin") { ?>
+                    <form method="post" action="supprimer_produit.php?id=' . $row['id_produit'] . '">
+                        <button class="button" id="supprimer" type="submit" onclick="return confirm('Voulez-vous vraiment supprimer ce produit ?')">Supprimer</button>
+                    </form>
+                <?php } ?>
                 <div class="card">
                     <div class="card-images">
                         <img src="<?php echo $row_produit['photo']; ?>" class="card-img-top" alt="produit aux enchères">
@@ -108,7 +113,7 @@ include "header.php";
                             <?php if ( $date_fin > $now ) {
                             if ( !isset($_SESSION['id']) || $_SESSION['id'] != $row_produit['id_utilisateur'] ) { ?>
                                     <h1 class="pawnstar-font">Placer Enchère</h1>
-                                    <p class="card-text">L\'Enchère finit le :</p>
+                                    <p class="card-text">L'Enchère finit le :</p>
                                     <h1 id="date_fin"><?php echo $row_produit['date_fin']; ?></h1>
                                     <label class="card-text" for="montant">Montant de l'enchère :</label>
                                     <input class="form-control form-input" type="number" id="montant" name="montant" required min="<?php echo $enchere_min; ?>" placeholder="Min : $<?php echo $enchere_min; ?>">

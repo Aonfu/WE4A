@@ -100,107 +100,113 @@ $data = $stmt->get_result();
 include "header.php";
 
 ?>
-<div class="stat-grid">
-    <div class="card">
-        <h1 class="pawnstar-font text-center">Statistiques</h1>
-        <div class="card-body">
-            <div class="stats">
-                <div class="stat">
-                    <p class="card-text">Enchères Gagnées</p>
-                    <?php echo'<h1 class="pawnstar-font">'. $enchere_gagne .'</h1>'; ?>
-                </div>
-                <div class="stat">
-                    <p class="card-text">Montant Dépensé</p>
-                    <?php echo'<h1 class="pawnstar-font">$'. $montant_depense .'</h1>'; ?>
-                </div>
-                <div class="stat">
-                    <p class="card-text">Winrate</p>
-                    <?php echo'<h1 class="pawnstar-font">'. round($winrate, 2) .' %</h1>'; ?>
-                </div>
-                <div class="stat">
-                    <p class="card-text">Enchères en Cours</p>
-                    <?php echo'<h1 class="pawnstar-font">'. $enchere_en_cours .'</h1>'; ?>
-                </div>
-                <div class="stat">
-                    <p class="card-text">Catégorie Favorite</p>
-                    <?php echo'<h1 class="pawnstar-font">'. ($row_categorie['nom'] ?? 'aucune') .'</h1>'; ?>
-                </div>
-                <div class="stat">
-                    <p class="card-text">Nombre de Ventes Effectuées</p>
-                    <?php echo'<h1 class="pawnstar-font">'. $nb_vente .'</h1>'; ?>
-                </div>
-                <div class="stat">
-                    <p class="card-text">Revenu Total</p>
-                    <?php echo'<h1 class="pawnstar-font">'. $revenu_total .'$</h1>'; ?>
-                </div>
-                <div class="stat">
-                    <p class="card-text">Plus Grosse Vente</p>
-                    <?php echo'<h1 class="pawnstar-font">$'. ($row_plus_grosse_vente['montant'] ?? 0) .'</h1>'; ?>
+    <div class="stat-grid">
+        <div class="card">
+            <h1 class="pawnstar-font text-center">Statistiques</h1>
+            <div class="card-body">
+                <div class="stats">
+                    <div class="stat">
+                        <p class="card-text">Enchères Gagnées</p>
+                        <?php echo'<h1 class="pawnstar-font">'. ($enchere_gagne ?? 0).'</h1>'; ?>
+                    </div>
+                    <div class="stat">
+                        <p class="card-text">Montant Dépensé</p>
+                        <?php echo'<h1 class="pawnstar-font">$'. ($montant_depense ?? 0).'</h1>'; ?>
+                    </div>
+                    <div class="stat">
+                        <p class="card-text">Winrate</p>
+                        <?php echo'<h1 class="pawnstar-font">'. round($winrate, 2) .' %</h1>'; ?>
+                    </div>
+                    <div class="stat">
+                        <p class="card-text">Enchères en Cours</p>
+                        <?php echo'<h1 class="pawnstar-font">'. ($enchere_en_cours ?? 0).'</h1>'; ?>
+                    </div>
+                    <div class="stat">
+                        <p class="card-text">Catégorie Favorite</p>
+                        <?php echo'<h1 class="pawnstar-font" id="catfav">'. ($row_categorie['nom'] ?? 'Aucune') .'</h1>'; ?>
+                    </div>
+                    <div class="stat">
+                        <p class="card-text">Nombre de Ventes Effectuées</p>
+                        <?php echo'<h1 class="pawnstar-font">'. ($nb_vente ?? 0).'</h1>'; ?>
+                    </div>
+                    <div class="stat">
+                        <p class="card-text">Revenu Total</p>
+                        <?php echo'<h1 class="pawnstar-font">$'. ($revenu_total ?? 0).'</h1>'; ?>
+                    </div>
+                    <div class="stat">
+                        <p class="card-text">Plus Grosse Vente</p>
+                        <?php echo'<h1 class="pawnstar-font">$'. ($row_plus_grosse_vente['montant'] ?? 0) .'</h1>'; ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<!-- Section Enchères Gagnées -->
-<div class="centrer">
-    <div class="catalogue-grid">
-        <h1>Enchères Gagnées</h1>
-        <?php if ($result_encheres_gagnees->num_rows > 0) { ?>
-            <?php while ($row = $result_encheres_gagnees->fetch_assoc()) { ?>
-                <div class="card">
-                    <div class="card-images">
-                        <img src="<?php echo $row["photo"]; ?>" class="card-img-top" alt="Produit aux enchères">
-                        <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
-                        <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
+    <div class="stat-grid">
+        <div class="card">
+            <h1 class="pawnstar-font text-center">Enchères Gagnées</h1>
+        </div>
+    </div>
+    <!-- Section Enchères Gagnées -->
+    <div class="centrer">
+        <div class="catalogue-grid">
+            <?php if ($result_encheres_gagnees->num_rows > 0) { ?>
+                <?php while ($row = $result_encheres_gagnees->fetch_assoc()) { ?>
+                    <div class="card">
+                        <div class="card-images">
+                            <img src="<?php echo $row["photo"]; ?>" class="card-img-top" alt="Produit aux enchères">
+                            <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
+                            <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-text card-title"><?php echo $row["nom"]; ?></h3>
+                            <p class="card-text"><?php echo $row["description"]; ?></p>
+                            <h1 class="card-text pawnstar-font">$<?php echo $row["montant"]; ?></h1>
+                        </div>
+                        <a href="enchere.php?id=<?php echo $row["id_produit"]; ?>" class="stretched-link text-decoration-none"></a>
                     </div>
+                <?php } ?>
+            <?php } else { ?>
+                <div class="card no-hover">
                     <div class="card-body">
-                        <h3 class="card-text card-title"><?php echo $row["nom"]; ?></h3>
-                        <p class="card-text"><?php echo $row["description"]; ?></p>
-                        <h1 class="card-text pawnstar-font">$<?php echo $row["montant"]; ?></h1>
+                        <p class="card-text text-center">Vous n'avez encore gagné aucune enchère.</p>
                     </div>
-                    <a href="enchere.php?id=<?php echo $row["id_produit"]; ?>" class="stretched-link text-decoration-none"></a>
                 </div>
             <?php } ?>
-        <?php } else { ?>
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-text text-center">Vous n'avez encore gagné aucune enchère.</p>
-                </div>
-            </div>
-        <?php } ?>
+        </div>
     </div>
-</div>
-
-<!-- Section Produits en Vente -->
-<div class="centrer">
-    <div class="catalogue-grid">
-        <h1>Produits en vente</h1>
-        <?php if ($data->num_rows > 0) { ?>
-            <?php while ($row = $data->fetch_assoc()) { ?>
-                <div class="card">
-                    <div class="card-images">
-                        <img src="<?php echo $row["photo"]; ?>" class="card-img-top" alt="Produit aux enchères">
-                        <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
-                        <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
+    <div class="stat-grid">
+        <div class="card">
+            <h1 class="pawnstar-font text-center">Produits en Vente</h1>
+        </div>
+    </div>
+    <!-- Section Produits en Vente -->
+    <div class="centrer">
+        <div class="catalogue-grid">
+            <?php if ($data->num_rows > 0) { ?>
+                <?php while ($row = $data->fetch_assoc()) { ?>
+                    <div class="card">
+                        <div class="card-images">
+                            <img src="<?php echo $row["photo"]; ?>" class="card-img-top" alt="Produit aux enchères">
+                            <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
+                            <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-text card-title"><?php echo $row["nom"]; ?></h3>
+                            <p class="card-text"><?php echo $row["description"]; ?></p>
+                            <h1 class="card-text pawnstar-font">$<?php echo $row["montant"]; ?></h1>
+                        </div>
+                        <a href="enchere.php?id=<?php echo $row["id_produit"]; ?>" class="stretched-link text-decoration-none"></a>
                     </div>
+                <?php } ?>
+            <?php } else { ?>
+                <div class="card no-hover">
                     <div class="card-body">
-                        <h3 class="card-text card-title"><?php echo $row["nom"]; ?></h3>
-                        <p class="card-text"><?php echo $row["description"]; ?></p>
-                        <h1 class="card-text pawnstar-font">$<?php echo $row["montant"]; ?></h1>
+                        <p class="card-text text-center">Vous n'avez aucun produit en vente.</p>
                     </div>
-                    <a href="enchere.php?id=<?php echo $row["id_produit"]; ?>" class="stretched-link text-decoration-none"></a>
                 </div>
             <?php } ?>
-        <?php } else { ?>
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-text text-center">Vous n'avez aucun produit en vente.</p>
-                </div>
-            </div>
-        <?php } ?>
+        </div>
     </div>
-</div>
-<?php include "footer.php"; ?>
+    <?php include "footer.php"; ?>
 </body>
 </html>

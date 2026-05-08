@@ -131,7 +131,7 @@ include "header.php";
 ?>
     <div class="centrer">
         <div class="catalogue-grid">
-            <div class="card" id="tri">
+            <div class="card no-hover" id="tri">
                 <div class="card-body">
                     <details class="form">
                         <summary class="pawnstar-font">Trier Prix</summary>
