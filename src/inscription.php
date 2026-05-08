@@ -3,6 +3,7 @@
 session_start();
 
 $page_title = "Inscription";
+$erreur = '';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nom = $_POST["nom"];
@@ -17,11 +18,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_ENV['MYSQL_PASSWORD'],
         $_ENV['MYSQL_DATABASE']
     );
-    $stmt = $conn->prepare("INSERT INTO utilisateur (nom, prenom, email, mdp) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $nom, $prenom, $email, $mdp_hash);
+    $stmt = $conn->prepare("SELECT * FROM utilisateur WHERE email = ?");
+    $stmt->bind_param("s", $email);
     $stmt->execute();
-    echo "<script>window.location.href='catalogue.php';</script>";
-    exit();
+    $res = $stmt->get_result();
+    if ($res->num_rows > 0) {
+        $erreur = 'Cet email est déjà utilisé !';
+    }
+    else {
+        $stmt = $conn->prepare("INSERT INTO utilisateur (nom, prenom, email, mdp) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $nom, $prenom, $email, $mdp_hash);
+        $stmt->execute();
+        echo "<script>window.location.href='catalogue.php';</script>";
+        exit();
+    }
 }
 
 include "header.php";
@@ -53,7 +63,7 @@ include "header.php";
                     <div class="form-field">
                          <label class="card-text" for="confirm_mdp">Confirmer le Mot de Passe:</label>
                          <input class="form-control form-input" type="password" id="confirm_mdp" name="confirm_mdp" placeholder="Confirmer" required>
-                         <p id="erreur" style="color: red; margin-bottom: 0;"></p>
+                         <p id="erreur" style="color: red; margin-bottom: 0;"><?php echo $erreur ?></p>
                     </div>
                     <button class="button" type="submit">S'inscrire</button>
                 </form>
