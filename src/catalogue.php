@@ -139,11 +139,11 @@ include "header.php";
                             <div class="form-row">
                                 <div class="form-field">
                                     <label class="card-text" for="prix_max">Plus de :</label>
-                                    <input class="form-control form-input" type="number" name="prix_min" id="prix_min">
+                                    <input class="form-control form-input" type="number" placeholder="$" name="prix_min" id="prix_min">
                                 </div>
                                 <div class="form-field">
                                     <label class="card-text" for="prix_max">Moins de :</label>
-                                    <input class="form-control form-input" type="number" name="prix_max" id="prix_max">
+                                    <input class="form-control form-input" type="number" placeholder="$" name="prix_max" id="prix_max">
                                 </div>
                             </div>
                         <div class="form-field">
@@ -158,9 +158,9 @@ include "header.php";
                     <details class="form">
                         <summary class="pawnstar-font">Catégories</summary>
                         <?php while ($row_categorie=$result_categorie->fetch_assoc()) {
-                            echo('<a class="button text-decoration-none"  href="catalogue.php?categorie='.$row_categorie['id_categorie'].'">'.$row_categorie['nom'].'</a>');
+                            echo('<a class="button text-decoration-none categorie" href="catalogue.php?categorie='.$row_categorie['id_categorie'].'">'.$row_categorie['nom'].'</a>');
                         } ?>
-                    </details>
+                       </details>
                 </div>
             </div>
             <?php while ($row = $data->fetch_assoc()) { ?>
