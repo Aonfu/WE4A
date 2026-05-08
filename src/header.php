@@ -12,7 +12,9 @@
 <body class="background">
     <nav class="navbar navbar-expand-md navbar-light bg-warning-subtle flex-nowrap">
         <div class="container-fluid d-flex align-items-center">
-            <a class="navbar-brand me-3 pawnstar-font" href="catalogue.php">PawnStar?</a>
+            <a class="navbar-brand me-3 pawnstar-font" href="catalogue.php">
+                <img class="logo" src="ressources/img/logo.png" alt="logo">
+            </a>
             <div class="collapse navbar-collapse order-2 order-md-1" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-0 mb-lg-0">
                     <li class="nav-item">
