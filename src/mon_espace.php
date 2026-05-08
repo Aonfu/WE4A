@@ -150,7 +150,7 @@ include "header.php";
             <?php while ($row = $result_encheres_gagnees->fetch_assoc()) { ?>
                 <div class="card">
                     <div class="card-images">
-                        <img src="ressources/img/<?php echo $row["photo"]; ?>" class="card-img-top" alt="Produit aux enchères">
+                        <img src="<?php echo $row["photo"]; ?>" class="card-img-top" alt="Produit aux enchères">
                         <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
                         <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
                     </div>
@@ -180,7 +180,7 @@ include "header.php";
             <?php while ($row = $data->fetch_assoc()) { ?>
                 <div class="card">
                     <div class="card-images">
-                        <img src="ressources/img/<?php echo $row["photo"]; ?>" class="card-img-top" alt="Produit aux enchères">
+                        <img src="<?php echo $row["photo"]; ?>" class="card-img-top" alt="Produit aux enchères">
                         <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
                         <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
                     </div>
