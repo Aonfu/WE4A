@@ -20,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $result = $stmt->get_result()->fetch_assoc();
     if ($result){
         $_SESSION["id"] = $result["utilisateur_id"];
+        $_SESSION["role"] = $result["role"];
         echo "<script>window.location.href='catalogue.php';</script>";
         exit();
     }
