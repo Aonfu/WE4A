@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+date_default_timezone_set('Europe/Paris');
 $page_title = "Catalogue";
 
 $conn = new mysqli(
@@ -165,7 +165,7 @@ include "header.php";
         echo
                 '<div class="card">
             <div class="card-images">
-                <img src="ressources/img/' . $row["photo"] . '" class="card-img-top" alt="...">
+                <img src="' . $row["photo"] . '" class="card-img-top" alt="produit aux enchères">
                 <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
                 <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
             </div>

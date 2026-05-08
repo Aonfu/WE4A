@@ -19,7 +19,7 @@ if ($conn->connect_error) {
 // Calcul du nombre d'enchères gagné et du montant dépensé
 $now = new DateTime();
 $now_str = $now->format('Y-m-d H:i:s');
-$stmt = $conn->prepare("SELECT MAX(enchere.montant) as montant FROM enchere JOIN produit ON enchere.id_produit = produit.id_produit WHERE enchere.montant = (SELECT MAX(montant) FROM enchere WHERE id_produit = produit.id_produit) AND produit.date_fin < ? AND enchere.id_user = ? GROUP BY produit.id_produit");
+$stmt = $conn->prepare("SELECT MAX(enchere.montant) as montant FROM enchere JOIN produit ON enchere.id_produit = produit.id_produit WHERE enchere.montant = (SELECT MAX(montant) FROM enchere WHERE id_produit = produit.id_produit) AND produit.date_fin < ? AND enchere.id_utilisateur = ? GROUP BY produit.id_produit");
 $stmt->bind_param("si", $now_str, $_SESSION['id']);
 $stmt->execute();
 $result_gangnant = $stmt->get_result();
@@ -30,7 +30,7 @@ while ($row_gagnant = $result_gangnant->fetch_assoc() ) {
 }
 
 // Calcul du nombre d'enchères où l'user a participé et calcul du winrate
-$stmt = $conn->prepare("SELECT enchere.id_produit FROM enchere JOIN produit ON enchere.id_produit = produit.id_produit WHERE produit.date_fin < ? AND enchere.id_user = ? GROUP BY produit.id_produit");
+$stmt = $conn->prepare("SELECT enchere.id_produit FROM enchere JOIN produit ON enchere.id_produit = produit.id_produit WHERE produit.date_fin < ? AND enchere.id_utilisateur = ? GROUP BY produit.id_produit");
 $stmt->bind_param("si", $now_str, $_SESSION['id']);
 $stmt->execute();
 $result_participe = $stmt->get_result();
@@ -43,14 +43,14 @@ else {
 }
 
 //Calcul du nombre d'enchères en cours
-$stmt = $conn->prepare("SELECT enchere.id_produit FROM enchere JOIN produit ON enchere.id_produit = produit.id_produit WHERE produit.date_fin > ? AND enchere.id_user = ? GROUP BY produit.id_produit");
+$stmt = $conn->prepare("SELECT enchere.id_produit FROM enchere JOIN produit ON enchere.id_produit = produit.id_produit WHERE produit.date_fin > ? AND enchere.id_utilisateur = ? GROUP BY produit.id_produit");
 $stmt->bind_param("si", $now_str, $_SESSION['id']);
 $stmt->execute();
 $result_en_cours = $stmt->get_result();
 $enchere_en_cours = $result_en_cours->num_rows;
 
 //calcul de la categorie favorite
-$stmt = $conn->prepare("SELECT categorie.nom, COUNT(*) as nb FROM enchere JOIN produit ON enchere.id_produit = produit.id_produit JOIN categorie ON produit.id_categorie = categorie.id_categorie WHERE enchere.id_user = ? GROUP BY categorie.id_categorie ORDER BY nb DESC LIMIT 1");
+$stmt = $conn->prepare("SELECT categorie.nom, COUNT(*) as nb FROM enchere JOIN produit ON enchere.id_produit = produit.id_produit JOIN categorie ON produit.id_categorie = categorie.id_categorie WHERE enchere.id_utilisateur = ? GROUP BY categorie.id_categorie ORDER BY nb DESC LIMIT 1");
 $stmt->bind_param("i", $_SESSION['id']);
 $stmt->execute();
 $result_categorie = $stmt->get_result();
@@ -78,7 +78,7 @@ $row_plus_grosse_vente = $result_plus_grosse_vente->fetch_assoc();
 $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
 FROM produit
 LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
-WHERE produit.date_fin > ? AND id_utilisateur = ?
+WHERE produit.date_fin > ? AND produit.id_utilisateur = ?
 GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo;");
 $stmt->bind_param("si", $now_str,$_SESSION['id']);
 $stmt->execute();
@@ -133,7 +133,7 @@ include "header.php";
             <?php while ($row = $data->fetch_assoc()) { ?>
                 <div class="card">
                     <div class="card-images">
-                        <img src="ressources/img/<?php echo $row["photo"]; ?>" class="card-img-top" alt="...">
+                        <img src="<?php echo $row["photo"]; ?>" class="card-img-top" alt="Produit aux enchères">
                         <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
                         <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
                     </div>
