@@ -14,24 +14,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_ENV['MYSQL_PASSWORD'],
         $_ENV['MYSQL_DATABASE']
     );
-    $stmt = $conn->prepare("SELECT * FROM utilisateur WHERE email = ? and mdp = ?");
-    $stmt->bind_param("ss", $email,$mdp);
+    $stmt = $conn->prepare("SELECT * FROM utilisateur WHERE email = ?");
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();
-    if ($result){
+    if ($result and password_verify($mdp, $result['mdp'])) {
         $_SESSION["id"] = $result["utilisateur_id"];
+        $_SESSION["role"] = $result["role"];
         echo "<script>window.location.href='catalogue.php';</script>";
         exit();
     }
     else{
-        $error = "mdp ou email invalide";
+        $error = '<p style="color: red; margin-bottom: 0;">Mot de passe ou Email invalide</p>';
     }
 }
 
 include "header.php";
 
 ?>
-    <?php if(isset($error)){echo $error;} ?>
     <div class="form-grid">
         <div class="card">
             <div class="card-body">
@@ -44,6 +44,7 @@ include "header.php";
                     <div class="form-field">
                         <label class="card-text left" for="mdp">Mot de Passe:</label>
                         <input class="form-control form-input" type="password" id="mdp" name="mdp" placeholder="Mot de Passe" required>
+                        <?php if(isset($error)){echo $error;} ?>
                     </div>
                     <button class="button" type="submit">Se Connecter</button>
                 </form>
