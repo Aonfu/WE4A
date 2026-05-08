@@ -26,6 +26,9 @@
                             </li>
                         <li class="nav-item"> 
                             <a class="nav-link pawnstar-font" href="vente.php">Vente</a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="nav-link pawnstar-font" href="deconnexion.php">Déconnexion</a>
                         </li>';
                     } else {
                         echo

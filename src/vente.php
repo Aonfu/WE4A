@@ -28,7 +28,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $categorie = $_POST["categorie"];
     $description = $_POST["description"];
     $photo = $_FILES["photo"];
-    $db_photo = __DIR__."/temporary/path/" . $photo["name"];
+    $db_photo = "images/" . $photo["name"];  // chemin relatif pour la BDD
+    if (!is_dir(__DIR__ . "/images/")) {
+        mkdir(__DIR__ . "/images/", 0755, true);
+    }
+    move_uploaded_file($photo["tmp_name"], __DIR__ . "/" . $db_photo);
     $prix = $_POST["prix"];
     $date_fin= $_POST["date_fin"];
     $stmt = $conn->prepare("INSERT INTO produit (id_utilisateur, nom, id_categorie, description, photo, prix_depart, date_fin) VALUES (?, ?, ?, ?, ?, ?, ?)");

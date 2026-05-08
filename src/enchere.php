@@ -37,7 +37,7 @@ $enchere_max = max($row_produit['prix_depart'], $row_enchere['MAX(montant)']);
 $enchere_min = ceil($enchere_max * 1.05); //ici on arrondit pour eviter un problème dans le form
 
 // Recupère le nom du gagnant de l'enchère et le montant de son enchère
-$stmt = $conn->prepare("SELECT utilisateur.nom, enchere.montant FROM utilisateur JOIN enchere ON utilisateur.utilisateur_id = enchere.id_user WHERE id_produit = ? ORDER BY montant DESC LIMIT 1 ");
+$stmt = $conn->prepare("SELECT utilisateur.nom, enchere.montant FROM utilisateur JOIN enchere ON utilisateur.utilisateur_id = enchere.id_utilisateur WHERE id_produit = ? ORDER BY montant DESC LIMIT 1 ");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result_gagnant = $stmt->get_result();
@@ -49,7 +49,7 @@ $date_fin = new DateTime($row_produit['date_fin']);
 $diff = $now->diff($date_fin);
 
 //recupère l'historique des enchères pour l'afficher
-$stmt = $conn->prepare("SELECT *, utilisateur.nom FROM enchere JOIN utilisateur ON enchere.id_user = utilisateur.utilisateur_id  WHERE id_produit = ? ORDER BY montant DESC");
+$stmt = $conn->prepare("SELECT *, utilisateur.nom FROM enchere JOIN utilisateur ON enchere.id_utilisateur = utilisateur.utilisateur_id  WHERE id_produit = ? ORDER BY montant DESC");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result_historique = $stmt->get_result();
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bind_param("si", $new_date_fin, $id);
         $stmt->execute();
     }
-    $stmt = $conn->prepare("INSERT INTO enchere(id_user,id_produit,montant,date) VALUES(?,?,?,?)");
+    $stmt = $conn->prepare("INSERT INTO enchere(id_utilisateur,id_produit,montant,date) VALUES(?,?,?,?)");
     $stmt->bind_param("iiis", $id_user,$id,$montant,$date);
     $stmt->execute();
 }
@@ -80,7 +80,7 @@ include "header.php";
             <div class="main-column">
                 <div class="card">
                     <div class="card-images">
-                        <img src="ressources/img/adiren.jpg" class="card-img-top" alt="...">
+                        <img src="<?php echo $row_produit['photo']; ?>" class="card-img-top" alt="produit aux enchères">
                         <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
                         <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
                     </div>
