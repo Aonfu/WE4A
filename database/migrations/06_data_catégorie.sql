@@ -1,0 +1,1 @@
+INSERT INTO categorie (id_categorie, nom) VALUES ('1', 'Électronique'), ('2', 'Mode & Luxe'), ('3', 'Maison & Mobilier'), ('4', 'Véhicules'), ('5', 'Jeux vidéo & Collections'), ('6', 'High-Tech & Informatique'), ('7', 'Sport & Outdoor'), ('8', 'Art & Antiquités'), ('9', 'Outils & Bricolage'), ('10', 'Divers');

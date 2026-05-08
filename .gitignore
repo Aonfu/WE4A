@@ -3,5 +3,8 @@
 !.idea/codeStyles/
 !.idea/inspectionProfiles/
 
-# Docker
+# Docker et config
 .env
+
+# images upload sur le serveur par les clients
+src/images/
