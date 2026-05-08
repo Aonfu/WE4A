@@ -14,11 +14,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_ENV['MYSQL_PASSWORD'],
         $_ENV['MYSQL_DATABASE']
     );
-    $stmt = $conn->prepare("SELECT * FROM utilisateur WHERE email = ? and mdp = ?");
-    $stmt->bind_param("ss", $email,$mdp);
+    $stmt = $conn->prepare("SELECT * FROM utilisateur WHERE email = ?");
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();
-    if ($result){
+    if ($result and password_verify($mdp, $result['mdp'])) {
         $_SESSION["id"] = $result["utilisateur_id"];
         echo "<script>window.location.href='catalogue.php';</script>";
         exit();
