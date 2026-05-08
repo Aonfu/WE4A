@@ -17,6 +17,12 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+//si l'user n'est pas connecté il est immédiatement rediriger a la page de connexion.
+if (!isset($_SESSION['id'])) {
+    echo "<script>window.location.href='connexion.php';</script>";
+    exit();
+}
+
 //recupére tout les élements sur le produits
 $id = $_GET['id'];
 $stmt = $conn->prepare("SELECT * FROM produit WHERE id_produit = ?");
