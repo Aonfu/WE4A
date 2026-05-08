@@ -25,14 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
     else{
-        $error = "mdp ou email invalide";
+        $error = '<p style="color: red; margin-bottom: 0;">Mot de passe ou Email invalide</p>';
     }
 }
 
 include "header.php";
 
 ?>
-    <?php if(isset($error)){echo $error;} ?>
     <div class="form-grid">
         <div class="card">
             <div class="card-body">
@@ -45,6 +44,7 @@ include "header.php";
                     <div class="form-field">
                         <label class="card-text left" for="mdp">Mot de Passe:</label>
                         <input class="form-control form-input" type="password" id="mdp" name="mdp" placeholder="Mot de Passe" required>
+                        <?php if(isset($error)){echo $error;} ?>
                     </div>
                     <button class="button" type="submit">Se Connecter</button>
                 </form>
