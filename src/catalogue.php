@@ -130,7 +130,6 @@ include "header.php";
 
 ?>
 <div class="tri">
-    <!-- Si le details c de la merde pour le css hésite pas a changer Loic -->
     <details>
         <summary>Trier :</summary>
         <a href="catalogue.php?tri=prix_desc">Prix décroissant</a>
@@ -162,8 +161,8 @@ include "header.php";
 <div class="catalogue-grid">
     <?php
     while ($row = $data->fetch_assoc()) {
-        echo
-                '<div class="card">
+        echo '
+        <div class="card">
             <div class="card-images">
                 <img src="' . $row["photo"] . '" class="card-img-top" alt="produit aux enchères">
                 <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
@@ -172,10 +171,18 @@ include "header.php";
             <div class="card-body">
                 <h3 class="card-text card-title">' . $row["nom"] . '</h3>
                 <p class="card-text">' . $row["description"] . '</p>
-                <h1 class="card-text pawnstar-font">$' . $row["montant"] . '</h1>
-            </div>
-            <a href="enchere.php?id='.$row['id_produit'].'" class="stretched-link text-decoration-none"></a>
-        </div>';
+                <h1 class="card-text pawnstar-font">$' . $row["montant"] . '</h1>';
+
+            if ($_SESSION["role"] == "admin") {
+                echo '
+                <form method="post" action="supprimer_produit.php?id=' . $row['id_produit'] . '" style="position: relative; z-index: 10;">
+                    <button class="button" type="submit" onclick="return confirm(\'Voulez-vous vraiment supprimer ce produit ?\')">Supprimer</button>
+            </form>';
+        }
+        echo '
+        </div>
+        <a href="enchere.php?id=' . $row['id_produit'] . '" class="stretched-link text-decoration-none"></a>
+    </div>';
     }
     ?>
 </div>
