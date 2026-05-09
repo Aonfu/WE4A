@@ -88,8 +88,8 @@ include "header.php";
     <div class="centrer">
         <div class="enchere-grid">
             <div class="main-column">
-                <?php if (isset($_SESSION["role]"]) && $_SESSION["role"] == "admin") { ?>
-                    <form method="post" action="supprimer_produit.php?id=' . $row['id_produit'] . '">
+                <?php if (isset($_SESSION["role"]) && $_SESSION["role"] == "admin") { ?>
+                    <form method="post" action="supprimer_produit.php?id=<?php echo $id; ?>">
                         <button class="button" id="supprimer" type="submit" onclick="return confirm('Voulez-vous vraiment supprimer ce produit ?')">Supprimer</button>
                     </form>
                 <?php } ?>
