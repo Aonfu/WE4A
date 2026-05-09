@@ -42,6 +42,18 @@ $stmt->bind_param("si", $now_str, $_SESSION['id']);
 $stmt->execute();
 $result_encheres_gagnees = $stmt->get_result();
 
+//Récupération des enchères en cours avec les détails des produits
+$stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, enchere.montant
+FROM enchere 
+JOIN produit ON enchere.id_produit = produit.id_produit 
+WHERE produit.date_fin > ? 
+AND enchere.id_utilisateur = ? 
+GROUP BY produit.id_produit, produit.nom, produit.description, produit.photo, enchere.montant
+ORDER BY produit.date_fin ASC");
+$stmt->bind_param("si", $now_str, $_SESSION['id']);
+$stmt->execute();
+$result_encheres_en_cours = $stmt->get_result();
+
 // Calcul du nombre d'enchères où l'user a participé et calcul du winrate
 $stmt = $conn->prepare("SELECT enchere.id_produit FROM enchere JOIN produit ON enchere.id_produit = produit.id_produit WHERE produit.date_fin < ? AND enchere.id_utilisateur = ? GROUP BY produit.id_produit");
 $stmt->bind_param("si", $now_str, $_SESSION['id']);
@@ -146,6 +158,7 @@ include "header.php";
             <h1 class="pawnstar-font text-center">Enchères Gagnées</h1>
         </div>
     </div>
+
     <!-- Section Enchères Gagnées -->
     <div class="centrer">
         <div class="catalogue-grid">
@@ -174,12 +187,48 @@ include "header.php";
             <?php } ?>
         </div>
     </div>
+
+
+    <!-- Section Enchères en Cours -->
+    <div class="stat-grid">
+        <div class="card">
+            <h1 class="pawnstar-font text-center">Enchères en Cours</h1>
+        </div>
+    </div>
+    <div class="centrer">
+        <div class="catalogue-grid">
+            <?php if ($result_encheres_en_cours->num_rows > 0) { ?>
+                <?php while ($row = $result_encheres_en_cours->fetch_assoc()) { ?>
+                    <div class="card">
+                        <div class="card-images">
+                            <img src="<?php echo $row["photo"]; ?>" class="card-img-top" alt="Produit aux enchères">
+                            <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
+                            <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-text card-title"><?php echo $row["nom"]; ?></h3>
+                            <p class="card-text"><?php echo $row["description"]; ?></p>
+                            <h1 class="card-text pawnstar-font">$<?php echo $row["montant"]; ?></h1>
+                        </div>
+                        <a href="enchere.php?id=<?php echo $row["id_produit"]; ?>" class="stretched-link text-decoration-none"></a>
+                    </div>
+                <?php } ?>
+            <?php } else { ?>
+                <div class="card no-hover">
+                    <div class="card-body">
+                        <p class="card-text text-center">Vous n'avez aucune enchère en cours.</p>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+
+    <!-- Section Produits en Vente -->
     <div class="stat-grid">
         <div class="card">
             <h1 class="pawnstar-font text-center">Produits en Vente</h1>
         </div>
     </div>
-    <!-- Section Produits en Vente -->
     <div class="centrer">
         <div class="catalogue-grid">
             <?php if ($data->num_rows > 0) { ?>
