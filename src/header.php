@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+<!-- Page d'en-tête commune à tout le site : gère la barre de navigation et l'affichage
+dynamique des liens selon la connexion de l'utilisateur -->
 <html lang="fr">
 <head>
     <meta charset="UTF-8">

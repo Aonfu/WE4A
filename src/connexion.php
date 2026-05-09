@@ -14,10 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_ENV['MYSQL_PASSWORD'],
         $_ENV['MYSQL_DATABASE']
     );
+    // Recherche de l'utilisateur par son email
     $stmt = $conn->prepare("SELECT * FROM utilisateur WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();
+    // Vérification du mot de passe avec password_verify()
     if ($result and password_verify($mdp, $result['mdp'])) {
         $_SESSION["id"] = $result["utilisateur_id"];
         $_SESSION["role"] = $result["role"];
@@ -25,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
     else{
+        // Message d'erreur
         $error = '<p style="color: red; margin-bottom: 0;">Mot de passe ou Email invalide</p>';
     }
 }
@@ -32,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 include "header.php";
 
 ?>
+<!-- Formulaire de connexion -->
     <div class="form-grid">
         <div class="card">
             <div class="card-body">

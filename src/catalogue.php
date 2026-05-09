@@ -15,6 +15,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Récupération de toutes les catégories pour le menu de filtrage
 $stmt = $conn->prepare("SELECT * FROM categorie");
 $stmt->execute();
 $result_categorie = $stmt->get_result();
@@ -22,7 +23,8 @@ $result_categorie = $stmt->get_result();
 $now = new DateTime();
 $now_str = $now->format('Y-m-d H:i:s');
 
-//tri par prix décroissant
+// Gestion des différents filtres et tris du catalogue
+// Tri par prix décroissant (du plus cher au moins cher)
 if( isset($_GET['tri']) && $_GET['tri'] == 'prix_desc') {
     $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
     FROM produit
@@ -34,7 +36,7 @@ if( isset($_GET['tri']) && $_GET['tri'] == 'prix_desc') {
     $data = $stmt->get_result();
 }
 
-//tri par prix croissant
+// Tri par prix croissant (du moins cher au plus cher)
 elseif ( isset($_GET['tri']) && $_GET['tri'] == 'prix_asc') {
     $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
     FROM produit
@@ -46,7 +48,7 @@ elseif ( isset($_GET['tri']) && $_GET['tri'] == 'prix_asc') {
     $data = $stmt->get_result();
 }
 
-//tri par catégorie
+// Filtrage par catégorie
 elseif ( isset($_GET['categorie'])) {
     $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
     FROM produit
@@ -58,7 +60,7 @@ elseif ( isset($_GET['categorie'])) {
     $data = $stmt->get_result();
 }
 
-//recherche
+// Recherche textuelle dans les noms des produits
 elseif ( isset($_GET['search'])) {
     $search = '%'.$_GET['search'].'%';
     $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
@@ -71,7 +73,7 @@ elseif ( isset($_GET['search'])) {
     $data = $stmt->get_result();
 }
 
-//filtre si prix max et prix min sont tous les deux rentrés par l'user
+// Filtre par fourchette de prix (entre prix_min et prix_max)
 elseif (isset($_GET['prix_min']) && isset($_GET['prix_max'])) {
     $prix_max = $_GET['prix_max'];
     $prix_min = $_GET['prix_min'];
@@ -86,7 +88,7 @@ elseif (isset($_GET['prix_min']) && isset($_GET['prix_max'])) {
     $data = $stmt->get_result();
 }
 
-//filtre Plus de :
+// Filtre "Prix supérieur ou égal à" (Plus de ...)
 elseif ( isset($_GET['prix_min'])) {
     $prix_min = $_GET['prix_min'];
     $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
@@ -100,7 +102,7 @@ elseif ( isset($_GET['prix_min'])) {
     $data = $stmt->get_result();
 }
 
-//filtre Moins de :
+// Filtre "Prix inférieur ou égal à" (Moins de ...)
 elseif ( isset($_GET['prix_max'])) {
     $prix_max = $_GET['prix_max'];
     $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
@@ -114,7 +116,7 @@ elseif ( isset($_GET['prix_max'])) {
     $data = $stmt->get_result();
 }
 
-//tri par défaut
+// Requête par défaut : affiche toutes les enchères en cours
 else {
     $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom, produit.description, produit.photo, GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
     FROM produit
@@ -131,7 +133,7 @@ include "header.php";
 ?>
     <div class="centrer">
         <div class="catalogue-grid">
-            <div class="card" id="tri">
+            <div class="card no-hover" id="tri">
                 <div class="card-body">
                     <details class="form">
                         <summary class="pawnstar-font">Trier Prix</summary>
@@ -157,6 +159,8 @@ include "header.php";
                     </details>
                     <details class="form">
                         <summary class="pawnstar-font">Catégories</summary>
+
+                        <!--Parcours et affichage de chaque produit -->
                         <?php while ($row_categorie=$result_categorie->fetch_assoc()) {
                             echo('<a class="button text-decoration-none categorie" href="catalogue.php?categorie='.$row_categorie['id_categorie'].'">'.$row_categorie['nom'].'</a>');
                         } ?>

@@ -1,10 +1,14 @@
 <?php
 
+// Page de suppression : supprime d'abord les enchères liées au produit
+// puis le produit lui-même, puis redirige vers mon_espace.php
+
 session_start();
 
 $page_title = "Supprimer un produit";
 
-date_default_timezone_set('Europe/Paris'); //ligne assez importante pour régler un bug
+date_default_timezone_set('Europe/Paris'); //ligne importante pour régler un bug
+
 $conn = new mysqli(
     $_ENV['MYSQL_HOST'],
     $_ENV['MYSQL_USER'],
@@ -25,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $conn->prepare("DELETE FROM produit WHERE id_produit = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
-    echo "<script>window.location.href='mon_espace.php';</script>"; // redirection en Javascript pour éviter un bug causé par le header
+    echo "<script>window.location.href='mon_espace.php';</script>";
 }
 
 include "header.php";
