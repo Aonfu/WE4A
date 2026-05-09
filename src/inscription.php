@@ -3,6 +3,7 @@
 session_start();
 
 $page_title = "Inscription";
+// Initialisation de la variable d'erreur pour l'affichage
 $erreur = '';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -10,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $prenom = $_POST["prenom"];
     $email = $_POST["email"];
     $mdp = $_POST["mdp"];
+    // Hashage du mot de passe
     $mdp_hash = password_hash($mdp, PASSWORD_DEFAULT);
 
     $conn = new mysqli(
@@ -18,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_ENV['MYSQL_PASSWORD'],
         $_ENV['MYSQL_DATABASE']
     );
+    // Vérifie si l'email est déjà utilisé par un autre compte
     $stmt = $conn->prepare("SELECT * FROM utilisateur WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -72,6 +75,7 @@ include "header.php";
     </div>
     <?php include "footer.php"; ?>
     <script>
+        // Validation JavaScript : vérifie que les deux mots de passe correspondent avant l'envoi
         const form = document.getElementById('form_inscription');
         const mdp = document.getElementById('mdp');
         const confirmMdp = document.getElementById('confirm_mdp');

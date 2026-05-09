@@ -16,6 +16,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Récupération de toutes les catégories pour le select
 $stmt = $conn->prepare("SELECT * FROM categorie");
 $stmt->execute();
 $result = $stmt->get_result();
@@ -24,7 +25,7 @@ $min_date = date('Y-m-d\TH:i');
 
 $id=$_GET['id'];
 
-//requete pour remplir le formulaire
+// Récupération des informations du produit à éditer
 $stmt = $conn->prepare("SELECT produit.id_produit, produit.nom AS nom, produit.description, produit.photo, produit.date_fin, produit.id_categorie ,GREATEST(COALESCE(MAX(enchere.montant),0), produit.prix_depart) AS montant
 FROM produit
 LEFT JOIN enchere ON produit.id_produit = enchere.id_produit
@@ -35,12 +36,14 @@ $stmt->execute();
 $result_produit = $stmt->get_result();
 $row_produit = $result_produit->fetch_assoc();
 
-// requete pour update le produit dans la bdd
+// Traitement du formulaire de modification
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nom = $_POST["nom"];
     $categorie = $_POST["categorie"];
     $description = $_POST["description"];
+    // Garde l'ancienne photo par défaut
     $db_photo = $row_produit["photo"];
+    // Si la photo a été modifiée on prend la nouvelle
     if (isset($_FILES["photo"]) && $_FILES["photo"]["error"] === UPLOAD_ERR_OK && $_FILES["photo"]["name"] != '') {
         $photo = $_FILES["photo"];
         $db_photo = "images/" . $photo["name"];
@@ -49,15 +52,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
         move_uploaded_file($photo["tmp_name"], __DIR__ . "/" . $db_photo);
     }
+    // Mise à jour du produit dans la BDD
     $stmt = $conn->prepare("UPDATE produit SET nom = ?,id_categorie = ?, description = ?, photo = ? WHERE id_produit = ?");
     $stmt->bind_param("sissi", $nom, $categorie, $description, $db_photo,$id);
     $stmt->execute();
-    echo "<script>window.location.href='mon_espace.php';</script>"; // redirection en Javascript pour éviter un bug causé par le header
+    echo "<script>window.location.href='mon_espace.php';</script>";
 }
 
 include "header.php";
 
 ?>
+<!-- Formulaire de modification -->
     <div class="form-grid">
         <div class="card">
             <div class="card-body">

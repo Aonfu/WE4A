@@ -17,13 +17,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-//si l'user n'est pas connecté il est immédiatement rediriger a la page de connexion.
+//si l'user n'est pas connecté il est immédiatement redirigé à la page de connexion.
 if (!isset($_SESSION['id'])) {
     echo "<script>window.location.href='connexion.php';</script>";
     exit();
 }
 
-//recupére tout les élements sur le produits
+// Récupération des informations du produit
 $id = $_GET['id'];
 $stmt = $conn->prepare("SELECT * FROM produit WHERE id_produit = ?");
 $stmt->bind_param("i", $id);
@@ -36,13 +36,13 @@ $stmt->bind_param("i", $id);
 $stmt->execute();
 $result_enchere = $stmt->get_result();
 
-// partie qui calcule le prix minimum de l'enchère qui doit etre 5% plus que le prix actuel (la valeur peut etre modifiée)
+// Calcul du prix actuel et du minimum pour la prochaine enchère (+5%)
 $row_produit = $result_produit->fetch_assoc();
 $row_enchere = $result_enchere->fetch_assoc();
 $enchere_max = max($row_produit['prix_depart'], $row_enchere['MAX(montant)']);
 $enchere_min = ceil($enchere_max * 1.05); //ici on arrondit pour eviter un problème dans le form
 
-// Recupère le nom du gagnant de l'enchère et le montant de son enchère
+// Récupération du meilleur enchérisseur actuel
 $stmt = $conn->prepare("SELECT utilisateur.nom, enchere.montant FROM utilisateur JOIN enchere ON utilisateur.utilisateur_id = enchere.id_utilisateur WHERE id_produit = ? ORDER BY montant DESC LIMIT 1 ");
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -54,13 +54,13 @@ $now = new DateTime();
 $date_fin = new DateTime($row_produit['date_fin']);
 $diff = $now->diff($date_fin);
 
-//recupère l'historique des enchères pour l'afficher
+// Récupération de tout l'historique des enchères
 $stmt = $conn->prepare("SELECT *, utilisateur.nom FROM enchere JOIN utilisateur ON enchere.id_utilisateur = utilisateur.utilisateur_id  WHERE id_produit = ? ORDER BY montant DESC");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result_historique = $stmt->get_result();
 
-// Gère le formulaire, s'il reste moins de 1h à l'enchère, la date de fin est modifié et est arrondie à l'heure suppérieure
+// Traitement d'une nouvelle enchère
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!isset($_SESSION["id"])) {
         header("Location: connexion.php");
@@ -69,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $montant=$_POST["montant"];
     $id_user=$_SESSION["id"];
     $date = date('Y-m-d H:i:s');
+    // Si moins d'1h restante, prolonge l'enchère d'1h
     if($diff->days == 0 and $diff->h == 0){
         $date_fin->modify('+1 hour');
         $date_fin->setTime($date_fin->format('H'), 0);
@@ -156,7 +157,7 @@ include "header.php";
     </div>
     <?php include "footer.php"; ?>
     <script>
-        // Requette AJAX pour garder les information a jours
+        // Mise à jour automatique toutes les 3 secondes par une requête AJAX
         setInterval(function () {
             fetch('get_data_enchere.php?id=<?php echo $id; ?>')
                 .then(response => response.json())

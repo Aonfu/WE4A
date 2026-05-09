@@ -17,6 +17,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Récupération de toutes les catégories pour le menu déroulant
 $stmt = $conn->prepare("SELECT * FROM categorie");
 $stmt->execute();
 $result = $stmt->get_result();
@@ -28,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $categorie = $_POST["categorie"];
     $description = $_POST["description"];
     $photo = $_FILES["photo"];
+    // Upload de la photo : création du dossier si inexistant et déplacement du fichier
     $db_photo = "images/" . $photo["name"];  // chemin relatif pour la BDD
     if (!is_dir(__DIR__ . "/images/")) {
         mkdir(__DIR__ . "/images/", 0755, true);
@@ -38,7 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $conn->prepare("INSERT INTO produit (id_utilisateur, nom, id_categorie, description, photo, prix_depart, date_fin) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("isissis", $_SESSION["id"],$nom, $categorie, $description, $db_photo, $prix, $date_fin);
     $stmt->execute();
-    echo "<script>window.location.href='mon_espace.php';</script>"; // redirection en Javascript pour éviter un bug causé par le header
+    // Redirection vers l'espace personnel après création
+    echo "<script>window.location.href='mon_espace.php';</script>";
     exit();
 }
 
@@ -65,8 +68,9 @@ include "header.php";
                             <label class="card-text" for="categorie">Catégorie :</label>
                             <select class="form-select form-input" name="categorie" id="categorie">
                                 <?php while ($row=$result->fetch_assoc()) {
-                                echo('<option value="'.$row['id_categorie'].'">'.$row['nom'].'</option>');
-                            } ?>
+                                    // Génération des options du menu déroulant des catégories
+                                    echo('<option value="'.$row['id_categorie'].'">'.$row['nom'].'</option>');
+                                } ?>
                             </select>
                         </div>
                         <div class="form-field">
