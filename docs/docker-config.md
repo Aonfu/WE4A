@@ -1,4 +1,4 @@
-# installation et configuration du projet
+# installation et configuration du projet sur votre environnement de developement
 
 ## dependences requises :
 - Git
@@ -65,6 +65,5 @@ et ouvrez le dans votre éditeur préféré
 3. mettez host à `localhost`, port à `3306`, et fournissez les données de login ainsi que le nom de la base de données
 4. Installez les drivers si proposés
 5. Testez la connexion et sauvegardez
-6. Dans Phpmyadmin, appliquez successivement les migrations sotckées dans database/migrations/ via la catégorie "importer"
 
 adapté du guide de Corentin Hautefaye : https://github.com/TheRefraction/WE4_Project/blob/master/README.md
