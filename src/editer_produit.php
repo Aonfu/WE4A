@@ -40,11 +40,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nom = $_POST["nom"];
     $categorie = $_POST["categorie"];
     $description = $_POST["description"];
-    if ($_FILES["photo"]["name"] == '') {
-        $db_photo = $row_produit["photo"];
-    } else {
-        $db_photo = "images/" . $_FILES["photo"]["name"];
-        move_uploaded_file($_FILES["photo"]["tmp_name"], __DIR__ . "/" . $db_photo);
+    $db_photo = $row_produit["photo"];
+    if (isset($_FILES["photo"]) && $_FILES["photo"]["error"] === UPLOAD_ERR_OK && $_FILES["photo"]["name"] != '') {
+        $photo = $_FILES["photo"];
+        $db_photo = "images/" . $photo["name"];
+        if (!is_dir(__DIR__ . "/images/")) {
+            mkdir(__DIR__ . "/images/", 0755, true);
+        }
+        move_uploaded_file($photo["tmp_name"], __DIR__ . "/" . $db_photo);
     }
     $stmt = $conn->prepare("UPDATE produit SET nom = ?,id_categorie = ?, description = ?, photo = ? WHERE id_produit = ?");
     $stmt->bind_param("sissi", $nom, $categorie, $description, $db_photo,$id);

@@ -175,7 +175,7 @@ include "header.php";
                         document.getElementById('enchere_over').innerHTML = '<p class="card-text">L\'enchère a été gagnée par ' + data.gagnant.nom + ' pour un montant de </p><h1 class="pawnstar-font">$' + data.gagnant.montant + '</h1>';
                     }
                 });
-        },5000);
+        },3000);
     </script>
 </body>
 </html>
