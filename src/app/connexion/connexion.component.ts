@@ -28,7 +28,7 @@ export class ConnexionComponent {
           })
           .subscribe();
 
-        localStorage.setItem('user', JSON.stringify({ role: data.role }));
+        localStorage.setItem('user', JSON.stringify({ role: data.role, email: email }));
         this.router.navigate(['/catalogue']);
       } else {
         // Log de tentative échouée
