@@ -1,0 +1,42 @@
+<div class="form-grid">
+  <div class="card">
+    <div class="card-body">
+      <form class="form">
+        <h1 class="pawnstar-font">Mise aux enchères</h1>
+        <div class="form-row">
+          <div class="form-field">
+            <label class="card-text" for="nom">Nom :</label>
+            <input class="form-control form-input" type="text" id="nom" placeholder="Nom" required #nom>
+          </div>
+          <div class="form-field">
+            <label class="card-text" for="prix">Prix de départ :</label>
+            <input class="form-control form-input" type="number" id="prix" placeholder="Prix" required min="1" step="1" #prix>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label class="card-text" for="categorie">Catégorie :</label>
+            <select class="form-select form-input" id="categorie" #categorie>
+            @for (cat of categories; track cat.id_categorie) {
+                <option [value]="cat.id_categorie">{{ cat.nom }}</option>
+            }
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="card-text" for="date_fin">Date de fin :</label>
+            <input class="form-control form-input" type="datetime-local" id="date_fin" [min]="minDate" required #date_fin>
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="card-text" for="description">Description :</label>
+          <textarea class="form-control form-input" id="description" placeholder="Description" required #description></textarea>
+        </div>
+        <div class="form-field">
+          <label class="card-text" for="photo">Photo :</label>
+          <input class="form-control form-input" type="file" id="photo" accept="image/*" required (change)="onPhotoChange($event)">
+        </div>
+        <button class="button" type="button" (click)="soumettre(nom.value, categorie.value, description.value, prix.value, date_fin.value)">Mettre aux enchères</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<!-- Formulaire de modification -->
+<div class="form-grid" *ngIf="produit">
+  <div class="card">
+    <div class="card-body">
+      <form class="form">
+        <h1 class="pawnstar-font">Édition ou Suppression</h1>
+        <div class="form-row">
+          <div class="form-field">
+            <label class="card-text" for="nom">Nom :</label>
+            <input class="form-control form-input" type="text" id="nom" placeholder="Nom" [value]="produit.nom" required #nom>
+          </div>
+          <div class="form-field">
+            <label class="card-text" for="categorie">Catégorie :</label>
+            <select class="form-select form-input" id="categorie" #categorie>
+              @for (cat of categories; track cat.id_categorie) {
+                <option [value]="cat.id_categorie" [selected]="cat.id_categorie == produit.id_categorie">{{ cat.nom }}</option>
+              }
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="card-text" for="description">Description :</label>
+          <textarea class="form-control form-input" id="description" placeholder="Description" required #description>{{ produit.description }}</textarea>
+        </div>
+        <div class="form-field">
+          <label class="card-text" for="photo">Photo :</label>
+          <input class="form-control form-input" type="file" id="photo" accept="image/*" (change)="onPhotoChange($event)">
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <button class="button" type="button" (click)="modifier(nom.value, categorie.value, description.value)">Modifier</button>
+          </div>
+          <div class="form-field">
+            <button class="button" type="button" (click)="supprimer()">Supprimer</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
