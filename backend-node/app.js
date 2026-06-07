@@ -4,6 +4,7 @@ const logsRouter = require('./routes/logs');
 const filesRouter = require('./routes/files');
 const statsRouter = require('./routes/stats');
 const { collectVisit } = require('./middleware/collectStats');
+require('dotenv').config();
 
 const app = express();
 app.use(express.json());
