@@ -16,7 +16,7 @@ export class App implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    // pour compter les visites sur la page d'acceuil
+    // Pour compter les visites sur la page d'accueil
     this.http.get('http://localhost:3000/api/stats/visit').subscribe();
   }
 }

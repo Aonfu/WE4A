@@ -7,19 +7,38 @@ import { HttpClient } from '@angular/common/http';
   standalone: true,
   imports: [CommonModule, RouterModule],
   selector: 'app-connexion',
-  templateUrl: './connexion.component.html'
+  templateUrl: './connexion.component.html',
 })
 export class ConnexionComponent {
   error = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
   connecter(email: string, mdp: string) {
-    this.http.post<any>('/api/connexion.php', { email, mdp }).subscribe(data => {
+    this.http.post<any>('/api/connexion.php', { email, mdp }).subscribe((data) => {
       if (data.success) {
+        // Log de connexion réussie
+        this.http
+          .post('http://localhost:3000/api/logs/create', {
+            userId: email,
+            action: 'login',
+          })
+          .subscribe();
+
         localStorage.setItem('user', JSON.stringify({ role: data.role }));
         this.router.navigate(['/catalogue']);
       } else {
+        // Log de tentative échouée
+        this.http
+          .post('http://localhost:3000/api/logs/create', {
+            userId: email,
+            action: 'login_failed',
+          })
+          .subscribe();
+
         this.error = data.error;
       }
     });
