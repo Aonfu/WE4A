@@ -1,4 +1,5 @@
 <?php
+header('Access-Control-Allow-Origin: http://localhost:4200');
 header('Content-Type: application/json');
 date_default_timezone_set('Europe/Paris'); //ligne assez importante pour régler un bug
 
@@ -54,6 +55,7 @@ $historique = [];
 while($row_historique = $result_historique->fetch_assoc()){
     $historique[] = $row_historique;
 }
+
 echo json_encode([
     'enchere_min' => $enchere_min,
     'date_fin' => $row_produit['date_fin'],
@@ -62,4 +64,3 @@ echo json_encode([
     'termine' => $date_fin < $now,
     'prix_actuel' => max($row_produit['prix_depart'], $row_enchere['MAX(montant)'] ?? 0)
 ]);
-?>

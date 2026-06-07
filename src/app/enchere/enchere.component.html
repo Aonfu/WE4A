@@ -1,0 +1,74 @@
+<div class="centrer" *ngIf="produit">
+  <div class="enchere-grid">
+    <div class="main-column">
+      @if (role == 'admin') {
+        <form (submit)="supprimerProduit()">
+          <button class="button" id="supprimer" type="button" style="margin-bottom: 10px;" (click)="supprimerProduit()">Supprimer</button>
+        </form>
+      }
+      <div class="card">
+        <div class="card-images">
+          <img src="{{ produit.photo }}" class="card-img-top" alt="produit aux enchères">
+          <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
+          <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
+        </div>
+        <div class="card-body">
+          <h1 class="card-title">{{ produit.nom }}</h1>
+          <p>{{ produit.description }}</p>
+          <h1 class="card-title pawnstar-font" id="prix">${{ enchere_max }}</h1>
+        </div>
+      </div>
+    </div>
+    <div class="side-column">
+      <div class="card">
+        <div class="card-body">
+          <form class="form" id="form">
+            @if (!termine) {
+              @if (!id_utilisateur_session || id_utilisateur_session != produit.id_utilisateur) {
+                <h1 class="pawnstar-font">Placer Enchère</h1>
+                <p class="card-text">L'Enchère finit le :</p>
+                <h1 id="date_fin">{{ produit.date_fin }}</h1>
+                <label class="card-text" for="montant">Montant de l'enchère :</label>
+                <input class="form-control form-input" type="number" id="montant" required [min]="enchere_min" [placeholder]="'Min : $' + enchere_min" #montant>
+                <button class="button" type="button" id="placer" (click)="placerEnchere(montant.value)">Placer l'enchère</button>
+              } @else {
+                <p class="card-text">L'Enchère finit le :</p>
+                <h1 id="date_fin">{{ produit.date_fin }}</h1>
+                <a class="button text-decoration-none" [routerLink]="['/editer_produit', id]" id="placer">Editer ou Supprimer l'Enchère</a>
+              }
+            }
+          </form>
+          @if (termine && gagnant) {
+            <div id="enchere_over" class="form">
+              <p class="card-text">L'enchère a été gagnée par {{ gagnant.nom }} pour un montant de </p>
+              <h1 class="pawnstar-font">${{ gagnant.montant }}</h1>
+            </div>
+          }
+        </div>
+      </div>
+      <div class="card">
+        <h1 class="pawnstar-font text-center">Historique</h1>
+        @if (historique.length > 0) {
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Montant</th>
+              </tr>
+            </thead>
+            <tbody id="historique">
+              @for (row of historique; track row.montant) {
+                <tr>
+                  <td>{{ row.nom }}</td>
+                  <td>{{ row.montant }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <p id="historique" class="card-text text-center">Aucune enchère n'a encore été placée</p>
+        }
+      </div>
+    </div>
+  </div>
+</div>
