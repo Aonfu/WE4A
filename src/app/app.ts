@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,13 @@ import { HeaderComponent } from './header/header.component';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('WE4B');
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    // Compter la visite sur la page d'accueil
+    this.http.get('http://localhost:3000/api/stats/visit').subscribe();
+  }
 }

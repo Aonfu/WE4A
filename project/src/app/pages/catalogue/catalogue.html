@@ -1,0 +1,49 @@
+<div class="centrer">
+  <div class="catalogue-grid">
+    <div class="card no-hover" id="tri">
+      <div class="card-body">
+        <details class="form">
+          <summary class="pawnstar-font">Trier Prix</summary>
+          <div class="form-row">
+            <div class="form-field">
+              <label class="card-text" for="prix_max">Plus de :</label>
+              <input class="form-control form-input" type="number" placeholder="$" [(ngModel)]="prixMin" name="prix_min" id="prix_min">
+            </div>
+            <div class="form-field">
+              <label class="card-text" for="prix_max">Moins de :</label>
+              <input class="form-control form-input" type="number" placeholder="$" [(ngModel)]="prixMax" name="prix_max" id="prix_max">
+            </div>
+          </div>
+          <div class="form-field">
+            <button class="button text-decoration-none" (click)="tri='prix_asc'; appliquerFiltres()">Prix croissant</button>
+          </div>
+          <div class="form-field">
+            <button class="button text-decoration-none" (click)="tri='prix_desc'; appliquerFiltres()">Prix décroissant</button>
+          </div>
+          <button class="button" (click)="appliquerFiltres()">Filtrer</button>
+        </details>
+        <details class="form">
+          <summary class="pawnstar-font">Catégories</summary>
+          <!-- Parcours et affichage de chaque catégorie -->
+          <button *ngFor="let cat of categories" class="button text-decoration-none categorie" (click)="selectedCategorie=cat.id_categorie; appliquerFiltres()">
+            {{ cat.nom }}
+          </button>
+        </details>
+      </div>
+    </div>
+    <!-- Parcours et affichage de chaque produit -->
+    <div *ngFor="let produit of produits" class="card">
+      <div class="card-images">
+        <img [src]="produit.photo" class="card-img-top" alt="...">
+        <img src="assets/ressources/img/scotch.png" class="scotch-1" alt="...">
+        <img src="assets/ressources/img/scotch.png" class="scotch-2" alt="...">
+      </div>
+      <div class="card-body">
+        <h3 class="card-text card-title">{{ produit.nom }}</h3>
+        <p class="card-text">{{ produit.description }}</p>
+        <h1 class="card-text pawnstar-font">${{ produit.montant }}</h1>
+      </div>
+      <a [routerLink]="['/enchere', produit.id_produit]" class="stretched-link text-decoration-none"></a>
+    </div>
+  </div>
+</div>
