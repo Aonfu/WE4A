@@ -181,4 +181,5 @@ router.get('/html', async (req, res) => {
   res.send(html);
 });
 
+// Lien pour dahsboard http://localhost:3000/api/stats/html
 module.exports = router;

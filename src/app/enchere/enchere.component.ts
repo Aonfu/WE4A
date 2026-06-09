@@ -19,14 +19,21 @@ export class EnchereComponent implements OnInit, OnDestroy {
   id_utilisateur_session: any = null;
   role: any = null;
   id: any = null;
+  userId: string = '';
   private interval: any;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const userData = JSON.parse(user);
+      this.userId = userData.email || userData.id || 'unknown';
+    }
+
     this.id = this.route.snapshot.paramMap.get('id');
     this.charger();
-    // Mise à jour toutes les 3 secondes par une requete AJAX
+    // Mise à jour toutes les 3 secondes
     this.interval = setInterval(() => {
       this.http.get<any>(`/api/get_data_enchere.php?id=${this.id}`).subscribe((data: any) => {
         this.enchere_min = data.enchere_min;
@@ -63,13 +70,32 @@ export class EnchereComponent implements OnInit, OnDestroy {
   }
 
   placerEnchere(montant: string) {
-    this.http.post<any>(`/api/enchere.php?id=${this.id}`, { montant: +montant }).subscribe(() => {
+    const montantValue = +montant;
+    this.http.post<any>(`/api/enchere.php?id=${this.id}`, { montant: montantValue }).subscribe((data: any) => {
+      if (data.success !== false) {
+        // Log de l'enchère
+        this.http.post('http://localhost:3000/api/logs/create', {
+          userId: this.userId,
+          action: 'enchere',
+          details: { productId: this.id, amount: montantValue }
+        }).subscribe();
+        // Incrémenter la stat enchère
+        this.http.post('http://localhost:3000/api/stats/create', {
+          metric: 'enchere'
+        }).subscribe();
+      }
       this.charger();
     });
   }
 
   supprimerProduit() {
     if (confirm('Voulez-vous vraiment supprimer ce produit ?')) {
+      // Log suppression
+      this.http.post('http://localhost:3000/api/logs/create', {
+        userId: this.userId,
+        action: 'delete_product',
+        details: { productId: this.id }
+      }).subscribe();
       this.router.navigate(['/supprimer_produit', this.id]);
     }
   }
