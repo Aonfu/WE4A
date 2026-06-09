@@ -15,10 +15,17 @@ export class EditerProduitComponent implements OnInit {
   minDate = '';
   photoFile: File | null = null;
   id: any = null;
+  userId: string = '';
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const userData = JSON.parse(user);
+      this.userId = userData.email || userData.id || 'unknown';
+    }
+
     this.id = this.route.snapshot.paramMap.get('id');
     this.http.get<any>(`/api/editer_produit.php?id=${this.id}`).subscribe((data: any) => {
       this.produit = data.produit;
@@ -39,10 +46,24 @@ export class EditerProduitComponent implements OnInit {
     formData.append('description', description);
     if (this.photoFile) {
       formData.append('photo', this.photoFile);
+
+      // Si nouvelle photo, upload vers Node.js
+      const imageFormData = new FormData();
+      imageFormData.append('image', this.photoFile);
+      imageFormData.append('userId', this.userId);
+      this.http.post<any>('http://localhost:3000/api/files/upload', imageFormData).subscribe();
     }
+
     // Mise à jour du produit dans la BDD
     this.http.post<any>(`/api/editer_produit.php?id=${this.id}`, formData).subscribe((data: any) => {
       if (data.success) {
+        // Log pour édition de produit
+        this.http.post('http://localhost:3000/api/logs/create', {
+          userId: this.userId,
+          action: 'edit_product',
+          details: { productId: this.id }
+        }).subscribe();
+
         this.router.navigate(['/mon_espace']);
       }
     });
@@ -52,6 +73,13 @@ export class EditerProduitComponent implements OnInit {
     if (confirm('Voulez vous vraiment supprimer ce produit ?')) {
       this.http.post<any>('/api/supprimer_produit.php', { id: this.id }).subscribe((data: any) => {
         if (data.success) {
+          // Log pour suppression de produit
+          this.http.post('http://localhost:3000/api/logs/create', {
+            userId: this.userId,
+            action: 'delete_product',
+            details: { productId: this.id }
+          }).subscribe();
+
           this.router.navigate(['/mon_espace']);
         }
       });

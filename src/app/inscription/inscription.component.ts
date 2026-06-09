@@ -22,6 +22,14 @@ export class InscriptionComponent {
     this.erreur = '';
     this.http.post<any>('/api/inscription.php', { nom, prenom, email, mdp }).subscribe(data => {
       if (data.success) {
+        // Log d'inscription
+        this.http
+          .post('http://localhost:3000/api/logs/create', {
+            userId: email,
+            action: 'register',
+          })
+          .subscribe();
+
         this.router.navigate(['/catalogue']);
       } else {
         this.erreur = data.error;
