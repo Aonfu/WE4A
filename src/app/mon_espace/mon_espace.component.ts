@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -22,7 +22,7 @@ export class MonEspaceComponent implements OnInit {
   encheres_en_cours: any[] = [];
   produits_en_vente: any[] = [];
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.http.get<any>('/api/mon_espace.php').subscribe((data: any) => {
@@ -41,6 +41,7 @@ export class MonEspaceComponent implements OnInit {
       this.encheres_gagnees = data.encheres_gagnees;
       this.encheres_en_cours = data.encheres_en_cours;
       this.produits_en_vente = data.produits_en_vente;
+      this.cdr.detectChanges();
     });
   }
 }

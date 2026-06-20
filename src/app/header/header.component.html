@@ -28,12 +28,15 @@
         }
       </ul>
     </div>
-    <form class="d-flex order-1 order-md-2" role="search" (submit)="search(searchInput.value)">
-      <input class="form-control me-2 search-bar" type="search" placeholder="Search" aria-label="Search" #searchInput>
-      <button class="btn search-button" type="submit"></button>
+    <form class="d-flex order-1 order-md-2" role="search" (submit)="$event.preventDefault()">
+      <input
+        class="form-control me-2 search-bar"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+        #searchInput
+        (input)="search(searchInput.value)"
+      >
     </form>
-    <button class="navbar-toggler order-3 ms-auto navbar-burger" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
   </div>
 </nav>
