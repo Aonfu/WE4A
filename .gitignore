@@ -49,5 +49,6 @@ Thumbs.db
 
 # images upload sur le serveur par les clients
 src/images/
+backend-node/uploads
 
 .angular
