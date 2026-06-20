@@ -76,7 +76,7 @@ export class VenteComponent implements OnInit {
                 metric: 'product'
               }).subscribe();
 
-              this.router.navigate(['/mon_espace']);
+              this.router.navigate(['/catalogue']);
             } else {
               console.error('Erreur PHP:', data.error);
             }
