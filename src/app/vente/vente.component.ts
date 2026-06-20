@@ -22,7 +22,8 @@ export class VenteComponent implements OnInit {
     const user = localStorage.getItem('user');
     if (user) {
       const userData = JSON.parse(user);
-      this.userId = userData.email || userData.id || 'unknown';
+      // Utilise l'id ou l'email si l'id n'existe pas
+      this.userId = userData.id || userData.email || 'unknown';
     }
 
     this.http.get<any>('/api/vente.php').subscribe((data: any) => {
@@ -36,6 +37,12 @@ export class VenteComponent implements OnInit {
   }
 
   soumettre(nom: string, categorie: string, description: string, prix: string, date_fin: string) {
+    // Vérifier que userId n'est pas 'unknown'
+    if (this.userId === 'unknown') {
+      console.error('Utilisateur non connecté');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('nom', nom);
     formData.append('categorie', categorie);
@@ -43,7 +50,7 @@ export class VenteComponent implements OnInit {
     formData.append('prix', prix);
     formData.append('date_fin', date_fin);
     formData.append('photo', this.photoFile!);
-    formData.append('userId', this.userId);
+    formData.append('id_utilisateur', this.userId);
 
     // Upload l'image sur mongo DB
     const imageFormData = new FormData();
@@ -52,21 +59,30 @@ export class VenteComponent implements OnInit {
 
     this.http.post<any>('http://localhost:3000/api/files/upload', imageFormData).subscribe({
       next: (imageData) => {
-        console.log('Image uploadée:', imageData);
-        this.http.post<any>('/api/vente.php', formData).subscribe((data: any) => {
-          if (data.success) {
-            // Log de la création du produit
-            this.http.post('http://localhost:3000/api/logs/create', {
-              userId: this.userId,
-              action: 'create_product'
-            }).subscribe();
+        console.log('📸 Image uploadée:', imageData);
 
-            // Incrémenter la stat product
-            this.http.post('http://localhost:3000/api/stats/create', {
-              metric: 'product'
-            }).subscribe();
+        // Envoi du formulaire à PHP
+        this.http.post<any>('/api/vente.php', formData).subscribe({
+          next: (data: any) => {
+            if (data.success) {
+              // Log de la création du produit
+              this.http.post('http://localhost:3000/api/logs/create', {
+                userId: this.userId,
+                action: 'create_product'
+              }).subscribe();
 
-            this.router.navigate(['/mon_espace']);
+              // Incrémenter la stat product
+              this.http.post('http://localhost:3000/api/stats/create', {
+                metric: 'product'
+              }).subscribe();
+
+              this.router.navigate(['/catalogue']);
+            } else {
+              console.error('Erreur PHP:', data.error);
+            }
+          },
+          error: (err) => {
+            console.error('Erreur envoi formulaire:', err);
           }
         });
       },
