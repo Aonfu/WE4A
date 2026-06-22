@@ -22,10 +22,6 @@
 3. quand vous démarrez Docker pour la première fois, acceptez les conditions d'utilisation. Vous n'avez pas besoin d'utiliser un compte (appuyez sur skip), travailler en local est suffisant.
 4. Docker s'initialisera. Cela peut prendre un moment lors du premier lancement.
 
-#### installation de PhpStorm
-1. allez sur [Jetbrains PhpStorm website](https://www.jetbrains.com/fr-fr/phpstorm/) et télécharger l'installeur ou avec votre gestionnaire de packet.
-2. Installez PhpStorm, puis connectez-vous à votre compte pour activer votre licence.
-
 #### Installation de Git
 Trivial
 
@@ -41,23 +37,6 @@ et ouvrez le dans votre éditeur préféré
 > pour les prochaines fois `--build` ne sera pas necessaire, il sert à utiliser le fichier Dockefile pour installer les dépendances php. Pour les prochains lancement préférez `docker compose up -d`
 > [!TIP]
 > Une fois la première commande lancée, vos conteneurs serons démarables depuis votre application Docker Desktop. Vous n'êtes donc pas obligé d'utiliser les commandes docker
-4. Une fois fini ouvrez http://localhost:8000 pour voir le site
-> [!TIP]
-> le lien pour phpmyadmin et votre site web est aussi accessible et cliquable depuis votre application Docker
-
-#### Configuration de PhpStorm (facultatif)
-> [!IMPORTANT]
-> Il faut avoir configurer le projet avec docker avant de configurer l'interpreteur
-##### Configurez l'interpréteur PHP
-1. allez dans `Settings > PHP`
-2. Puis dans `CLI Interpreter`, cliquez sur `...`
-3. Cliquez `+ > From Docker, ...`
-4. Sélectionnez `Docker Compose`
-5. mettez:
-   - Server: Docker
-   - Configuration files: `./compose.yml`
-   - Service: `php`
-6. Appliquez et Confirmez
 
 ##### Database Link Configuration
 1. Dans le panneau de droite, cliquez sur l'icône `Database`
@@ -67,4 +46,23 @@ et ouvrez le dans votre éditeur préféré
 5. Testez la connexion et sauvegardez
 6. Dans Phpmyadmin, appliquez successivement les migrations sotckées dans database/migrations/ via la catégorie "importer"
 
-adapté du guide de Corentin Hautefaye : https://github.com/TheRefraction/WE4_Project/blob/master/README.md
+## Angular et node app.js
+
+### Angular
+dans un terminal
+```
+npm install 
+ng serve --proxy-config proxy.conf.json
+```
+
+### Node app.js
+créez un autre fichier .env dans backend-node comme ceci :
+```
+MONGODB_URI=votre_URL_mongo_db
+```
+dans un autre terminal
+```
+cd backend-node
+npm install 
+node app.js
+```

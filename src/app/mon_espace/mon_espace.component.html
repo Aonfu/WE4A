@@ -1,0 +1,144 @@
+<!-- Affichage du tableau de bord avec les statistiques de l'utilisateur-->
+<div class="stat-grid">
+  <div class="card">
+    <h1 class="pawnstar-font text-center">Statistiques</h1>
+    <div class="card-body">
+      <div class="stats">
+        <div class="stat">
+          <p class="card-text">Enchères Gagnées</p>
+          <h1 class="pawnstar-font">{{ enchere_gagne }}</h1>
+        </div>
+        <div class="stat">
+          <p class="card-text">Montant Dépensé</p>
+          <h1 class="pawnstar-font">${{ montant_depense }}</h1>
+        </div>
+        <div class="stat">
+          <p class="card-text">Winrate</p>
+          <h1 class="pawnstar-font">{{ winrate }} %</h1>
+        </div>
+        <div class="stat">
+          <p class="card-text">Enchères en Cours</p>
+          <h1 class="pawnstar-font">{{ enchere_en_cours }}</h1>
+        </div>
+        <div class="stat">
+          <p class="card-text">Catégorie Favorite</p>
+          <h1 class="pawnstar-font" id="catfav">{{ categorie_favorite }}</h1>
+        </div>
+        <div class="stat">
+          <p class="card-text">Nombre de Ventes Effectuées</p>
+          <h1 class="pawnstar-font">{{ nb_vente }}</h1>
+        </div>
+        <div class="stat">
+          <p class="card-text">Revenu Total</p>
+          <h1 class="pawnstar-font">${{ revenu_total }}</h1>
+        </div>
+        <div class="stat">
+          <p class="card-text">Plus Grosse Vente</p>
+          <h1 class="pawnstar-font">${{ plus_grosse_vente }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section Enchères Gagnées -->
+<div class="stat-grid">
+  <div class="card">
+    <h1 class="pawnstar-font text-center">Enchères Gagnées</h1>
+  </div>
+</div>
+<div class="centrer">
+  <div class="catalogue-grid">
+    @if (encheres_gagnees.length > 0) {
+      @for (row of encheres_gagnees; track row.id_produit) {
+        <div class="card">
+          <div class="card-images">
+            <img src="{{ row.photo }}" class="card-img-top" alt="Produit aux enchères">
+            <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
+            <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
+          </div>
+          <div class="card-body">
+            <h3 class="card-text card-title">{{ row.nom }}</h3>
+            <p class="card-text">{{ row.description }}</p>
+            <h1 class="card-text pawnstar-font">${{ row.montant }}</h1>
+          </div>
+          <a [routerLink]="['/enchere', row.id_produit]" class="stretched-link text-decoration-none"></a>
+        </div>
+      }
+    } @else {
+      <div class="card no-hover">
+        <div class="card-body">
+          <p class="card-text text-center">Vous n'avez encore gagné aucune enchère.</p>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+<!-- Section Enchères en Cours -->
+<div class="stat-grid">
+  <div class="card">
+    <h1 class="pawnstar-font text-center">Enchères en Cours</h1>
+  </div>
+</div>
+<div class="centrer">
+  <div class="catalogue-grid">
+    @if (encheres_en_cours.length > 0) {
+      @for (row of encheres_en_cours; track row.id_produit) {
+        <div class="card">
+          <div class="card-images">
+            <img src="{{ row.photo }}" class="card-img-top" alt="Produit aux enchères">
+            <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
+            <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
+          </div>
+          <div class="card-body">
+            <h3 class="card-text card-title">{{ row.nom }}</h3>
+            <p class="card-text">{{ row.description }}</p>
+            <h1 class="card-text pawnstar-font">${{ row.montant }}</h1>
+          </div>
+          <a [routerLink]="['/enchere', row.id_produit]" class="stretched-link text-decoration-none"></a>
+        </div>
+      }
+    } @else {
+      <div class="card no-hover">
+        <div class="card-body">
+          <p class="card-text text-center">Vous n'avez aucune enchère en cours.</p>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+<!-- Section Produits en Vente -->
+<div class="stat-grid">
+  <div class="card">
+    <h1 class="pawnstar-font text-center">Produits en Vente</h1>
+  </div>
+</div>
+<div class="centrer">
+  <div class="catalogue-grid">
+    @if (produits_en_vente.length > 0) {
+      @for (row of produits_en_vente; track row.id_produit) {
+        <div class="card">
+          <div class="card-images">
+            <img src="{{ row.photo }}" class="card-img-top" alt="Produit aux enchères">
+            <img src="ressources/img/scotch.png" class="scotch-1" alt="...">
+            <img src="ressources/img/scotch.png" class="scotch-2" alt="...">
+          </div>
+          <div class="card-body">
+            <h3 class="card-text card-title">{{ row.nom }}</h3>
+            <p class="card-text">{{ row.description }}</p>
+            <h1 class="card-text pawnstar-font">${{ row.montant }}</h1>
+          </div>
+          <a [routerLink]="['/enchere', row.id_produit]" class="stretched-link text-decoration-none"></a>
+        </div>
+      }
+    } @else {
+      <div class="card no-hover">
+        <div class="card-body">
+          <p class="card-text text-center">Vous n'avez aucun produit en vente.</p>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<!-- Formulaire de connexion -->
+<div class="form-grid">
+  <div class="card">
+    <div class="card-body">
+      <form class="form">
+        <h1 class="pawnstar-font">Connexion</h1>
+        <div class="form-field">
+          <label class="card-text left" for="email">Email:</label>
+          <input class="form-control form-input" type="email" id="email" placeholder="mail.exemple@ex.com" required #email>
+        </div>
+        <div class="form-field">
+          <label class="card-text left" for="mdp">Mot de Passe:</label>
+          <input class="form-control form-input" type="password" id="mdp" placeholder="Mot de Passe" required #mdp>
+          @if (error) {
+            <p style="color: red; margin-bottom: 0;">{{ error }}</p>
+          }
+        </div>
+        <button class="button" type="button" (click)="connecter(email.value, mdp.value)">Se Connecter</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="form-grid">
+  <div class="card">
+    <div class="card-body">
+      <form class="form" id="form_inscription">
+        <h1 class="pawnstar-font">Inscription</h1>
+        <div class="form-row">
+          <div class="form-field">
+            <label class="card-text" for="nom">Nom:</label>
+            <input class="form-control form-input" type="text" id="nom" placeholder="Nom" required #nom>
+          </div>
+          <div class="form-field">
+            <label class="card-text" for="prenom">Prénom:</label>
+            <input class="form-control form-input" type="text" id="prenom" placeholder="Prénom" required #prenom>
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="card-text" for="email">Email:</label>
+          <input class="form-control form-input" type="email" id="email" placeholder="mail.exemple@ex.com" required #email>
+        </div>
+        <div class="form-field">
+          <label class="card-text" for="mdp">Mot de Passe:</label>
+          <input class="form-control form-input" type="password" id="mdp" placeholder="Mot de Passe" required #mdp>
+        </div>
+        <div class="form-field">
+          <label class="card-text" for="confirm_mdp">Confirmer le Mot de Passe:</label>
+          <input class="form-control form-input" type="password" id="confirm_mdp" placeholder="Confirmer" required #confirmMdp>
+          <p id="erreur" style="color: red; margin-bottom: 0;">{{ erreur }}</p>
+        </div>
+        <button class="button" type="button" (click)="inscrire(nom.value, prenom.value, email.value, mdp.value, confirmMdp.value)">S'inscrire</button>
+      </form>
+    </div>
+  </div>
+</div>
